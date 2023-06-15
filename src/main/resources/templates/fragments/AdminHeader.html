@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+ 	<meta charset="ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+</head>
+<body>
+
+<header th:fragment="adminheader" >
+
+
+<nav class="navbar navbar-expand-md bg-light navbar-light fixed-top"> 
+  <div class="flex-row d-flex">
+        <button type="button" class="navbar-toggler  mr-2 " data-toggle="offcanvas" title="Toggle responsive left sidebar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+   <a class="navbar-brand" th:href="@{/adminhome}"><img th:src="@{/img/savera_logo.jpg}" id="c_logo" ></a>
+    </div>
+ 
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		<span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+		<ul class="navbar-nav">
+		  
+	
+	<li class="nav-item ">
+
+      <a class="nav-link active" th:href="@{/adminhome}" id="navbardrop" >Home
+		</a>
+	</li>
+	
+	<!-- Dropdown -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+      		Appointments
+      </a>
+      
+      <div class="dropdown-menu">
+        
+			<a class="dropdown-item"  th:href="@{/adminbookappoint}">Book Appointment</a> 
+			<a class="dropdown-item"  th:href="@{/adminviewappoints}">View Appointments</a>
+        
+      </div>
+    </li>
+
+    <!-- Dropdown -->
+    <li class="nav-item dropdown">
+		  <a class="nav-link dropdown-toggle" th:href="@{#}" id="navbardrop" data-toggle="dropdown"> Company </a>
+		  
+      <div class="dropdown-menu">
+        
+		<a class="dropdown-item"  th:href="@{/addcompany}">Add Company</a>
+        <a class="dropdown-item"  th:href="@{/viewcompanies}">View Company</a>
+        
+      </div>
+    </li>
+	
+	
+	<!-- Dropdown -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Department
+      </a>
+      <div class="dropdown-menu">
+        
+		<a class="dropdown-item"  th:href="@{/adddepartment}">Add Department</a>
+        <a class="dropdown-item"  th:href="@{/viewdepartments}">View Department</a>
+        
+      </div>
+    </li>
+    
+    <!-- Dropdown -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Designation
+      </a>
+      <div class="dropdown-menu">
+        
+		<a class="dropdown-item"  th:href="@{/adddesignation}">Add Designation</a>
+        <a class="dropdown-item"  th:href="@{/viewdesignations}">View Designation</a>
+        
+      </div>
+    </li>
+	
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+			Employee
+      </a>
+      <div class="dropdown-menu">
+        
+		<a class="dropdown-item"  th:href="@{/addemployee}">Add Employee</a>
+		<a class="dropdown-item"  th:href="@{/viewemployees}">View Employees</a>
+        
+      </div>
+    </li> 
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Welcome &nbsp;&nbsp;&nbsp;<i class="fa fa-user" aria-hidden="true"></i>
+					[[${#httpServletRequest.remoteUser}]]
+					</a>
+				
+				<div class="dropdown-menu">
+				 <!-- <a class="dropdown-item" href="#"> <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;Setting</a> -->
+				  <a class="dropdown-item" th:href="@{/changepass}"><i class="fa fa-cog"></i>&nbsp;&nbsp;Change Password</a>
+				  
+				  <hr class="my-4">
+					<a class="dropdown-item" th:href="@{/logout}"><i class="fa fa-power-off" aria-hidden="true"></i>&nbsp;&nbsp;Logout</a>
+				</div>
+		</li>
+		  
+		</ul>
+	  </div>  
+</nav> 
+
+</header>

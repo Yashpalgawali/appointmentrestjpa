@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <title>View Appointments</title>
+	<meta charset="ISO-8859-1" /> 
+  	<meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  	<link href="#" rel="shortcut icon">
+  
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+	  
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js">   </script>
+	  
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<link rel="stylesheet" th:href="@{/css/main.css}">	
+	
+	<link rel="stylesheet" th:href="@{/css/headerstyle.css}">
+	<link rel="stylesheet" th:href="@{/css/bookappoint.css}">	
+		
+	<!-- Include Moment.js CDN -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js">    </script>
+ 
+    <!-- Include Bootstrap DateTimePicker CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"  rel="stylesheet">
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"/>
+	
+<!-- 	<link rel ="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"> -->
+<!-- 	<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> -->
+	
+	<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+		<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+		<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
+
+<!-- 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" /> -->
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" />
+		<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" />
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	
+  <script>
+  
+  $(document).ready(function(){
+	  
+	  var vmail	=	$('#vis_email').val();
+	  var burl	=	$('#burl').val();
+	 
+	  var aparr = "",tapp="";
+		
+	  $.ajax({
+			type     : "GET",
+		    url      : burl+"/getallappointmentsbyemail/"+vmail,
+			dataType : "json",
+			success  : function(result) {
+				var sr = 1;
+				
+				for (var i = 0; i < result.length; i++) 
+				{
+					aparr = aparr
+								+ "<tr><td>" + result[i].status 
+								+ "</td><td>"+ result[i].vis_name
+								+ "</td><td>"+ result[i].vis_purpose
+								+ "</td><td>"+ result[i].apdate
+								+ "</td><td>"+ result[i].aptime
+								+ "</td><td>"+ result[i].vcomp_name
+								+ "</td><td>"+ result[i].vis_email
+								+ "</td><td>"+ result[i].vis_contact
+								+ "</td><td>"+ result[i].employee.emp_name
+								+ "</td><td>"+ result[i].employee.department.company.comp_name
+								+ "</td></tr>";
+				}
+					$(aparr).appendTo('#apbody');
+					$("#aptable").DataTable({
+						
+						responsive	:	true,
+						"order"		: [ 3, "desc" ],
+						language	: {
+											"zeroRecords": "No Appointments to Show",
+									  },
+									  
+						"fnRowCallback": function(nRow, result, iDisplayIndex, iDisplayIndexFull) {
+				        if (result[0] == "pending") {
+				          	$('td:eq(0)', nRow).css("color" , "#F69828");
+				        }
+				        else if (result[0] == "confirmed") {
+					          $('td:eq(0)', nRow).css("color" , "green");
+					     }
+				        else if (result[0] == "declined") {
+					          $('td:eq(0)', nRow).css("color" , "red");
+					     }
+				       } 
+					});
+			   }
+		});
+	 
+	  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	        $($.fn.dataTable.tables(true)).DataTable()
+	           .columns.adjust()
+	           .responsive.recalc();
+	    });  
+	  	var date 	= new Date();
+		var tyear 	= (parseInt(date.getFullYear()));
+		var tmonth 	= (parseInt(String(date.getMonth()+1).padStart(2,'0')));
+		var tdate  	= (parseInt(String(date.getDate()).padStart(2 , '0'))); 
+		
+		if(tmonth <10){
+				tmonth	=	"0"+tmonth;	
+		}
+		
+		var todaydate	=	tyear+"-"+tmonth+"-"+tdate;
+		
+		$.ajax({
+				type     : "GET",
+			    url      : burl+"/gettodaysappointmentsbyemail/"+vmail,
+				dataType : "json",
+				success  : function(result) {
+					var sr = 1;
+					for (var i = 0; i < result.length; i++) 
+					{
+						tapp = tapp
+								+ "<tr><td>" + result[i].status
+								+ "</td><td>"+ result[i].vis_name
+								+ "</td><td>"+ result[i].vis_purpose
+								+ "</td><td>"+ result[i].apdate
+								+ "</td><td>"+ result[i].aptime
+								+ "</td><td>"+ result[i].vcomp_name
+								+ "</td><td>"+ result[i].vis_email
+								+ "</td><td>"+ result[i].vis_contact
+								+ "</td><td>"+ result[i].employee.emp_name
+								+ "</td><td>"+ result[i].employee.department.company.comp_name
+								+ "</td></tr>";
+					}
+					$(tapp).appendTo('#aptodaybody');
+					$("#aptodaytable").DataTable({
+						
+						responsive	:	true,
+						"order": [ 4, "asc" ],
+						"language": {
+										"zeroRecords": "No Appointments For Today",	
+									},
+						"fnRowCallback": function(nRow, result, iDisplayIndex, iDisplayIndexFull) {
+					        if (result[0] == "pending") {
+					          $('td:eq(0)', nRow).css("color" , "#F69828");
+					        }
+					        if (result[0] == "confirmed") {
+						          $('td:eq(0)', nRow).css("color" , "green");
+						    }
+					 		if (result[0] == "declined") {
+						          $('td:eq(0)', nRow).css("color" , "red");
+						    }
+					    }
+					});
+				}
+	});
+	  
+	$('#rstbtn').click(function(){
+		
+		location.reload();
+		
+	});
+	  
+
+	 $('#datetime').datetimepicker({
+           
+		format: 'hh:mm:ss A',  
+		icons: {
+					time	: 'fa fa-clock-o',
+					date	: 'fa fa-calendar',
+					up		: 'fa fa-chevron-up',
+					down	: 'fa fa-chevron-down',
+					previous: 'fa fa-chevron-left',
+					next	: 'fa fa-chevron-right',
+					today	: 'fa fa-check',
+					clear	: 'fa fa-trash',
+					close	: 'fa fa-times'
+			},
+	 });
+ });
+  
+</script>
+
+</head>
+<body>
+
+<div th:replace="fragments/Header.html :: header">
+</div>
+	
+
+<div class="container" >
+ <!-- start: PAGE HEADER -->
+		<div class="row">
+			<div class="col-sm-12">
+				<!-- start: PAGE TITLE & BREADCRUMB -->
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a th:href="@{/}">
+							<i class="fa fa-home "></i>&nbsp;Home
+						</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">
+						View Appointments
+					</li>
+				</ol>
+			</div>
+		</div>
+	<div th:if="${response}">
+		<h6 th:text="${response}" class="alert alert-success"></h6>
+	</div>	
+	
+	<div th:if="${reserr}">
+		<h6 th:text="${reserr}" class="alert alert-danger"></h6>
+	</div>			
+					
+		<div class="card">
+			<div class="card-header">
+				<h4>View Appointments 
+					<a target="_blank" th:href="@{/bookappointment}" class="btn btn-primary" style="float:right;">Book Appointment</a>
+				</h4>
+			</div>
+	  		
+	  		<input type="hidden" id="vis_email" name="vis_email"  th:value="${vemail}" />
+	  		<input type="hidden" id="burl" name="burl"  th:value="${baseurl}" />
+	  		
+		  	<ul class="nav nav-tabs">
+					<li class="nav-item ">
+					  <a class="nav-link active" href="#todayappoints" data-toggle="tab">Today's Appointments</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link " href="#allappoints" data-toggle="tab">All Appointments</a>
+					</li>
+			</ul>		
+	  
+	<div class="tab-content">
+	  <div id="todayappoints" class="tab-pane active">
+		 <div class="card-body">
+			<div class="table-responsive-sm" id="todayappoints">
+				<table class="table table-bordered table-striped table-hover table-full-width dt-responsive nowrap" style="width:100%;text-decoration:none;"  id="aptodaytable" >
+					<thead style="background-color:#3fbdeb;color:white;">
+						<tr>
+							<th>Appointment Status</th>
+							<th>Visitor's Name</th>
+							<th>Visit Purpose</th>
+							<th>Appointment Date</th>
+							<th>Time</th>
+							<th>Visitor's Company</th>
+							<th>Visitor's Email</th>
+							<th>Visitor's Contact</th>
+							<th>Personnel Name</th>
+							<th>Personnel Company </th>
+						</tr>	
+					</thead>
+					<tbody id="aptodaybody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+      </div>
+      
+      <div id="allappoints" class="tab-pane fade">
+		 <div class="card-body">
+			<div class="table-responsive" id="data">
+				   <table class="table table-bordered table-striped table-hover table-full-width dt-responsive nowrap" style="width:100%;text-decoration:none;" id="aptable" >
+					
+					<thead style="background-color:#3fbdeb;color:white;">
+						<tr>
+							<th>Appointment Status</th>
+							<th>Visitor's Name</th>
+							<th>Visit Purpose</th>
+							<th>Appointment Date</th>
+							<th>Time</th>
+							<th>Visitor's Company</th>
+							<th>Visitor's Email</th>
+							<th>Visitor's Contact</th>
+							<th>Personnel Name</th>
+							<th>Personnel Company </th>
+						</tr>	
+					</thead>
+					<tbody id="apbody">
+					</tbody>
+				</table>
+			</div>
+    	</div>
+      </div>
+    </div>
+  </div>
+ </div>
+  
+ <!-- Footer -->
+<footer class="container-fluid page-footer font-small blue">
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3"><i class="fa fa-copyright" aria-hidden="true"></i> 2022 Developed By Tidyhomz
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->

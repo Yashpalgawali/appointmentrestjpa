@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+
+	<meta charset="ISO-8859-1" />
+ 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+ 	
+ 	<link th:href="@{#}" rel="shortcut icon">
+  
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js">   </script>
+	  
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+	
+	<link rel="stylesheet" th:href="@{/css/bookappoint.css}"> 
+	<link rel="stylesheet" th:href="@{/css/headerstyle.css}">
+	<link rel="stylesheet" th:href="@{/css/main.css}">
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"/>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+ 	
+	
+ <script>
+ 
+	$(document).ready(function(){
+			  
+		$('#company').select2({
+			theme	:	'classic',
+			width	:	'resolve'
+			
+		});
+		$('#department').select2({
+			theme	:	'classic',
+			width	:	'resolve'
+			
+		});
+		$('#status').select2({
+			theme	:	'classic',
+			width	:	'resolve'
+			
+		});
+		$('#designation').select2({
+			theme	:	'classic',
+			width	:	'resolve'
+			
+		});
+			
+// 			$('#emp_name').blur(function(){
+				
+// 				var ename = $('#emp_name').val();
+// 				if(ename!=""){
+// 				$.ajax({
+					
+// 						url		:	'emppresent/'+ename,
+// 						datatype:	'json',
+// 						type	:	'GET',
+// 						success	:	function(result)
+// 						{ 
+// 							//alert("result is "+result);
+// 							if(result=='yes')
+// 							{
+// 								alert("Record for "+ename+" already present");	
+// 								$('#emp_name').val('');
+								
+// 							}
+// 							else
+// 							{
+								
+// 							}
+							
+// 						},
+// 						error	:	function(result)
+// 						{
+// 							alert("in Error function result is "+JSON.stringify(result));
+// 						}
+// 				});
+// 			 }
+// // 				else{alert("Please Enter the name");}
+// 			});
+			
+	});
+	
+	
+	 
+	 function getDeptByCompId(compid)
+	 {
+		 var tapp="";
+			
+			$.ajax({
+					async    : true,
+					type     : "GET",
+				    url      : "/getdeptbycompid/"+compid,
+					dataType : "json",
+					success  : function(result) {
+						
+						$('select[name="department"]').empty();
+						$('select[name="department"]').append('<option selected disabled value="">'+"Please Select Department"+'</option');
+						
+						$.each(result,function(i){
+							
+							$('select[name="department"]').append('<option value="'+result[i].dept_id+'">'+result[i].dept_name+'</option>');
+							
+						});
+						
+					}
+		 });
+	 }
+	 
+ </script>
+  
+ </head>
+<body>
+
+
+<div th:replace="fragments/AdminHeader.html :: adminheader" >
+</div>
+
+<div class="container" >
+	
+ <!-- start: PAGE HEADER -->
+					<div class="row">
+						<div class="col-sm-12">
+							
+							<!-- start: PAGE TITLE & BREADCRUMB -->
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item">
+									
+									<a th:href="@{/adminhome}">
+										<i class="fa fa-home"></i>&nbsp;Home
+									</a>
+								</li>
+								<li class="breadcrumb-item active" aria-current="page">
+									Add Employee
+								</li>
+								
+							</ol>
+						</div>
+					</div>
+			
+
+<form th:action="@{/updateemployee}" method="POST" >	
+  
+	<div class="card">
+		<div class="card-header">
+			<h4>Add Employee</h4>
+		</div>
+  
+	<div class="card-body">
+		<div class="col-md-3"></div>
+	  
+	<input type="hidden" id="emp_id" name="emp_id" th:value="${emp.emp_id}"/>
+	 
+	<div class="form-group">
+      	<label for="emp_name">Employee Name:</label>
+		<input type="text" class="form-control" id="emp_name" placeholder="Enter Employee Name" th:value="${emp.emp_name}" name="emp_name" required>
+   	</div>    
+   	
+   	<div class="form-group">
+      	<label for="emp_email">Employee Email:</label>
+		<input type="email" class="form-control" id="emp_email" placeholder="Enter Employee Address" th:value="${emp.emp_email}" name="emp_email" required>
+   	</div> 
+   	
+   	<div class="form-group">
+      <label for="designation">Designation:</label>
+		
+    	<select class="form-control" style="width:100%;" id="designation"  name="designation" required >
+    		<option value="" selected disabled="disabled">Select Designation</option>
+    			<th:block th:each="desig : ${dlist}">
+    			  <th:block th:if="${desig.desig_id}== ${emp.designation.desig_id}">
+    				<option selected th:value="${desig.desig_id}" th:text="${desig.desig_name}"></option>
+    			  </th:block>
+    			  <th:block th:unless="${desig.desig_id}== ${emp.designation.desig_id}">
+    				<option th:value="${desig.desig_id}" th:text="${desig.desig_name}"></option>
+    			  </th:block>
+    			</th:block>
+    	</select>
+    </div> 
+   	  
+    	 
+	<div class="form-group">
+      <label for="company_id">Company Name:</label>
+		
+    	<select class="form-control" style="width:100%;" id="company"  name="company" required onchange="getDeptByCompId(this.value)">
+    		<option value="" selected disabled="disabled">Select Company Name</option>
+    			<th:block th:each="cmp : ${clist}">
+    				<option th:value="${cmp.company_id}" th:text="${cmp.comp_name}"></option>
+    			</th:block>
+    	</select>
+    </div>
+    
+    <div class="form-group">
+		<label for="department">Department Name:</label>
+			<select class="form-control" style ="width:100%;" id="department" name="department" required >
+				
+				<option selected disabled="disabled"> Select Department Name </option>
+					
+			</select>
+	</div>
+	
+	<div class="form-group">
+		<label for="emp_status">Status:</label>
+			<select class="form-control" style ="width:100%;" id="emp_status" name="emp_status" required >
+				
+				<option disabled="disabled"> Select Status  </option>
+				<th:block th:if="${emp.emp_status}==0">
+					<option selected value="0">Disabled</option>
+				</th:block>
+				<th:block th:unless="${emp.emp_status}==0">
+					<option value="0">Disabled</option>
+				</th:block>
+				<th:block th:if="${emp.emp_status}==1">
+					<option selected value="1">Enabled</option>
+				</th:block>
+				<th:block th:unless="${emp.emp_status}==1">
+					<option value="1">Enabled</option>
+				</th:block>
+					
+			</select>
+	</div>
+	
+	<button type="submit" class="btn btn-primary">Submit</button> &nbsp;&nbsp;<button type="reset" class="btn btn-primary">Cancel</button>
+  
+	</div>
+</div>
+
+</form>
+</div>
+
+ <!-- Footer -->
+<footer class="container-fluid  sub-div page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3"><i class="fa fa-copyright" aria-hidden="true"></i> 2022 Developed By Tidyhomz
+    
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
