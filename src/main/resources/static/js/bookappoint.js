@@ -3,7 +3,7 @@
 		var date = new Date();
 		 
 		var mnth = (date.getMonth()+1);
-		let app_name = $('#app_name').val();
+		var app_name = $('#app_name').val();
 		var dt	 =	date.getDate();
 		if(dt<10)
 		{
@@ -96,7 +96,7 @@
   });
   
 	function getDeptByEmpId(empid)
-	{	
+	{	var app_name = $('#app_name').val();
 	 	$('#department').empty();
  		$('#company').empty();
 	 	
