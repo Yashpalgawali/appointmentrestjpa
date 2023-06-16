@@ -51,12 +51,12 @@
 	  
 	  var vmail	=	$('#vis_email').val();
 	  var burl	=	$('#burl').val();
-	 
+	  let app_name = $('#app_name').val();
 	  var aparr = "",tapp="";
 		
 	  $.ajax({
 			type     : "GET",
-		    url      : "/getallappointmentsbyemail/"+vmail,
+		    url      : "/"+app_name+"/getallappointmentsbyemail/"+vmail,
 			dataType : "json",
 			success  : function(result) {
 				var sr = 1;
@@ -118,7 +118,7 @@
 		
 		$.ajax({
 				type     : "GET",
-			    url      : "/gettodaysappointmentsbyemail/"+vmail,
+			    url      : "/"+app_name+"/gettodaysappointmentsbyemail/"+vmail,
 				dataType : "json",
 				success  : function(result) {
 					var sr = 1;
@@ -226,6 +226,8 @@
 			</div>
 	  		
 	  		<input type="hidden" id="vis_email" name="vis_email"  th:value="${vemail}" />
+	  		<input type="hidden" id="app_name" name="app_name"  th:value="${appname}" />
+	  		
 	  		<input type="hidden" id="burl" name="burl"  th:value="${baseurl}" />
 	  		
 		  	<ul class="nav nav-tabs">

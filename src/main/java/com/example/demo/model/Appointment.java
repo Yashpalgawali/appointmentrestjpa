@@ -44,6 +44,8 @@ public class Appointment {
 	@Transient
 	private Integer new_otp;
 	
+	@Transient
+	private String app_name;
 	
 	public Integer getNew_otp() {
 		return new_otp;
@@ -145,9 +147,10 @@ public class Appointment {
 		this.otp_num = otp_num;
 	}
 	
+
 	public Appointment(Long appoint_id, String vis_name, String vis_email, String vis_contact, String vis_purpose,
 			String vcomp_name, String apdate, String aptime, String status, Integer otp_num, Integer new_otp,
-			Employee employee) {
+			String app_name, Employee employee) {
 		super();
 		this.appoint_id = appoint_id;
 		this.vis_name = vis_name;
@@ -160,7 +163,16 @@ public class Appointment {
 		this.status = status;
 		this.otp_num = otp_num;
 		this.new_otp = new_otp;
+		this.app_name = app_name;
 		this.employee = employee;
+	}
+
+	public String getApp_name() {
+		return app_name;
+	}
+
+	public void setApp_name(String app_name) {
+		this.app_name = app_name;
 	}
 
 	public Appointment() {}
