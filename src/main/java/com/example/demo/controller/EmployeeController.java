@@ -82,9 +82,7 @@ public class EmployeeController {
 		if(emp!=null)
 		{
 			List<Company> clist = compserv.getAllCOmpanies();
-			
 			List<Designation> dlist = desigserv.getAllDesignations();
-			
 			model.addAttribute("emp", emp);
 			model.addAttribute("clist", clist);
 			model.addAttribute("dlist", dlist);

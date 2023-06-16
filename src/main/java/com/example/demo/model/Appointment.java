@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="tbl_appointment")
@@ -37,8 +38,21 @@ public class Appointment {
 	
 	private String status;
 	
+	@Transient
+	private Integer otp_num;
+	
+	@Transient
+	private Integer new_otp;
 	
 	
+	public Integer getNew_otp() {
+		return new_otp;
+	}
+
+	public void setNew_otp(Integer new_otp) {
+		this.new_otp = new_otp;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -122,11 +136,18 @@ public class Appointment {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-
 	
+	public Integer getOtp_num() {
+		return otp_num;
+	}
+
+	public void setOtp_num(Integer otp_num) {
+		this.otp_num = otp_num;
+	}
 	
 	public Appointment(Long appoint_id, String vis_name, String vis_email, String vis_contact, String vis_purpose,
-			String vcomp_name, String apdate, String aptime, String status, Employee employee) {
+			String vcomp_name, String apdate, String aptime, String status, Integer otp_num, Integer new_otp,
+			Employee employee) {
 		super();
 		this.appoint_id = appoint_id;
 		this.vis_name = vis_name;
@@ -137,11 +158,12 @@ public class Appointment {
 		this.apdate = apdate;
 		this.aptime = aptime;
 		this.status = status;
+		this.otp_num = otp_num;
+		this.new_otp = new_otp;
 		this.employee = employee;
 	}
 
 	public Appointment() {}
-	
 	
 	
 }

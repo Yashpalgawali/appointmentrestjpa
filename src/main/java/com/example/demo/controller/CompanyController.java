@@ -50,7 +50,6 @@ public class CompanyController {
 	public String viewCompanies(Model model)
 	{
 		List<Company> clist= compserv.getAllCOmpanies();
-		
 		model.addAttribute("clist", clist);
 		return "ViewCompany";
 	}
