@@ -142,7 +142,7 @@ public class AppointmentController {
 			return "redirect:/confotp";
 		}
 		
-	}
+	} 
 	
 	
 	@GetMapping("/viewappointmentbyemail")
