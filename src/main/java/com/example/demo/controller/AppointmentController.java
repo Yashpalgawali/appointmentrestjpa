@@ -48,6 +48,7 @@ public class AppointmentController {
 		List<Employee> elist = empserv.getAllEmployees();
 		
 		model.addAttribute("elist", elist);
+		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		return "BookAppointment";
 	}
 	

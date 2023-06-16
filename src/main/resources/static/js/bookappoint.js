@@ -1,9 +1,9 @@
   $(document).ready(function(){
 		
 		var date = new Date();
-		
+		 
 		var mnth = (date.getMonth()+1);
-		
+		let app_name = $('#app_name').val();
 		var dt	 =	date.getDate();
 		if(dt<10)
 		{
@@ -25,7 +25,6 @@
 				alert("Please Select Employee ");
 			}
 		}); 
-	  
 	  
   	$('#apdate').datetimepicker({ 
 
@@ -104,7 +103,7 @@
 		$.ajax({
 				async    : true,
 				type     : "GET",
-			    url      : "/getdeptbyempid/"+empid,
+			    url      : "/"+app_name+"/getdeptbyempid/"+empid,
 				success  : function(result) {
 					
 					//var size = Object.keys(result).length;

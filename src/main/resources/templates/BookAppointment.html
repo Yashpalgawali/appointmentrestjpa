@@ -75,7 +75,7 @@
 		<div class="col-md-3"></div>
 			
 		<form th:action="@{/saveappointment}" method="POST" >	
-				
+			<input type="hidden" id="app_name" name="app_name" th:value="${appname}"/>	
 			<div class="form-group">
 				  <label for="vis_name">Visitor's Name:</label>
 				  <input type="text" class="form-control" id="vis_name" placeholder="Enter Visitor's Name" name="vis_name" required>
