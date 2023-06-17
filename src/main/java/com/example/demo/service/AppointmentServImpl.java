@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +27,9 @@ public class AppointmentServImpl implements AppointmentService {
 	@Autowired
 	HttpServletRequest request;
 	
+	@Autowired
+	LastUpdateTimeService lastupdatetimeserv;
+	
 	@Override
 	public Appointment saveAppointment(Appointment appoint) {
 		// TODO Auto-generated method stub
@@ -46,7 +52,12 @@ public class AppointmentServImpl implements AppointmentService {
 			emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          "+appoint.getVis_name()
 					+" needs an appointment regarding "+appoint.getVis_purpose().substring(0, 10)+" dated on "+appoint.getApdate()
 					+"  "+appoint.getAptime()+"\n\n Confirm Appointment \n"+cnfappoint+"\n\n Decline Appointment \n"+declineappoint, subject);
-			return apoint;
+			
+		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		   LocalDateTime today = LocalDateTime.now();  
+		   
+		   lastupdatetimeserv.updateLastUpdateTime(""+dtf.format(today));
+		   return apoint;
 		}
 		else
 		{
@@ -73,16 +84,13 @@ public class AppointmentServImpl implements AppointmentService {
 		List<Appointment> elist = appointrepo.getAllEmployeesAppointments(email);
 		List<Appointment> vlist = appointrepo.getAllVisitorAppointments(email);
 		
-		if(elist.size()>0)
-		{
+		if(elist.size()>0){
 			return elist;
 		}
-		else if(vlist.size()>0)
-		{
+		else if(vlist.size()>0){
 			return vlist;
 		}
-		else
-			{	return null;  }
+		else{	return null;  }
 	}
 
 	@Override

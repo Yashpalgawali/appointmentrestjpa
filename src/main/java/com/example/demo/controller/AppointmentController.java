@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ import com.example.demo.model.Employee;
 import com.example.demo.service.AppointmentService;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.EmployeeService;
+import com.example.demo.service.LastUpdateTimeService;
 import com.example.demo.service.OtpService;
 
 @Controller
@@ -42,11 +45,16 @@ public class AppointmentController {
 	@Autowired
 	OtpService otpserv;
 	
+	
+	
 	@GetMapping("/bookappointment")
 	public String bookAppointment(Model model)
 	{
 		List<Employee> elist = empserv.getAllEmployees();
-		
+		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		   LocalDateTime today = LocalDateTime.now();
+		   System.err.println("Today --> "+dtf.format(today));
+		   
 		model.addAttribute("elist", elist);
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		return "BookAppointment";
