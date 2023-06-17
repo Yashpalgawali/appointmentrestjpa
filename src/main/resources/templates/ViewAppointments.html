@@ -98,11 +98,11 @@
 		var tdate  	= (parseInt(String(date.getDate()).padStart(2 , '0'))); 
 		
 		var todaydate	=	tyear+"-"+tmonth+"-"+tdate;
-		
+		alert("Today -->> "+todaydate);
 		$.ajax({
 				async    : true,
 				type     : "GET",
-			    url      : "/gettodaysappointments/"+todaydate,
+			    url      : "/gettodaysappointmentsbyemail/"+$('#vemail').val(),
 				dataType : "json",
 				success  : function(result) {
 					
@@ -136,10 +136,8 @@
 	});
 	  
 	$('#rstbtn').click(function(){
-		
 		location.reload();
 	});
-	  
  });
   
   
@@ -192,8 +190,8 @@
 			</ul>		
 	  
 	<div class="tab-content">
-	  
-	  <div id="todayappoints" class="tab-pane active">
+	  <input type="hidden" id="vemail" name="vemail" th:value="${vemail}">
+ 	  <div id="todayappoints" class="tab-pane active">
 		 <div class="card-body">
 			<div class="col-md-3"></div>
 		
@@ -228,8 +226,6 @@
       
       <div id="allappoints" class="tab-pane fade">
 		 <div class="card-body">
-			<div class="col-md-3"></div>
-		
 <!-- 			<div class="table-responsive-sm" id="data"> -->
 				<div class="table-responsive" id="data">
 				   <table class="table table-bordered table-striped table-hover table-full-width dt-responsive nowrap" style="width:100%;text-decoration:none;" id="aptable" >
@@ -253,7 +249,6 @@
 					<tbody id="apbody">
 					
 					</tbody>
-					
 				</table>
 			</div>
 		 
@@ -264,17 +259,6 @@
   </div>
 	 
  </div>
-  
- 
- 
- <!-- Footer -->
-<footer class="container-fluid page-footer font-small blue">
-
-  <!-- Copyright -->
-  <div class="footer-copyright text-center py-3"><i class="fa fa-copyright" aria-hidden="true"></i> 2022 Developed By Tidyhomz
-    
-  </div>
-  <!-- Copyright -->
-
-</footer>
-<!-- Footer -->
+  <div th:replace="fragments/Footer.html :: footer"></div>
+</body>
+</html>

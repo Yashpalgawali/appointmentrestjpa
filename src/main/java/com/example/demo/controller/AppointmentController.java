@@ -53,7 +53,7 @@ public class AppointmentController {
 	}
 	
 	@RequestMapping("/saveappointment")
-	public String saveAppointment(@ModelAttribute("Appointment")Appointment appoint,RedirectAttributes attr)
+	public String saveAppointment(@ModelAttribute("Appointment")Appointment appoint, HttpSession sess ,RedirectAttributes attr)
 	{
 		
 		appoint.setStatus("pending");
@@ -61,12 +61,13 @@ public class AppointmentController {
 		
 		if(appointment!=null)
 		{
-			attr.addFlashAttribute("response", "Appointment is booked and waiting for the confirmation");
-			return "redirect:/viewappointments";
+			sess.setAttribute("vemail", appoint.getVis_email());
+			attr.addFlashAttribute("reswait", "Appointment is booked and waiting for the confirmation");
+			return "redirect:/viewappointmentbyemail";
 		}
 		else {
 			attr.addFlashAttribute("reserr", "Appointment is not booked ");
-			return "redirect:/viewappointments";
+			return "redirect:/viewappointmentbyemail";
 		}
 	}
 	
@@ -158,7 +159,7 @@ public class AppointmentController {
 								.build()
 								.toUriString();
 		
-		System.err.println("Base URL->> "+base_url+"\n Email ->> "+sess.getAttribute("vemail"));
+		//System.err.println("Base URL->> "+base_url+"\n Email ->> "+sess.getAttribute("vemail"));
 		
 		model.addAttribute("baseurl", base_url);
 		model.addAttribute("vemail", sess.getAttribute("vemail"));
@@ -179,20 +180,37 @@ public class AppointmentController {
 	public List<Appointment> getTodaysAppointmentsByEmail(@PathVariable("email") String email)
 	{
 		LocalDate ldate = LocalDate.now();
-	
 		List<Appointment> aplist = appointserv.getAllTodaysAppointmentsByEmail(ldate.toString(),email);
 		return aplist;
 	}
 	
-
+	@GetMapping("/confappointment/{id}")
+	public String confAppointmentById(@PathVariable("id")Long id,RedirectAttributes attr)
+	{ 
+		int res = appointserv.confAppointmentById(id);
+		if(res>0)
+		{
+			attr.addFlashAttribute("response", "Appointment is confirmed");
+			return "redirect:/";
+		}
+		else {
+			attr.addFlashAttribute("reserr", "Appointment status is not updated");
+			return "redirect:/";
+		}
+	}
 	
-	@GetMapping("testmail")
-	@ResponseBody
-	public String testmail()
-	{
-//		otpserv.generateotp("yashpal");
-//		int otp = otpserv.getOtp("yashpal");
-//		emailserv.sendSimpleEmail("crankyash@gmail.com", "This is a test mail OTP is "+otp, "Test mail");
-		return "";
+	@GetMapping("/declineappointment/{id}")
+	public String declineAppointmentById(@PathVariable("id")Long id,RedirectAttributes attr)
+	{ 
+		int res = appointserv.confAppointmentById(id);
+		if(res>0)
+		{
+			attr.addFlashAttribute("reserr", "Appointment is declined");
+			return "redirect:/";
+		}
+		else {
+			attr.addFlashAttribute("reserr", "Appointment status is not updated");
+			return "redirect:/";
+		}
 	}
 }

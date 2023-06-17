@@ -17,5 +17,7 @@ public interface AppointmentService {
 	
 	public List<Appointment> getAllTodaysAppointmentsByEmail(String tdate ,String email);
 	
+	public int confAppointmentById(Long apid);
 	
+	public int declineAppointmentById(Long apid);
 }

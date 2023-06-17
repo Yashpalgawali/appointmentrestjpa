@@ -3,7 +3,10 @@ package com.example.demo.repository;
 import java.sql.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -33,4 +36,10 @@ public interface AppointmentRepo extends JpaRepository<Appointment, Long> {
 	
 	@Query("SELECT a FROM Appointment a WHERE a.apdate=?1 AND a.vis_email=?2")
 	public List<Appointment> getAllTodaysAppointmentsByEmail(String tdate, String email);
+	
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Appointment a SET a.status=?2 WHERE a.appoint_id=?1")
+	public int updateAppointmentStatusById(Long id,String status);
 }
