@@ -162,4 +162,10 @@ public class AppointmentServImpl implements AppointmentService {
 		
 	}
 
+	@Override
+	public int updateAppointment(Appointment appoint) {
+		// TODO Auto-generated method stub
+		return appointrepo.updateAppointmentById(appoint.getApdate(), appoint.getAptime(), appoint.getVcomp_name(), appoint.getVis_contact(), appoint.getVis_email(), appoint.getVis_name(), appoint.getVis_purpose(), appoint.getEmployee().getEmp_id(), appoint.getStatus(), appoint.getAppoint_id());
+	}
+
 }

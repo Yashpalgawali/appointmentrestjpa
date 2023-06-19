@@ -80,7 +80,7 @@
 				  <label for="vis_email">Email:</label>
 				  <input type="email" class="form-control" id="vis_email"  placeholder="Enter Visitor's Email" name="vis_email" th:value="${appoint.vis_email}" required>
 			</div>
-			
+				
 			<div class="form-group">
 				  <label for="vcomp_name">Visitor's Company Name:</label>
 				  <input type="text" class="form-control" id="vcomp_name" placeholder="Enter Visitor's Company Name" name="vcomp_name" th:value="${appoint.vcomp_name}"required>
@@ -106,13 +106,13 @@
 			<div class="form-group">
 				 <label for="aptime">Appointment Time:</label>
 					<div class="input-group">
-					<input class="form-control" type="text" id="aptime"  name="aptime" th:value="${appoint.aptime}" autocomplete="off"/>
-						<span class="input-group-append bg-white border-left-0">
+						<input class="form-control" type="text" id="aptime"  name="aptime" th:value="${appoint.aptime}" autocomplete="off"/>
+							<span class="input-group-append bg-white border-left-0">
 								<span class="input-group-text bg-transparent">
 										<i class="fa fa-clock-o fa-lg"></i>
 								</span>
-						</span>
-				</div>
+							</span>
+					</div>
 			</div>
 			
 			<div class="form-group">
@@ -128,14 +128,14 @@
 			<div class="form-group">
 				<label for="department">Department Name:</label>
 					<select class="form-control" style ="width:100%;" id="department" name="department" onchange="getEmpByDeptId(this.value)">
-						<option selected disabled="disabled"> Select Department Name </option>
+						<option selected disabled="disabled"> Select Department  </option>
 					</select>
 			</div>
 			
 			<div class="form-group">
 				<label for="company">Company Name:</label>
 					<select class="form-control" style ="width:100%;" id="company" name="company" >
-						<option selected disabled="disabled"> Select Company Name </option>
+						<option selected disabled="disabled"> Select Company  </option>
 					</select>
 			</div>
 			

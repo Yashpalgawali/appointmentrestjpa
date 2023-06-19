@@ -24,4 +24,6 @@ public interface AppointmentService {
 	public Appointment saveAdminAppointment(Appointment appoint);
 	
 	public Appointment getAppointmentById(Long apid);
+	
+	public int updateAppointment(Appointment appoint); 
 }

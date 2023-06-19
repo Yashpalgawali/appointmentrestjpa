@@ -42,4 +42,10 @@ public interface AppointmentRepo extends JpaRepository<Appointment, Long> {
 	@Modifying
 	@Query("UPDATE Appointment a SET a.status=?2 WHERE a.appoint_id=?1")
 	public int updateAppointmentStatusById(Long id,String status);
+	
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Appointment a SET a.apdate=?1,a.aptime=?2,a.vcomp_name=?3,a.vis_contact=?4,a.vis_email=?5,a.vis_name=?6,a.vis_purpose=?7,a.employee.emp_id=?8,a.status=?9 WHERE a.appoint_id=?10")
+	public int updateAppointmentById(String apdate, String aptime, String vcomp,String vcontact,String vemail,String vname,String purpose,Long empid,String status,Long apid);
 }
