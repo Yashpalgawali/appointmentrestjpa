@@ -11,7 +11,7 @@ public interface AppointmentService {
 	
 	public List<Appointment> getAllAppointments();
 	
-	public List<Appointment> getAllTodaysAppointments(Date today);
+	public List<Appointment> getAllTodaysAppointments(String today);
 	
 	public List<Appointment> getAllAppointmentsByEmail(String email);
 	
@@ -20,4 +20,8 @@ public interface AppointmentService {
 	public int confAppointmentById(Long apid);
 	
 	public int declineAppointmentById(Long apid);
+	
+	public Appointment saveAdminAppointment(Appointment appoint);
+	
+	public Appointment getAppointmentById(Long apid);
 }

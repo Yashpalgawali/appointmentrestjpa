@@ -46,15 +46,11 @@ public class AppointmentController {
 	OtpService otpserv;
 	
 	
-	
 	@GetMapping("/bookappointment")
 	public String bookAppointment(Model model)
 	{
 		List<Employee> elist = empserv.getAllEmployees();
-		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-		   LocalDateTime today = LocalDateTime.now();
-		   System.err.println("Today --> "+dtf.format(today));
-		   
+		 
 		model.addAttribute("elist", elist);
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		return "BookAppointment";
@@ -166,15 +162,13 @@ public class AppointmentController {
 								.replacePath(null)
 								.build()
 								.toUriString();
-		
-		//System.err.println("Base URL->> "+base_url+"\n Email ->> "+sess.getAttribute("vemail"));
-		
 		model.addAttribute("baseurl", base_url);
 		model.addAttribute("vemail", sess.getAttribute("vemail"));
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		return "ViewAppointmentsByEmail";
 	}
 	
+	// Fetch All Todays appointments for particular user
 	@RequestMapping("/getallappointmentsbyemail/{email}")
 	@ResponseBody
 	public List<Appointment> getallappointmentsbyemail(@PathVariable("email") String email)
@@ -183,12 +177,25 @@ public class AppointmentController {
 		return aplist;
 	}
 	
+	// Fetch Only Todays appointments for particular user
 	@RequestMapping("/gettodaysappointmentsbyemail/{email}")
 	@ResponseBody
 	public List<Appointment> getTodaysAppointmentsByEmail(@PathVariable("email") String email)
 	{
 		LocalDate ldate = LocalDate.now();
 		List<Appointment> aplist = appointserv.getAllTodaysAppointmentsByEmail(ldate.toString(),email);
+		return aplist;
+	}
+	
+	
+	// Fetch All Todays appointments for admin
+	@RequestMapping("/gettodaysappointments")
+	@ResponseBody
+	public List<Appointment> getTodaysAppointments()
+	{
+		DateTimeFormatter dformat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate ldate = LocalDate.now();
+		List<Appointment> aplist = appointserv.getAllTodaysAppointments(dformat.format(ldate));
 		return aplist;
 	}
 	
@@ -221,4 +228,6 @@ public class AppointmentController {
 			return "redirect:/";
 		}
 	}
+	
+	
 }

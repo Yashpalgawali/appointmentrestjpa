@@ -1,15 +1,12 @@
   $(document).ready(function(){
 		
 		var date = new Date();
-		 
 		var mnth = (date.getMonth()+1);
 		var app_name = $('#app_name').val();
 		var dt	 =	date.getDate();
-		if(dt<10)
-		{
+		if(dt<10){
 			dt= "0"+dt;	
 		}
-		
 		if(mnth <10 ){
 				mnth = "0"+mnth;
 		}
@@ -18,32 +15,27 @@
 		
 	  	$('#sbapt').click(function(e){
 			
-			if($('#employee').val()==null)
-			{
+			if($('#employee').val()==null){
 				e.preventDefault();
 				$('#employee').focus();
 				alert("Please Select Employee ");
 			}
 		}); 
 	  
-  	$('#apdate').datetimepicker({ 
-
+  	$('#apdate').datetimepicker({
 		minDate	: 	today,
 		format	:	'YYYY-MM-DD'
 	});
 
-	
   	$('#company').select2({
 			theme	:	'classic',
 			width	:	'resolve'
 	});
 	
-	
 	$('#employee').select2({
 		theme	:	'classic',
 		width	:	'resolve'
 	});
-	
 	
 	$('#department').select2({
 		theme	:	'classic',
@@ -55,11 +47,8 @@
 		if($('#apdate').val()==today)
 		{
 		   $('#aptime').datetimepicker({ 
-	          	
 	    		format: 'hh:mm:ss A',
-	    		
 	    		minDate: moment(),
-	    		 
 	    		icons: {
 	    				time	: 'fa fa-clock-o',
 	    				date	: 'fa fa-calendar',
@@ -78,7 +67,6 @@
 		     $('#aptime').datetimepicker({ 
 	          	
 	    		format: 'hh:mm:ss A',
-	    
 	    		icons: {
 	    				time	: 'fa fa-clock-o',
 	    				date	: 'fa fa-calendar',
@@ -103,8 +91,8 @@
 		$.ajax({
 				async    : true,
 				type     : "GET",
-			    url      : "/"+app_name+"/getdeptbyempid/"+empid,
-			    //url      : "/getdeptbyempid/"+empid, 
+			    //url      : "/"+app_name+"/getdeptbyempid/"+empid,
+			    url      : "/getdeptbyempid/"+empid, 
 				success  : function(result) {
 					
 					$('select[name="department"]').append('<option selected value="'+result.department.dept_id+'">'+result.department.dept_name+'</option>');

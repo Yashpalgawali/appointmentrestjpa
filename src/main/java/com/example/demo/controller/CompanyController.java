@@ -22,18 +22,14 @@ public class CompanyController {
 	@Autowired
 	CompanyService compserv;
 	
-	
 	@GetMapping("/addcompany")
-	public String addCompany()
-	{
+	public String addCompany(){
 		return "AddCompany";
 	}
 	
 	@RequestMapping("/savecompany")
-	public String saveCompany(@ModelAttribute("Company")Company comp,BindingResult br , RedirectAttributes attr)
+	public String saveCompany(@ModelAttribute("Company")Company comp, RedirectAttributes attr)
 	{
-		
-		
 		Company company = compserv.saveCompany(comp);
 		if(company!=null)
 		{
@@ -59,7 +55,6 @@ public class CompanyController {
 	{
 		
 		if(id!="") {
-			
 			Company comp = compserv.getCompanyById(id);
 			if(comp!=null)
 			{
