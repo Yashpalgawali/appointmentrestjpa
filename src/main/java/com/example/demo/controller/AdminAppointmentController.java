@@ -21,9 +21,16 @@ public class AdminAppointmentController {
 	@Autowired
 	AppointmentService appointserv;
 	
+	@Autowired
+	EmployeeService empserv;
+	
+	@Autowired
+	Environment env;
+
 	@GetMapping("/adminbookappoint")
-	public String adminBookAppointment()
+	public String adminBookAppointment(Model model)
 	{
+		model.addAttribute("elist", empserv.getAllEmployees() );
 		return "AdminBookAppointment";
 	}
 	
@@ -34,11 +41,11 @@ public class AdminAppointmentController {
 		
 		if(apt!=null){
 			attr.addFlashAttribute("reswait", "Appointment is saved successfully and waiting for confirmation");
-			return "redirect:/viewadminappointments";
+			return "redirect:/adminviewappoints";
 		}
 		else{
 			attr.addFlashAttribute("reserr", "Appointment is not saved");
-			return "redirect:/viewadminappointments";
+			return "redirect:/adminviewappoints";
 		}
 	}
 	
@@ -46,12 +53,6 @@ public class AdminAppointmentController {
 	public String adminViewAppointments(Model model){
 		return "AdminViewAppointments";
 	}
-	
-	@Autowired
-	EmployeeService empserv;
-	
-	@Autowired
-	Environment env;
 	
 	@GetMapping("/editappointbyid/{id}")
 	public String getAppointmentById(@PathVariable("id")String id,Model model){
@@ -69,11 +70,11 @@ public class AdminAppointmentController {
 		if(res>0)
 		{
 			attr.addFlashAttribute("response", "Appointment is Updated successfully");
-			return "redirect:/viewadminappointments";
+			return "redirect:/adminviewappoints";
 		}
 		else {
 			attr.addFlashAttribute("reserr", "Appointment is not Updated");
-			return "redirect:/viewadminappointments";
+			return "redirect:/adminviewappoints";
 		}
 	}
 }

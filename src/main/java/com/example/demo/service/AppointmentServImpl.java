@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.example.demo.model.ActivityLogs;
 import com.example.demo.model.Appointment;
 import com.example.demo.repository.AppointmentRepo;
 
@@ -30,6 +31,13 @@ public class AppointmentServImpl implements AppointmentService {
 	@Autowired
 	LastUpdateTimeService lastupdatetimeserv;
 	
+	@Autowired
+	ActivityService actserv;
+	
+
+	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+	LocalDateTime today = LocalDateTime.now();  
+	
 	@Override
 	public Appointment saveAppointment(Appointment appoint) {
 		// TODO Auto-generated method stub
@@ -38,6 +46,14 @@ public class AppointmentServImpl implements AppointmentService {
 		
 		if(apoint!=null)
 		{
+			   
+			lastupdatetimeserv.updateLastUpdateTime(""+dtf.format(today));
+			
+			ActivityLogs act = new ActivityLogs();
+			act.setActivity("Appointment is saved for "+apoint.getVis_email());
+			act.setActivity_date(dtf.format(today));
+			actserv.saveActivity(act);
+			
 			String base_url =	ServletUriComponentsBuilder
 					.fromRequestUri(request)
 					.replacePath(null)
@@ -53,10 +69,7 @@ public class AppointmentServImpl implements AppointmentService {
 					+" needs an appointment regarding "+appoint.getVis_purpose().substring(0, 10)+" dated on "+appoint.getApdate()
 					+"  "+appoint.getAptime()+"\n\n Confirm Appointment \n"+cnfappoint+"\n\n Decline Appointment \n"+declineappoint, subject);
 			
-		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-		   LocalDateTime today = LocalDateTime.now();  
 		   
-		   lastupdatetimeserv.updateLastUpdateTime(""+dtf.format(today));
 		   return apoint;
 		}
 		else
@@ -122,6 +135,16 @@ public class AppointmentServImpl implements AppointmentService {
 		
 		if(apoint!=null)
 		{
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+			LocalDateTime today = LocalDateTime.now();  
+			   
+			lastupdatetimeserv.updateLastUpdateTime(""+dtf.format(today));
+			   
+			ActivityLogs act = new ActivityLogs();
+			act.setActivity("Appointment is saved for "+apoint.getVis_email()+" by admin");
+			act.setActivity_date(dtf.format(today));
+			actserv.saveActivity(act);
+			
 			String base_url =	ServletUriComponentsBuilder
 					.fromRequestUri(request)
 					.replacePath(null)
@@ -137,10 +160,7 @@ public class AppointmentServImpl implements AppointmentService {
 					+" needs an appointment regarding "+appoint.getVis_purpose().substring(0, 10)+" dated on "+appoint.getApdate()
 					+"  "+appoint.getAptime()+"\n\n Confirm Appointment \n"+cnfappoint+"\n\n Decline Appointment \n"+declineappoint, subject);
 			
-		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-		   LocalDateTime today = LocalDateTime.now();  
 		   
-		   lastupdatetimeserv.updateLastUpdateTime(""+dtf.format(today));
 		   return apoint;
 		}
 		else

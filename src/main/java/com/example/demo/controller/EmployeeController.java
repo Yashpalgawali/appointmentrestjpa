@@ -9,12 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.model.Company;
-import com.example.demo.model.Department;
 import com.example.demo.model.Designation;
 import com.example.demo.model.Employee;
 import com.example.demo.service.CompanyService;
@@ -70,7 +68,6 @@ public class EmployeeController {
 	{
 		List<Employee> elist = empserv.getAllEmployees();
 		model.addAttribute("elist", elist);
-		
 		return "ViewEmployees";
 	}
 	

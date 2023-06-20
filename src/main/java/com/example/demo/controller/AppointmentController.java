@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.demo.model.Appointment;
 import com.example.demo.model.Employee;
+import com.example.demo.service.ActivityService;
 import com.example.demo.service.AppointmentService;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.EmployeeService;
@@ -41,6 +42,7 @@ public class AppointmentController {
 	
 	@Autowired
 	OtpService otpserv;
+	
 	
 	
 	@GetMapping("/bookappointment")
@@ -152,7 +154,6 @@ public class AppointmentController {
 	@GetMapping("/viewappointmentbyemail")
 	public String viewAppointmentsByEmail(HttpServletRequest request,Model model,HttpSession sess)
 	{
-		
 		String base_url =	ServletUriComponentsBuilder
 								.fromRequestUri(request)
 								.replacePath(null)

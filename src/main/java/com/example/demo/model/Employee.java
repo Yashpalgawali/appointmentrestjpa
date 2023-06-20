@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,11 +26,11 @@ public class Employee {
 	
 	private Long emp_status;
 	
-	@OneToOne(cascade = CascadeType.MERGE,targetEntity = Department.class)
+	@OneToOne(cascade = CascadeType.MERGE,targetEntity = Department.class,fetch = FetchType.LAZY)
 	@JoinColumn(name="dept_id",referencedColumnName = "dept_id")
 	private Department department;
 
-	@OneToOne(cascade = CascadeType.MERGE, targetEntity = Designation.class )
+	@OneToOne(cascade = CascadeType.MERGE, targetEntity = Designation.class ,fetch = FetchType.EAGER)
 	@JoinColumn(name="desig_id" , referencedColumnName = "desig_id")
 	private Designation designation;
 	

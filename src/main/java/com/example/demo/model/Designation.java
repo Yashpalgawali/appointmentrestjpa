@@ -1,12 +1,16 @@
 package com.example.demo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 
 @Entity
 @SequenceGenerator(name="desig_seq" , allocationSize = 1, initialValue = 1)
@@ -20,7 +24,10 @@ public class Designation {
 	
 	@Column(name="desig_name")
 	private String desig_name;
-
+	
+	@OneToOne(mappedBy = "designation",targetEntity = Employee.class,cascade = CascadeType.MERGE)
+	private Employee employee;
+	
 	public Long getDesig_id() {
 		return desig_id;
 	}

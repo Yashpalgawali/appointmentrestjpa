@@ -35,8 +35,7 @@
 		<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" />
 		<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" />
 
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	
+	  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css"  />
 	
   <script>
   
@@ -74,7 +73,7 @@
 								+ "</td><td>"+ result[i].vis_contact
 								+ "</td><td>"+ result[i].employee.emp_name
 								+ "</td><td>"+ result[i].employee.department.company.comp_name                          
-								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href='editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-pencil-square fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
+								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href='editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-edit ' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
 								+ "</td></tr>";
 				}
 				$(aparr).appendTo('#apbody');
@@ -82,7 +81,23 @@
 					responsive	:	true,
 					language	: {
 										"zeroRecords": "No Appointments to Show",
-								  }
+								  },
+								  
+				"fnRowCallback": function(nRow, result, iDisplayIndex, iDisplayIndexFull) {
+					
+			        if (result[0]=="pending")
+			        {
+			        	$('td:eq(0)', nRow).css("color" , "#F69828");
+			        }
+			        else if (result[0]=="confirmed") 
+			        {
+				    	$('td:eq(0)', nRow).css("color" , "green");
+				    }
+			        else if (result[0]=="declined") 
+			        {
+				    	$('td:eq(0)', nRow).css("color" , "red");
+				    }
+				}
 				});
 			   }
 		});
@@ -121,53 +136,36 @@
 								+ "</td><td>"+ result[i].vis_contact
 								+ "</td><td>"+ result[i].employee.emp_name
 								+ "</td><td>"+ result[i].employee.department.company.comp_name
-								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href='editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-pencil-square fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
+								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href='editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-edit ' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
 								+ "</td></tr>";
 					}
 					$(tapp).appendTo('#aptodaybody');
 					$("#aptodaytable").DataTable({
 						
 						responsive	:	true,
-						
 						language	: {
 											"zeroRecords": "No Appointments to Show",
 									  },
 									  
-						"fnRowCallback": function(nRow, result, iDisplayIndex, iDisplayIndexFull) {alert(result[0]);
-				        if (result[0] == "pending") {
-				          	$('td:eq(0)', nRow).css("color" , "#F69828");
-				        }
-				        else if (result[0] == "confirmed") {
-					          $('td:eq(0)', nRow).css("color" , "green");
-					     }
-				        else if (result[0] == "declined") {
-					          $('td:eq(0)', nRow).css("color" , "red");
-					     }
-				       } 			
+						"fnRowCallback": function(nRow, result, iDisplayIndex, iDisplayIndexFull) {
+						
+					        if (result[0]=="pending")
+					        {
+					        	$('td:eq(0)', nRow).css("color" , "#F69828");
+					        }
+					        else if (result[0]=="confirmed") 
+					        {
+						    	$('td:eq(0)', nRow).css("color" , "green");
+						    }
+					        else if (result[0]=="declined") 
+					        {
+						    	$('td:eq(0)', nRow).css("color" , "red");
+						    }
+						}			
 					});
 				}
 	});
-	  
-	$('#rstbtn').click(function(){
-		location.reload();
-	});
-	  
-
-	 $('#datetime').datetimepicker({
-           
-		format: 'hh:mm:ss A',
-		icons: {
-			time	: 'fa fa-clock-o',
-			date	: 'fa fa-calendar',
-			up		: 'fa fa-chevron-up',
-			down	: 'fa fa-chevron-down',
-			previous: 'fa fa-chevron-left',
-			next	: 'fa fa-chevron-right',
-			today	: 'fa fa-check',
-			clear	: 'fa fa-trash',
-			close	: 'fa fa-times'
-			},
-	 }); 
+	
  });
   
   </script>
@@ -219,8 +217,6 @@
 	  
 	  <div id="todayappoints" class="tab-pane active">
 		 <div class="card-body">
-			<div class="col-md-3"></div>
-		
 			<div class="table-responsive-sm" id="todayappoints">
 				<table class="table table-bordered table-striped table-hover table-full-width dt-responsive nowrap" style="width:100%;text-decoration:none;"  id="aptodaytable" >
 					
@@ -284,5 +280,4 @@
   </div>
  </div>
   
- 
 <div th:replace="fragments/Footer.html :: footer"></div>
