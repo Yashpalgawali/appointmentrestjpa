@@ -46,6 +46,13 @@ public class CompanyController {
 	public String viewCompanies(Model model)
 	{
 		List<Company> clist= compserv.getAllCOmpanies();
+		
+		for(int i=0;i<clist.size();i++)
+		{
+			System.err.println(clist.get(i));
+		}
+		//clist.stream().forEach(e->System.err.println(e.getComp_name()));
+		
 		model.addAttribute("clist", clist);
 		return "ViewCompany";
 	}

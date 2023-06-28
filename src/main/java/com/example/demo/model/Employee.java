@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,9 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="tbl_employee")
@@ -26,13 +32,22 @@ public class Employee {
 	
 	private Long emp_status;
 	
-	@OneToOne(cascade = CascadeType.MERGE,targetEntity = Department.class,fetch = FetchType.LAZY)
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.MERGE,targetEntity = Department.class,fetch = FetchType.EAGER)
 	@JoinColumn(name="dept_id",referencedColumnName = "dept_id")
 	private Department department;
+
+//	@JsonIgnore
+//	@OneToMany(cascade = CascadeType.MERGE,targetEntity = Department.class,fetch = FetchType.EAGER)
+//	@JoinColumn(name="dept_id",referencedColumnName = "dept_id")
+//	private List<Department> department;
+
+	
 
 	@OneToOne(cascade = CascadeType.MERGE, targetEntity = Designation.class ,fetch = FetchType.EAGER)
 	@JoinColumn(name="desig_id" , referencedColumnName = "desig_id")
 	private Designation designation;
+	
 	
 	public Designation getDesignation() {
 		return designation;

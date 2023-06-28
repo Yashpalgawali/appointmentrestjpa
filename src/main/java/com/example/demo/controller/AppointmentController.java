@@ -27,6 +27,7 @@ import com.example.demo.service.AppointmentService;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.EmployeeService;
 import com.example.demo.service.OtpService;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Controller
 public class AppointmentController {
@@ -43,7 +44,8 @@ public class AppointmentController {
 	@Autowired
 	OtpService otpserv;
 	
-	
+	@Autowired
+	Environment env;
 	
 	@GetMapping("/bookappointment")
 	public String bookAppointment(Model model)
@@ -81,6 +83,7 @@ public class AppointmentController {
 		model.addAttribute("aplist", aplist);
 		return "ViewAppointments";
 	}
+	
 	
 	
 	@RequestMapping("/getallappointments")
@@ -148,8 +151,7 @@ public class AppointmentController {
 		}
 		
 	} 
-	@Autowired
-	Environment env;
+	
 	
 	@GetMapping("/viewappointmentbyemail")
 	public String viewAppointmentsByEmail(HttpServletRequest request,Model model,HttpSession sess)
@@ -171,6 +173,9 @@ public class AppointmentController {
 	public List<Appointment> getallappointmentsbyemail(@PathVariable("email") String email)
 	{
 		List<Appointment> aplist = appointserv.getAllAppointmentsByEmail(email);
+		
+		//aplist.stream().forEach(e->System.err.println(e.getEmployee().getDepartment().getCompany().getComp_name()));
+		
 		return aplist;
 	}
 	

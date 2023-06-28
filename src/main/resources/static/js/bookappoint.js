@@ -91,8 +91,8 @@
 		$.ajax({
 				async    : true,
 				type     : "GET",
-			    //url      : "/"+app_name+"/getdeptbyempid/"+empid,
-			    url      : "/getdeptbyempid/"+empid, 
+			    url      : "/"+app_name+"/getdeptbyempid/"+empid,
+			   // url      : "/getdeptbyempid/"+empid, 
 				success  : function(result) {
 					
 					$('select[name="department"]').append('<option selected value="'+result.department.dept_id+'">'+result.department.dept_name+'</option>');

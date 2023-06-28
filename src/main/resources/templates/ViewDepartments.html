@@ -46,7 +46,7 @@ function getdepartmentbycomp(cid)
 				dept_arr =  dept_arr 
 							+"<tr><td>" +(cnt++)
 							+"</td><td>"+result[i].dept_name
-							+"</td><td>"+result[i].company.comp_name
+							+"</td><td>"+result[i].department.company.comp_name
 							+"</td><td><a href='/editdeptbyid/"+result[i].dept_id+"'>Edit</a></td></tr>"
 			}
 			$(dept_arr).appendTo('#deptbody');

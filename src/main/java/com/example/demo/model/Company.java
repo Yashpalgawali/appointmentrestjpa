@@ -1,19 +1,32 @@
 package com.example.demo.model;
 
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
  
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @SequenceGenerator(name="comp_seq" , initialValue = 1, allocationSize = 1)
 @Table(name="tbl_company")
 public class Company {
-
 
 	
 	@Id 
@@ -24,22 +37,10 @@ public class Company {
 	@Column(name="comp_name")
 	private String comp_name;
 
-	public Long getCompany_id() {
-		return company_id;
-	}
-
-	public void setCompany_id(Long company_id) {
-		this.company_id = company_id;
-	}
-
-	public String getComp_name() {
-		return comp_name;
-	}
-
-	public void setComp_name(String comp_name) {
-		this.comp_name = comp_name;
-	} 
-
+//	@JsonIgnore
+//	@OneToMany(cascade = CascadeType.MERGE,mappedBy = "company",targetEntity = Department.class )
+//	private List<Department> department;
+	
 	
 	
 	

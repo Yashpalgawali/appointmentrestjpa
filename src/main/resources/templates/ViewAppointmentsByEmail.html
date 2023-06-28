@@ -36,7 +36,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" th:href="@{/css/style.css}">
 	
-	
   <script>
   
   $(document).ready(function(){
@@ -44,18 +43,19 @@
 	  var vmail	=	$('#vis_email').val();
 	  var burl	=	$('#burl').val();
 	  let app_name = $('#app_name').val();
+	  alert("email "+vmail);
 	  var aparr = "",tapp="";
 		
 	  $.ajax({
-			type     : "GET",
+				type     : "GET",
 			  //url      : "/"+app_name+"/getallappointmentsbyemail/"+vmail,
-			  url    : "/getallappointmentsbyemail/"+vmail,
-			dataType : "json",
-			success  : function(result) {
+			  	url    : "/getallappointmentsbyemail/"+vmail,
+				dataType : "json",
+				success  : function(result) {
 				var sr = 1;
 				
 				for (var i = 0; i < result.length; i++) 
-				{
+				{alert(result[i].vis_name);
 					aparr = aparr
 								+ "<tr><td>" + result[i].status 
 								+ "</td><td>"+ result[i].vis_name
@@ -66,7 +66,8 @@
 								+ "</td><td>"+ result[i].vis_email
 								+ "</td><td>"+ result[i].vis_contact
 								+ "</td><td>"+ result[i].employee.emp_name
-								+ "</td><td>"+ result[i].employee.department.company.comp_name
+								//+ "</td><td>"+ result[i].employee.department.company.comp_name
+								+ "</td><td>"+ result[i].employee.department
 								+ "</td></tr>";
 				}
 					$(aparr).appendTo('#apbody');
@@ -114,6 +115,7 @@
 			    url      : "/gettodaysappointmentsbyemail/"+vmail,
 				dataType : "json",
 				success  : function(result) {
+					
 					var sr = 1;
 					for (var i = 0; i < result.length; i++) 
 					{
@@ -127,7 +129,7 @@
 								+ "</td><td>"+ result[i].vis_email
 								+ "</td><td>"+ result[i].vis_contact
 								+ "</td><td>"+ result[i].employee.emp_name
-								+ "</td><td>"+ result[i].employee.department.company.comp_name
+								+ "</td><td>"+ result[i].employee.department
 								+ "</td></tr>";
 					}
 					$(tapp).appendTo('#aptodaybody');

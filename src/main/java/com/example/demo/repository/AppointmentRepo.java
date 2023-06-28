@@ -26,8 +26,8 @@ public interface AppointmentRepo extends JpaRepository<Appointment, Long> {
 	public List<Appointment> getAllTodaysAppointments(String today); 
 	
 	
-	//@Query(value="SELECT * FROM tbl_appointment JOIN tbl_employee ON tbl_employee.emp_id=tbl_appointment.emp_id WHERE tbl_appointment.vis_email=?1",nativeQuery = true)
-	@Query("SELECT a FROM Appointment a JOIN a.employee WHERE a.vis_email=?1")
+	//@Query(value="SELECT * FROM tbl_appointment JOIN tbl_employee ON tbl_employee.emp_id=tbl_appointment.emp_id JOIN tbl_department ON tbl_department.dept_id=tbl_employee.dept_id WHERE tbl_appointment.vis_email=?1",nativeQuery = true)
+	@Query("SELECT a FROM Appointment a INNER JOIN a.employee e INNER JOIN e.department d INNER JOIN d.company c WHERE a.vis_email=?1")
 	public List<Appointment> getAllVisitorAppointments(String vemail);
 	
 	//@Query(value="SELECT * FROM tbl_appointment JOIN tbl_employee ON tbl_employee.emp_id=tbl_appointment.emp_id WHERE tbl_employee.emp_email=?1",nativeQuery = true)

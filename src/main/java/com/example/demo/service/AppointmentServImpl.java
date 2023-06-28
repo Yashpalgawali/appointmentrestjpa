@@ -97,6 +97,9 @@ public class AppointmentServImpl implements AppointmentService {
 		List<Appointment> elist = appointrepo.getAllEmployeesAppointments(email);
 		List<Appointment> vlist = appointrepo.getAllVisitorAppointments(email);
 		
+		//System.out.println("getAllAppointmentsByEmail in service layer\n");
+		//vlist.stream().forEach(e->System.err.println(e.getEmployee().getDepartment().getDept_name()));
+		
 		if(elist.size()>0){
 			return elist;
 		}

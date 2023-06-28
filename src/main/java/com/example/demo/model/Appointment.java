@@ -13,8 +13,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="tbl_appointment")
+
 public class Appointment {
 
 	@Id
@@ -62,7 +65,8 @@ public class Appointment {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
+	
+	//@JsonIgnoreProperties
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="emp_id",referencedColumnName = "emp_id") 
 	private Employee employee;

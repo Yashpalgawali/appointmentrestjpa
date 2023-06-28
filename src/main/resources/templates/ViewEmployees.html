@@ -85,7 +85,7 @@
 								<td th:text="${emp.emp_email}"></td>
 								<td th:text="${emp.department.dept_name}"></td>
 								<td th:text="${emp.department.company.comp_name}"></td>
-								<td ><a th:href="@{'/editempbyid/__${emp.emp_id}__'}">Edit</a></td>
+								<td ><a th:href="@{'/editempbyid/__${emp.emp_id}__'}"><i class="fa fa-edit"></i>&nbsp;Edit</a></td>
 							</tr>
 						</th:block>
 					</tbody>

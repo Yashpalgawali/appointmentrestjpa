@@ -64,6 +64,11 @@ public class DepartmentController {
 	public List<Department> getDepartmentsByCompId(@PathVariable("id") String id)
 	{
 		List<Department> deplist = deptserv.getAllDepartmentsByCompId(id);
+		
+		System.out.println("inside getdeptbycompid service \n");
+		
+		deplist.stream().forEach(e->System.err.println(e));
+		
 		return deplist;
 	}
 	
