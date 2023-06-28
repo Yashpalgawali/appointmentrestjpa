@@ -44,13 +44,13 @@ public class DepartmentServImpl implements DepartmentService {
 			actserv.saveActivity(act);
 			return depart;
 		}
-		
 	}
 
 	@Override
 	public List<Department> getAllDepartmentsByCompId(String cid) {
 		// TODO Auto-generated method stub
-		return deptrepo.getAllDepartmentsByCompId(cid);
+		Long cmpid = Long.valueOf(cid);
+		return deptrepo.getAllDepartmentsByCompId(cmpid);
 	}
 
 	@Override

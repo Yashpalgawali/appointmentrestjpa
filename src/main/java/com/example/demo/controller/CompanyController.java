@@ -49,7 +49,7 @@ public class CompanyController {
 		
 		for(int i=0;i<clist.size();i++)
 		{
-			System.err.println(clist.get(i));
+			System.err.println(clist.get(i).toString());
 		}
 		//clist.stream().forEach(e->System.err.println(e.getComp_name()));
 		

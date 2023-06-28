@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,19 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -39,14 +33,10 @@ public class Department {
 	
 	@Column(name="dept_name")
 	private String dept_name;
-	
-//	@JsonIgnore
-//	@ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY,targetEntity = Company.class)
-//	@JoinColumn(name="company_id")
-//	private Company company;
 
+	@ToString.Exclude
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY,targetEntity = Company.class)
+	@ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER,targetEntity = Company.class)
 	@JoinColumn(name="company_id")
 	private Company company;
 

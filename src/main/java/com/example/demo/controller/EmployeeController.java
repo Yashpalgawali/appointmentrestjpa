@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,13 +36,16 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService empserv;
 	
+	@Autowired
+	Environment env;
+	
 	@GetMapping("/addemployee")
 	public String addEmployee(Model model)
 	{
 		List<Company> clist = compserv.getAllCOmpanies();
 		
 		List<Designation> dlist = desigserv.getAllDesignations();
-		
+		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		model.addAttribute("clist", clist);
 		model.addAttribute("dlist", dlist);
 		return "AddEmployee";
@@ -105,7 +109,6 @@ public class EmployeeController {
 			return "redirect:/viewemployee";
 		}
 	}
-	
 	
 	@GetMapping("/getdeptbyempid/{id}")
 	@ResponseBody

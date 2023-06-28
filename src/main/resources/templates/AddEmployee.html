@@ -4,7 +4,7 @@
 
 	<meta charset="ISO-8859-1" />
  	<meta name="viewport" content="width=device-width, initial-scale=1" />
- 	
+ 	<title>Add Employee</title>
  	<link th:href="@{#}" rel="shortcut icon">
   
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js">   </script>
@@ -19,49 +19,6 @@
 	
  <script>
  
-	$(document).ready(function(){
-			  
-		$('#company').select2({
-			theme	:	'classic',
-			width	:	'resolve'
-			
-		});
-		$('#department').select2({
-			theme	:	'classic',
-			width	:	'resolve'
-			
-		});
-		$('#status').select2({
-			theme	:	'classic',
-			width	:	'resolve'
-			
-		});
-		$('#designation').select2({
-			theme	:	'classic',
-			width	:	'resolve'
-			
-		});
-});
-	
- function getDeptByCompId(compid)
- {
-	 $.ajax({
-				async    : true,
-				type     : "GET",
-			    url      : "getdeptbycompid/"+compid,
-				dataType : "json",
-				success  : function(result) {
-					$('select[name="department"]').empty();
-					$('select[name="department"]').append('<option selected disabled value="">'+"Please Select Department"+'</option');
-					
-					$.each(result,function(i){
-						
-						$('select[name="department"]').append('<option value="'+result[i].dept_id+'">'+result[i].dept_name+'</option>');
-						
-					});
-				}
-	 });
- }
  </script>
  </head>
 <body>
@@ -96,7 +53,8 @@
 	<div class="card-body">
 		
 	<div class="form-group">
-      	<label for="emp_name">Employee Name:</label>
+		<label for="emp_name">Employee Name:</label>
+		<input type="hidden" id="app_name" name="app_name" th:value="${appname}"/>	
 			<input type="text" class="form-control" id="emp_name" placeholder="Enter Employee Name" name="emp_name" required>
    	</div>    
    	

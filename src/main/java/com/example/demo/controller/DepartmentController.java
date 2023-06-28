@@ -66,15 +66,33 @@ public class DepartmentController {
 	
 	@RequestMapping("/getdeptbycompid/{id}")
 	@ResponseBody
-	public List<Department> getDepartmentsByCompId(@PathVariable("id") String id)
+	public List<Department> getDepartmentsByCompId(@PathVariable("id") Long id)
 	{
-		List<Department> deplist = deptserv.getAllDepartmentsByCompId(id);
+		List<Department> deplist = deptserv.getAllDepartmentsByCompId(""+id);
+		System.out.println("inside getdeptbycompid controller \n");
 		
-		System.out.println("inside getdeptbycompid service \n");
+		deplist.stream().forEach(e->{
+									Company c = e.getCompany() ;
+									System.err.println("Company = "+c.getComp_name());
+									});
 		
-		deplist.stream().forEach(e->System.err.println(e));
-		
-		return deplist;
+		List<Department> dlist = null ;
+		for(int i=0;i<deplist.size();i++)
+		{
+			
+			Company comp = new Company();
+			comp.setCompany_id(deplist.get(i).getCompany().getCompany_id());
+			comp.setComp_name(deplist.get(i).getCompany().getComp_name());
+			
+			Department dept = new Department();
+			
+			dept.setDept_id(deplist.get(i).getDept_id());
+			dept.setDept_name(deplist.get(i).getDept_name());
+			
+			dept.setCompany(comp);
+			dlist.add(dept);
+		}
+		return dlist;
 	}
 	
 	@RequestMapping("/editdeptbyid/{id}")
