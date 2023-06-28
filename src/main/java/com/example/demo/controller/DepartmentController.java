@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,9 @@ public class DepartmentController {
 
 	@Autowired
 	DepartmentService deptserv;
+	
+	@Autowired
+	Environment env;
 	
 	@GetMapping("/adddepartment")
 	public String addDepartment(Model model)
@@ -55,6 +59,7 @@ public class DepartmentController {
 	{
 		List<Company> clist= compserv.getAllCOmpanies();
 		
+		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		model.addAttribute("clist", clist);
 		return "ViewDepartments";
 	}

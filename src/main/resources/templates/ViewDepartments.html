@@ -11,15 +11,15 @@
     
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js">   </script>
 	  
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-	
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 	
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 	
+	<link rel="stylesheet" th:href="@{/css/style.css}">
 	
 	<link rel ="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 	<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css"  />
 
 <script>
 
@@ -27,38 +27,10 @@ $(document).ready(function(){
 	
 });
 
-function getdepartmentbycomp(cid)
-{
-	let dept_arr="";
-	$('#depttable').dataTable().fnClearTable();
-	$('#depttable').dataTable().fnDestroy();
-	
-	$.ajax({
-		
-		url		: '/getdeptbycompid/'+cid,
-		type	:	'GET',
-		dataType: 	'JSON',
-		success : function(result)
-		{
-			let cnt =1;
-			for(let i=0;i<result.length;i++)
-			{
-				dept_arr =  dept_arr 
-							+"<tr><td>" +(cnt++)
-							+"</td><td>"+result[i].dept_name
-							+"</td><td>"+result[i].department.company.comp_name
-							+"</td><td><a href='/editdeptbyid/"+result[i].dept_id+"'>Edit</a></td></tr>"
-			}
-			$(dept_arr).appendTo('#deptbody');
-			$('#depttable').DataTable();
-		}
-	});
-}
+
 
   </script>
-
  </head>
-
 <body>
 
 <div th:replace="fragments/AdminHeader.html :: adminheader" >
@@ -97,14 +69,11 @@ function getdepartmentbycomp(cid)
 		<div class="card">
 			<div class="card-header">
 				<h4>View Department
+					<input type="hidden" id="app_name" name="app_name" th:value="${appname}"/>	
 					<a th:href="@{/adddepartment}" class="btn btn-primary" style="float:right;">Add Department</a>
 				</h4>
 			</div>
-	  
-	 
 		 <div class="card-body">
-			<div class="col-md-3"></div>
-		
 			<div class="form-group">
 				<select class="form-control" id="company" name="company" onchange="getdepartmentbycomp(this.value)">
 					<option selected disabled>Please Select Company Name</option>
@@ -113,43 +82,27 @@ function getdepartmentbycomp(cid)
 					</th:block>
 				</select>
 			</div>
-		
 			<div class="table-responsive-sm" >
 				<table class="table table-bordered table-striped" id="depttable" style="text-decoration:none;">
-					
 					<thead style="background-color:#3fbdeb;color:white;">
 						<tr>
-							
 							<th>Sr No.</th>
 							<th>Department</th>
 							<th>Company Name</th>
 							<th>Action</th>
-							
 						</tr>	
-					</thead>	
-					
-					<tbody id="deptbody">
-						
-					</tbody>
-					
+					</thead>
+					<tbody id="deptbody"></tbody>
 				</table>
 			</div>
-		 
     	</div>
       </div>
-      
-    	
     </div>
-  
- <!-- Footer -->
-<footer class="container-fluid page-footer font-small blue">
-
-  <!-- Copyright -->
-  <div class="footer-copyright text-center py-3"><i class="fa fa-copyright" aria-hidden="true"></i> 2022 Developed By Tidyhomz
-    
-  </div>
-  <!-- Copyright -->
-
-<!-- 	<script th:src="@{/js/company.js}"></script> -->
-</footer>
-<!-- Footer -->
+ <div th:replace="fragments/footer.html :: footer"></div>
+ <script th:src="@{/js/viewdepartment.js}"></script>
+ <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+	
+ </body>
+ </html>

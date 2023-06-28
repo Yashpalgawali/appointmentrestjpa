@@ -6,33 +6,16 @@
 	<meta charset="ISO-8859-1" /> 
   	<meta name="viewport" content="width=device-width, initial-scale=1" />
   
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
-	  
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js">   </script>
 	
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
 	
-	<script th:src="@{/js/bookappoint.js}"></script>
-	<script th:src="@{/js/moment.min.js}"></script>
-	<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
-	<script th:src="@{/js/select2.min.js}"></script>
-	
-<!-- 	 Include Moment.js CDN -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js">  </script>
- 
-<!--     Include Bootstrap DateTimePicker CDN -->
+	<!--     Include Bootstrap DateTimePicker CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"  rel="stylesheet" />
- 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
 	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-	
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
-	
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css"  />
 	<link rel="stylesheet" th:href="@{/css/style.css}">
-	
 </head>
 <body>
 
@@ -102,13 +85,10 @@
 							</span>
 					</div>
 			</div>
-			
-			
 			<div class="form-group">
 				 <label for="aptime">Appointment Time:</label>
 					<div class="input-group">
 					<input class="form-control" type="text" id="aptime"  name="aptime" autocomplete="off"/>
-						
 						<span class="input-group-append bg-white border-left-0">
 								<span class="input-group-text bg-transparent">
 										<i class="fa fa-clock-o fa-lg"></i>
@@ -116,61 +96,52 @@
 						</span>
 				</div>
 			</div>
-			
-			
 			<div class="form-group">
 				<label for="employee">Employee Name:</label>
 					<select class="form-control" style ="width:100%;" id="employee" name="employee" required onchange="getDeptByEmpId(this.value)">
-						
 						<option selected disabled="disabled"> Select Employee Name </option>
 							 <th:block th:each="emp : ${elist}" >
 		                            <option th:value="${emp.emp_id}" th:text="${emp.emp_name}"></option>
 		                     </th:block>
 					</select>
 			</div>
-	
 			<div class="form-group">
 				<label for="department">Department Name:</label>
 					<select class="form-control" style ="width:100%;" id="department" name="department" onchange="getEmpByDeptId(this.value)">
-						
 						<option selected disabled="disabled"> Select Department Name </option>
-							
 					</select>
 			</div>
-			
 			<div class="form-group">
 				<label for="company">Company Name:</label>
 					<select class="form-control" style ="width:100%;" id="company" name="company" >
-						
 						<option selected disabled="disabled"> Select Company Name </option>
-							
 					</select>
 			</div>
-			
 			<div class="form-group">
 				<label for="vis_purpose">Visit Purpose:</label>
 					<textarea class="form-control" rows="5" id="vis_purpose" name="vis_purpose" required></textarea>
 			</div>
 			
 			<input type="hidden" class="form-control" value="pending"  name="status" id="status"  required>	 
-			
 			<button type="submit" id="sbapt" class="btn btn-primary">Submit</button> &nbsp;&nbsp;<button type="reset" id="rstbtn" class="btn btn-primary">Cancel</button>
-	
-	
-		  </form>
+	</form>
 	    </div>
 	  </div>
 		 
  </div>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<script th:src="@{/js/bookappoint.js}"></script>
+	<script th:src="@{/js/moment.min.js}"></script>
+	<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+	<script th:src="@{/js/select2.min.js}"></script>
+	
+	<!-- 	 Include Moment.js CDN -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js">  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
   
- <!-- Footer -->
-<footer class="container-fluid page-footer font-small blue">
+</body>
 
-  <!-- Copyright -->
-  <div class="footer-copyright text-center py-3"><i class="fa fa-copyright" aria-hidden="true"></i> 2022 Developed By Tidyhomz
-    
-  </div>
-  <!-- Copyright -->
-
-</footer>
-<!-- Footer -->
+</html>
