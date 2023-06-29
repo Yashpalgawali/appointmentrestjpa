@@ -17,6 +17,14 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name="tbl_employee")
 public class Employee {
@@ -32,80 +40,17 @@ public class Employee {
 	
 	private Long emp_status;
 	
+	@ToString.Exclude
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.MERGE,targetEntity = Department.class,fetch = FetchType.EAGER)
 	@JoinColumn(name="dept_id",referencedColumnName = "dept_id")
 	private Department department;
 
-//	@JsonIgnore
-//	@OneToMany(cascade = CascadeType.MERGE,targetEntity = Department.class,fetch = FetchType.EAGER)
-//	@JoinColumn(name="dept_id",referencedColumnName = "dept_id")
-//	private List<Department> department;
-
-	
 
 	@OneToOne(cascade = CascadeType.MERGE, targetEntity = Designation.class ,fetch = FetchType.EAGER)
 	@JoinColumn(name="desig_id" , referencedColumnName = "desig_id")
 	private Designation designation;
 	
 	
-	public Designation getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(Designation designation) {
-		this.designation = designation;
-	}
-
-	public Long getEmp_status() {
-		return emp_status;
-	}
-
-	public void setEmp_status(Long emp_status) {
-		this.emp_status = emp_status;
-	}
-
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-
-	public Long getEmp_id() {
-		return emp_id;
-	}
-
-	public void setEmp_id(Long emp_id) {
-		this.emp_id = emp_id;
-	}
-
-	public String getEmp_name() {
-		return emp_name;
-	}
-
-	public void setEmp_name(String emp_name) {
-		this.emp_name = emp_name;
-	}
-
-	public String getEmp_email() {
-		return emp_email;
-	}
-
-	public void setEmp_email(String emp_email) {
-		this.emp_email = emp_email;
-	}
-
-	public Employee() {}
-
-	public Employee(Long emp_id, String emp_name, String emp_email, Long emp_status, Department department) {
-		super();
-		this.emp_id = emp_id;
-		this.emp_name = emp_name;
-		this.emp_email = emp_email;
-		this.emp_status = emp_status;
-		this.department = department;
-	}
 
 }

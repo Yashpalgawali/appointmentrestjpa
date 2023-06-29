@@ -16,7 +16,7 @@ public interface DepartmentRepo extends JpaRepository<Department, Long> {
 
 	
 //	@Query(value="select * from tbl_department join tbl_company on tbl_company.company_id=tbl_department.company_id where tbl_department.company_id=?1" , nativeQuery = true)
-	@Query("SELECT d FROM Department d JOIN d.company c WHERE d.company.company_id=?1" )
+	@Query("SELECT d FROM Department d JOIN  d.company c WHERE d.company.company_id=?1" )
 	public List<Department> getAllDepartmentsByCompId(Long cid);
 	
 	//@Query(value="select * from tbl_department join tbl_company on tbl_company.company_id=tbl_department.company_id where tbl_department.dept_id=?1" , nativeQuery = true)

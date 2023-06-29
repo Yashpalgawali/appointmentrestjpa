@@ -19,11 +19,10 @@
 			let cnt =1;
 			for(let i=0;i<result.length;i++) 
 			{
-				alert(result[i].department.company.comp_name);
 				dept_arr =  dept_arr 
 							+"<tr><td>" +(cnt++)
 							+"</td><td>"+result[i].dept_name
-							+"</td><td>"+result[i].dept_id	
+							+"</td><td>"+result[i].company.comp_name	
 							+"</td><td><a href='/editdeptbyid/"+result[i].dept_id+"'>Edit</a></td></tr>"
 			}
 			$(dept_arr).appendTo('#deptbody');

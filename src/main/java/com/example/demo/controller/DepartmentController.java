@@ -71,28 +71,8 @@ public class DepartmentController {
 		List<Department> deplist = deptserv.getAllDepartmentsByCompId(""+id);
 		System.out.println("inside getdeptbycompid controller \n");
 		
-		deplist.stream().forEach(e->{
-									Company c = e.getCompany() ;
-									System.err.println("Company = "+c.getComp_name());
-									});
-		
-		List<Department> dlist = null ;
-		for(int i=0;i<deplist.size();i++)
-		{
-			
-			Company comp = new Company();
-			comp.setCompany_id(deplist.get(i).getCompany().getCompany_id());
-			comp.setComp_name(deplist.get(i).getCompany().getComp_name());
-			
-			Department dept = new Department();
-			
-			dept.setDept_id(deplist.get(i).getDept_id());
-			dept.setDept_name(deplist.get(i).getDept_name());
-			
-			dept.setCompany(comp);
-			dlist.add(dept);
-		}
-		return dlist;
+		deplist.forEach(e->System.err.println(e));
+		return deplist;
 	}
 	
 	@RequestMapping("/editdeptbyid/{id}")
