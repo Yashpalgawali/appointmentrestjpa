@@ -5,7 +5,7 @@
 	
 	  var aparr = "",tapp="";
 	  let app_name = $('#app_name').val();
-	  alert(app_name);
+	 
 	  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	        $($.fn.dataTable.tables(true)).DataTable()
 	           .columns.adjust()

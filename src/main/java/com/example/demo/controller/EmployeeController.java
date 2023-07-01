@@ -68,6 +68,7 @@ public class EmployeeController {
 	public String viewEmployees(Model model)
 	{
 		List<Employee> elist = empserv.getAllEmployees();
+		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		model.addAttribute("elist", elist);
 		return "ViewEmployees";
 	}
@@ -82,6 +83,7 @@ public class EmployeeController {
 			List<Company> clist = compserv.getAllCOmpanies();
 			List<Designation> dlist = desigserv.getAllDesignations();
 			model.addAttribute("emp", emp);
+			model.addAttribute("appname", env.getProperty("spring.application.name"));
 			model.addAttribute("clist", clist);
 			model.addAttribute("dlist", dlist);
 			return "EditEmployee";
@@ -109,9 +111,10 @@ public class EmployeeController {
 	
 	@GetMapping("/getdeptbyempid/{id}")
 	@ResponseBody
-	public  List<Employee>  getEmployeeByEmpId(@PathVariable("id")String id) 
+	public  List<Employee>  getEmployeeByEmpId(@PathVariable("id")String id,Model model) 
 	{
 		List<Employee> elist = empserv.getDeptByEmpId(id);
+		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		return elist;
 	}
 }
