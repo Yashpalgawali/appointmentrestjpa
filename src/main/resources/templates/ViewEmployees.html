@@ -26,13 +26,7 @@
 <div th:replace="fragments/AdminHeader.html :: adminheader" ></div>
 
 <div class="container" >
-		<div th:if="${response}" >	
-			<h6 th:text="${response}" class="alert alert-success"></h6>
-		</div>
 		
-		<div th:if="${reserr}" >
-			<h6 th:text="${reserr}" class="alert alert-danger"></h6>
-		</div>	
  <!-- start: PAGE HEADER -->
 		<div class="row">
 			<div class="col-sm-12">
@@ -49,16 +43,14 @@
 				</ol>
 			</div>
 		</div>
-						
+		<div th:if="${response}"><h6 th:text="${response}" class="alert alert-success"></h6></div>
+		<div th:if="${reserr}"><h6 th:text="${reserr}" class="alert alert-danger"></h6></div>					
 		<div class="card">
-			<div class="card-header">
-				<h4>View Employees
-					<a th:href="@{/addemployee}" class="btn btn-primary" style="float:right;">Add Employee</a>
-				</h4>
+			<div class="card-header"><h4>View Employees<a th:href="@{/addemployee}" class="btn btn-primary" style="float:right;">Add Employee</a></h4>
 			</div>
 		 <div class="card-body">
 			<div class="table-responsive-sm" >
-				<table class="table table-striped table-hover" id="emptable" style="width:100%;">
+				<table class="table table-striped table-hover  table-full-width dt-responsive nowrap" id="emptable" style="width:100%;">
 					<thead style="background-color:#3fbdeb;color:white;">
 						<tr>
 							<th>Sr No.</th>

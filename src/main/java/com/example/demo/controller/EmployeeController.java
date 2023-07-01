@@ -43,7 +43,6 @@ public class EmployeeController {
 	public String addEmployee(Model model)
 	{
 		List<Company> clist = compserv.getAllCOmpanies();
-		
 		List<Designation> dlist = desigserv.getAllDesignations();
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		model.addAttribute("clist", clist);
@@ -55,9 +54,7 @@ public class EmployeeController {
 	public String saveEmployee(@ModelAttribute("Employee")Employee emp,RedirectAttributes attr)
 	{
 		Employee empl = empserv.saveEmployee(emp);
-		
-		if(empl!=null)
-		{
+		if(empl!=null){
 			attr.addFlashAttribute("response", "Employee Saved Successfully");
 			return "redirect:/viewemployee";
 		}
@@ -115,8 +112,6 @@ public class EmployeeController {
 	public  List<Employee>  getEmployeeByEmpId(@PathVariable("id")String id) 
 	{
 		List<Employee> elist = empserv.getDeptByEmpId(id);
-		System.err.println("in getdeptbyempid inside controller \n");
-		elist.stream().forEach(e->System.err.println(e));
 		return elist;
 	}
 }

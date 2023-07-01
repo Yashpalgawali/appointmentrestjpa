@@ -15,7 +15,7 @@ public interface DesignationRepo extends JpaRepository<Designation, Long> {
 
 	@Transactional
 	@Modifying
-	@Query(value="update tbl_designation set desig_name=?1 where desig_id=?2" , nativeQuery = true)
+	@Query("UPDATE Designation d SET d.desig_name=?1 WHERE d.desig_id=?2")
 	public int updateDesignationById(String dname , Long did);
 	
 }

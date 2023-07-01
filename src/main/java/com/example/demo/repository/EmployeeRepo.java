@@ -16,15 +16,15 @@ public interface EmployeeRepo extends JpaRepository<Employee, Long> {
 
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE tbl_employee SET emp_name=?1,emp_email=?2,dept_id=?3,desig_id=?4,emp_status=?5 where emp_id=?6",nativeQuery = true)
+	@Query(value="UPDATE Employee e SET e.emp_name=:ename,e.emp_email=:email,e.department.dept_id=:depid,e.designation.desig_id=:desid,e.emp_status=:status WHERE e.emp_id=:empid")
 	public int updateEmployee(String ename,String email,Long status,Long depid,Long desid,Long empid);
 	
 	
-	//@Query("SELECT e FROM Employee e JOIN e.designation JOIN e.department JOIN e.department.company")
-	@Query(value="SELECT * FROM tbl_employee JOIN tbl_designation ON tbl_designation.desig_id=tbl_employee.desig_id JOIN tbl_department ON tbl_department.dept_id=tbl_employee.dept_id",nativeQuery = true)
+	@Query("SELECT e FROM Employee e JOIN e.designation JOIN e.department JOIN e.department.company")
 	public List<Employee> getAllEmployees();
 	
-	@Query(value="SELECT * FROM tbl_employee JOIN tbl_designation ON tbl_designation.desig_id=tbl_employee.desig_id JOIN tbl_department ON tbl_department.dept_id=tbl_employee.dept_id JOIN tbl_company ON tbl_company.company_id=tbl_department.company_id WHERE tbl_employee.emp_id=?1",nativeQuery = true)
-	public  List<Employee>  getDeptByEmpId(String empid);
+//	@Query(value="SELECT * FROM tbl_employee JOIN tbl_designation ON tbl_designation.desig_id=tbl_employee.desig_id JOIN tbl_department ON tbl_department.dept_id=tbl_employee.dept_id JOIN tbl_company ON tbl_company.company_id=tbl_department.company_id WHERE tbl_employee.emp_id=?1",nativeQuery = true)
+	@Query("SELECT e FROM Employee e JOIN e.designation JOIN e.department.company WHERE e.emp_id=?1")
+	public  List<Employee>  getDeptByEmpId(Long empid);
 	
 }

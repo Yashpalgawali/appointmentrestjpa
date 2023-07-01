@@ -5,10 +5,8 @@
 	  var vmail	=	$('#vis_email').val();
 	  var burl	=	$('#burl').val();
 	  let app_name = $('#app_name').val();
-	  alert("email "+vmail);
 	  var aparr = "",tapp="";
-		
-	  $.ajax({
+	 $.ajax({
 				type     : "GET",
 			  	url      : "/"+app_name+"/getallappointmentsbyemail/"+vmail,
 			  	//url    : "/getallappointmentsbyemail/"+vmail,
@@ -17,7 +15,7 @@
 				var sr = 1;
 				
 				for (var i = 0; i < result.length; i++) 
-				{alert(result[i].vis_name);
+				{
 					aparr = aparr
 								+ "<tr><td>" + result[i].status 
 								+ "</td><td>"+ result[i].vis_name

@@ -94,9 +94,11 @@
 			    url      : "/"+app_name+"/getdeptbyempid/"+empid,
 			    //url      : "/getdeptbyempid/"+empid, 
 				success  : function(result) {
-					
-					$('select[name="department"]').append('<option selected value="'+result.department.dept_id+'">'+result.department.dept_name+'</option>');
-					$('select[name="company"]').append('<option selected value="'+result.department.company.comp_id+'">'+result.department.company.comp_name+'</option>');
+					for(let i=0;i<result.length;i++)
+					{
+						$('select[name="department"]').append('<option selected value="'+result[i].department.dept_id+'">'+result[i].department.dept_name+'</option>');
+						$('select[name="company"]').append('<option selected value="'+result[i].department.company.company_id+'">'+result[i].department.company.comp_name+'</option>');	
+					}
 				}
 	 	});
 	}

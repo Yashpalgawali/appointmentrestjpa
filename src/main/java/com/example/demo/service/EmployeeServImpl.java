@@ -90,9 +90,8 @@ public class EmployeeServImpl implements EmployeeService {
 	@Override
 	public  List<Employee>  getDeptByEmpId(String id) {
 		// TODO Auto-generated method stub
-		
-		List<Employee>  elist = emprepo.getDeptByEmpId(id);
-		//elist.stream().forEach(e->System.err.println(e));
+		Long eid =Long.valueOf(id);
+		List<Employee>  elist = emprepo.getDeptByEmpId(eid);
 		return elist;
 	}
 

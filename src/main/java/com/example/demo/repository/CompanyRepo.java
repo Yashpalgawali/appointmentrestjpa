@@ -15,7 +15,7 @@ public interface CompanyRepo extends JpaRepository<Company, Long> {
 	
 	@Transactional
 	@Modifying
-	@Query(value="update tbl_company set comp_name=?1 where company_id=?2", nativeQuery = true)
+	@Query("UPDATE Company c SET c.comp_name=?1 WHERE c.company_id=?2")
 	public Integer updateCompanyById(String cname, Long cid);
 	
 }
