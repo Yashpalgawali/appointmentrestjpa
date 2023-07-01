@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -26,7 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="tbl_company")
+@Table(name = "tbl_company")
 public class Company {
 
 	

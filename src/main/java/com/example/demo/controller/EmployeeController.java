@@ -112,8 +112,11 @@ public class EmployeeController {
 	
 	@GetMapping("/getdeptbyempid/{id}")
 	@ResponseBody
-	public Employee getEmployeeByEmpId(@PathVariable("id")String id) 
+	public  List<Employee>  getEmployeeByEmpId(@PathVariable("id")String id) 
 	{
-		return empserv.getDeptByEmpId(id);
+		List<Employee> elist = empserv.getDeptByEmpId(id);
+		System.err.println("in getdeptbyempid inside controller \n");
+		elist.stream().forEach(e->System.err.println(e));
+		return elist;
 	}
 }

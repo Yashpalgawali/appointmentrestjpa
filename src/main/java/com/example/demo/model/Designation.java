@@ -25,8 +25,8 @@ public class Designation {
 	@Column(name="desig_name")
 	private String desig_name;
 	
-	@OneToOne(mappedBy = "designation",targetEntity = Employee.class,cascade = CascadeType.MERGE)
-	private Employee employee;
+//	@OneToOne(mappedBy = "designation",targetEntity = Employee.class,cascade = CascadeType.MERGE)
+//	private Employee employee;
 	
 	public Long getDesig_id() {
 		return desig_id;

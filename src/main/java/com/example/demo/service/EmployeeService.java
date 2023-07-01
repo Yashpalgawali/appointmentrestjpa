@@ -16,7 +16,7 @@ public interface EmployeeService {
 
 	//public Employee getEmployeeByDeptId(String deptid);
 
-	public Employee getDeptByEmpId(String id);
+	public  List<Employee> getDeptByEmpId(String id);
 	
 }
 

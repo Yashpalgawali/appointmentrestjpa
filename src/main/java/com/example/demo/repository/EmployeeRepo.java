@@ -20,10 +20,11 @@ public interface EmployeeRepo extends JpaRepository<Employee, Long> {
 	public int updateEmployee(String ename,String email,Long status,Long depid,Long desid,Long empid);
 	
 	
+	//@Query("SELECT e FROM Employee e JOIN e.designation JOIN e.department JOIN e.department.company")
 	@Query(value="SELECT * FROM tbl_employee JOIN tbl_designation ON tbl_designation.desig_id=tbl_employee.desig_id JOIN tbl_department ON tbl_department.dept_id=tbl_employee.dept_id",nativeQuery = true)
 	public List<Employee> getAllEmployees();
 	
-	@Query(value="SELECT * FROM tbl_employee JOIN tbl_designation ON tbl_designation.desig_id=tbl_employee.desig_id JOIN tbl_department ON tbl_department.dept_id=tbl_employee.dept_id WHERE tbl_employee.emp_id=?1",nativeQuery = true)
-	public Employee getDeptByEmpId(String empid);
+	@Query(value="SELECT * FROM tbl_employee JOIN tbl_designation ON tbl_designation.desig_id=tbl_employee.desig_id JOIN tbl_department ON tbl_department.dept_id=tbl_employee.dept_id JOIN tbl_company ON tbl_company.company_id=tbl_department.company_id WHERE tbl_employee.emp_id=?1",nativeQuery = true)
+	public  List<Employee>  getDeptByEmpId(String empid);
 	
 }

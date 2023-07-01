@@ -51,7 +51,11 @@ public class EmployeeServImpl implements EmployeeService {
 	@Override
 	public List<Employee> getAllEmployees() {
 		// TODO Auto-generated method stub
-		return emprepo.getAllEmployees();
+		
+		List<Employee> elist = emprepo.getAllEmployees();
+		
+		elist.stream().forEach(e->System.err.println(e.getDepartment().toString()));
+		return elist;
 	}
 
 	@Override
@@ -84,9 +88,12 @@ public class EmployeeServImpl implements EmployeeService {
 	}
 
 	@Override
-	public Employee getDeptByEmpId(String id) {
+	public  List<Employee>  getDeptByEmpId(String id) {
 		// TODO Auto-generated method stub
-		return emprepo.getDeptByEmpId(id);
+		
+		List<Employee>  elist = emprepo.getDeptByEmpId(id);
+		//elist.stream().forEach(e->System.err.println(e));
+		return elist;
 	}
 
 }

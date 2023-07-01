@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,13 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,17 +41,14 @@ public class Employee {
 	
 	private Long emp_status;
 	
-	@ToString.Exclude
-	@JsonIgnore
-	@OneToOne(cascade = CascadeType.MERGE,targetEntity = Department.class,fetch = FetchType.EAGER)
-	@JoinColumn(name="dept_id",referencedColumnName = "dept_id")
+	
+	
+	@ManyToOne(cascade = CascadeType.MERGE,targetEntity = Department.class)
+	@JoinColumn(name = "dept_id")
 	private Department department;
 
-
-	@OneToOne(cascade = CascadeType.MERGE, targetEntity = Designation.class ,fetch = FetchType.EAGER)
-	@JoinColumn(name="desig_id" , referencedColumnName = "desig_id")
+	@OneToOne(cascade = CascadeType.MERGE, targetEntity = Designation.class )
+	@JoinColumn(name = "desig_id")
 	private Designation designation;
 	
-	
-
 }
