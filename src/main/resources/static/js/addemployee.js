@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function() {
+	
 	$('#company').select2({
 		theme: 'classic',
 		width: 'resolve'
@@ -22,6 +23,8 @@ $(document).ready(function() {
 });
 
 function getDeptByCompId(compid) {
+	
+	var app_name = $('#app_name').val();
 	$.ajax({
 		async: true,
 		type: "GET",

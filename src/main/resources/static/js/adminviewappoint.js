@@ -32,7 +32,8 @@
 								+ "</td><td>"+ result[i].vis_contact
 								+ "</td><td>"+ result[i].employee.emp_name
 								+ "</td><td>"+ result[i].employee.department.company.comp_name                          
-								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href='editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-edit ' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
+//								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href='editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-edit ' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
+								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href="+app_name+"'/editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-edit ' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
 								+ "</td></tr>";
 				}
 				$(aparr).appendTo('#apbody');
@@ -85,7 +86,8 @@
 								+ "</td><td>"+ result[i].vis_contact
 								+ "</td><td>"+ result[i].employee.emp_name
 								+ "</td><td>"+ result[i].employee.department.company.comp_name
-								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href='editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-edit ' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
+								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href="+app_name+"'/editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-edit ' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
+//								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href='editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-edit ' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
 								+ "</td></tr>";
 					}
 					$(tapp).appendTo('#aptodaybody');

@@ -2,7 +2,7 @@
 		
 		var date = new Date();
 		var mnth = (date.getMonth()+1);
-		var app_name = $('#app_name').val();
+		
 		var dt	 =	date.getDate();
 		if(dt<10){
 			dt= "0"+dt;	
