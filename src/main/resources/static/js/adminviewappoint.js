@@ -5,7 +5,7 @@
 	
 	  var aparr = "",tapp="";
 	  let app_name = $('#app_name').val();
-	  
+	  alert(app_name);
 	  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	        $($.fn.dataTable.tables(true)).DataTable()
 	           .columns.adjust()
@@ -32,8 +32,8 @@
 								+ "</td><td>"+ result[i].vis_contact
 								+ "</td><td>"+ result[i].employee.emp_name
 								+ "</td><td>"+ result[i].employee.department.company.comp_name                          
-//								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href='editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-edit ' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
 								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href="+app_name+"'/editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-edit ' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
+								//								+ "</td><td style='text-align:center;'><a class='btn btn-primary' href='editappointbyid/"+result[i].appoint_id+"'><i class='fa fa-edit ' aria-hidden='true'></i>&nbsp;&nbsp;Edit</a>";
 								+ "</td></tr>";
 				}
 				$(aparr).appendTo('#apbody');
@@ -67,8 +67,8 @@
 		$.ajax({
 				async    : true,
 				type     : "GET",
-				url      : "gettodaysappointments",
-				//url      : "/"+app_name+"/gettodaysappointments",
+				//url      : "gettodaysappointments",
+				url      : "/"+app_name+"/gettodaysappointments",
 			    dataType : "json",
 				success  : function(result) {
 					var sr = 1;

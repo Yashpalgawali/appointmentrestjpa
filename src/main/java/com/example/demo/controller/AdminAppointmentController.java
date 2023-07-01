@@ -30,6 +30,7 @@ public class AdminAppointmentController {
 	@GetMapping("/adminbookappoint")
 	public String adminBookAppointment(Model model)
 	{
+		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		model.addAttribute("elist", empserv.getAllEmployees() );
 		return "AdminBookAppointment";
 	}
@@ -51,6 +52,7 @@ public class AdminAppointmentController {
 	
 	@GetMapping("adminviewappoints")
 	public String adminViewAppointments(Model model){
+		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		return "AdminViewAppointments";
 	}
 	

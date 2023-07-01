@@ -79,7 +79,7 @@ public class AppointmentController {
 	public String viewAppointments(Model model)
 	{
 		List<Appointment> aplist = appointserv.getAllAppointments();
-		
+		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		model.addAttribute("aplist", aplist);
 		return "ViewAppointments";
 	}
