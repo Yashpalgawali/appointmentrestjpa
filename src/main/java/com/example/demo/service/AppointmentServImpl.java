@@ -45,8 +45,7 @@ public class AppointmentServImpl implements AppointmentService {
 		Appointment apoint = appointrepo.save(appoint); 
 		
 		if(apoint!=null)
-		{
-			   
+		{  
 			lastupdatetimeserv.updateLastUpdateTime(""+dtf.format(today));
 			
 			ActivityLogs act = new ActivityLogs();
@@ -69,7 +68,6 @@ public class AppointmentServImpl implements AppointmentService {
 					+" needs an appointment regarding "+appoint.getVis_purpose().substring(0, 10)+" dated on "+appoint.getApdate()
 					+"  "+appoint.getAptime()+"\n\n Confirm Appointment \n"+cnfappoint+"\n\n Decline Appointment \n"+declineappoint, subject);
 			
-		   
 		   return apoint;
 		}
 		else
@@ -97,9 +95,6 @@ public class AppointmentServImpl implements AppointmentService {
 		List<Appointment> elist = appointrepo.getAllEmployeesAppointments(email);
 		List<Appointment> vlist = appointrepo.getAllVisitorAppointments(email);
 		
-		//System.out.println("getAllAppointmentsByEmail in service layer\n");
-		//vlist.stream().forEach(e->System.err.println(e.getEmployee().getDepartment().getDept_name()));
-		
 		if(elist.size()>0){
 			return elist;
 		}
@@ -114,21 +109,50 @@ public class AppointmentServImpl implements AppointmentService {
 		// TODO Auto-generated method stub
 		
 		List<Appointment> alist = appointrepo.getAllTodaysAppointmentsByEmail(tdate,email); 
-		
 		return alist;
 	}
 
 	@Override
 	public int confAppointmentById(Long apid) {
 		// TODO Auto-generated method stub
-		return appointrepo.updateAppointmentStatusById(apid, "confirmed");
+		
+		Appointment appoint = appointrepo.findById(apid).get();
+		
+		int res = appointrepo.updateAppointmentStatusById(apid, "confirmed");
+		if(res>0)
+		{
+			ActivityLogs act = new ActivityLogs();
+			act.setActivity("Appointment is confirmed for "+appoint.getVis_email());
+			act.setActivity_date(dtf.format(today));
+			actserv.saveActivity(act);
+			
+			emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          \n Your appointment is confirmed with "+appoint.getEmployee().getEmp_name()+" dated on "+appoint.getApdate()+" "+appoint.getAptime() , "Appointment Confirmation");
+	
+			return res;
+		}
+		else
+			return res ;
 		
 	}
 
 	@Override
 	public int declineAppointmentById(Long apid) {
 		// TODO Auto-generated method stub
-		return appointrepo.updateAppointmentStatusById(apid, "declined");
+		Appointment appoint = appointrepo.findById(apid).get();
+		int res = appointrepo.updateAppointmentStatusById(apid, "declined");
+		
+		if(res>0){
+			ActivityLogs act = new ActivityLogs();
+			act.setActivity("Appointment is declined for "+appoint.getVis_email());
+			act.setActivity_date(dtf.format(today));
+			actserv.saveActivity(act);
+			
+			emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          \n Your appointment is declined with "+appoint.getEmployee().getEmp_name()+" dated on "+appoint.getApdate()+" "+appoint.getAptime() , "Appointment Confirmation");
+			return res;
+		}
+		else{
+			return res;
+		}
 	}
 
 	@Override
@@ -163,11 +187,9 @@ public class AppointmentServImpl implements AppointmentService {
 					+" needs an appointment regarding "+appoint.getVis_purpose().substring(0, 10)+" dated on "+appoint.getApdate()
 					+"  "+appoint.getAptime()+"\n\n Confirm Appointment \n"+cnfappoint+"\n\n Decline Appointment \n"+declineappoint, subject);
 			
-		   
 		   return apoint;
 		}
-		else
-		{
+		else{
 			return null;
 		}
 	}
@@ -178,11 +200,9 @@ public class AppointmentServImpl implements AppointmentService {
 		try {
 			return appointrepo.findById(apid).get();
 		}
-		catch(Exception e)
-		{
+		catch(Exception e){
 			return null;
 		}
-		
 	}
 
 	@Override
