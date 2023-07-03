@@ -37,22 +37,22 @@
 			<input type="hidden" id="app_name" name="app_name" th:value="${appname}"/>	
 			<input type="hidden" id="appoint_id" name="appoint_id" th:value="${appoint.appoint_id}"/>	
 			<div class="form-group">
-				<label for="vis_name">Visitor's Name:</label>
+				<label for="vis_name">Visitor's Name</label>
 				  <input type="text" class="form-control" id="vis_name" placeholder="Enter Visitor's Name" name="vis_name" th:value="${appoint.vis_name}" required>
 			</div>
 			
 			<div class="form-group">
-				<label for="vis_email">Email:</label>
+				<label for="vis_email">Email</label>
 				  <input type="email" class="form-control" id="vis_email"  placeholder="Enter Visitor's Email" name="vis_email" th:value="${appoint.vis_email}" required>
 			</div>
 				
 			<div class="form-group">
-				<label for="vcomp_name">Visitor's Company Name:</label>
+				<label for="vcomp_name">Visitor's Company Name</label>
 					<input type="text" class="form-control" id="vcomp_name" placeholder="Enter Visitor's Company Name" name="vcomp_name" th:value="${appoint.vcomp_name}"required>
 			</div>
 			
 			<div class="form-group">
-				<label for="vis_contact">Contact:</label>
+				<label for="vis_contact">Contact</label>
 				  <input type="number" class="form-control" id="vis_contact"  placeholder="Enter Visitor's mobile" name="vis_contact" th:value="${appoint.vis_contact}" required>
 			</div>
 			
@@ -69,7 +69,7 @@
 			</div>
 			
 			<div class="form-group">
-				 <label for="aptime">Appointment Time:</label>
+				 <label for="aptime">Appointment Time</label>
 					<div class="input-group">
 						<input class="form-control" type="text" id="aptime"  name="aptime" th:value="${appoint.aptime}" autocomplete="off"/>
 							<span class="input-group-append bg-white border-left-0">
@@ -81,7 +81,7 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="employee">Employee Name:</label>
+				<label for="employee">Employee </label>
 					<select class="form-control" style ="width:100%;" id="employee" name="employee" required onchange="getDeptByEmpId(this.value)">
 						<option selected disabled="disabled"> Select Employee Name </option>
 							 <th:block th:each="emp : ${elist}" >
@@ -91,28 +91,28 @@
 			</div>
 	
 			<div class="form-group">
-				<label for="department">Department Name:</label>
+				<label for="department">Department </label>
 					<select class="form-control" style ="width:100%;" id="department" name="department" onchange="getEmpByDeptId(this.value)">
 						<option selected disabled="disabled"> Select Department  </option>
 					</select>
 			</div>
 			
 			<div class="form-group">
-				<label for="company">Company Name:</label>
+				<label for="company">Company </label>
 					<select class="form-control" style ="width:100%;" id="company" name="company" >
 						<option selected disabled="disabled"> Select Company  </option>
 					</select>
 			</div>
 			
 			<div class="form-group">
-				<label for="vis_purpose">Visit Purpose:</label>
+				<label for="vis_purpose">Visit Purpose</label>
 					<textarea class="form-control" rows="5" id="vis_purpose" name="vis_purpose"  th:text="${appoint.vis_purpose}" required></textarea>
 			</div>
 			
 			<div class="form-group">
 				<label for="status">Appointment Status:</label>
 					<select class="form-control" style ="width:100%;" id="status" name="status" >
-						<option selected disabled="disabled"> Select Employee Status</option>
+						<option selected disabled="disabled"> Select Appointment Status</option>
 						<option value="pending"> Pending</option>
 						<option value="declined">Declined</option>
 						<option value="waiting"> Waiting</option>

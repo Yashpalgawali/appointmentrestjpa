@@ -36,6 +36,10 @@
 		theme	:	'classic',
 		width	:	'resolve'
 	});
+	$('#status').select2({
+		theme	:	'classic',
+		width	:	'resolve'
+	});
 	
 	$('#department').select2({
 		theme	:	'classic',
@@ -65,7 +69,6 @@
 		else
 		{
 		     $('#aptime').datetimepicker({ 
-	          	
 	    		format: 'hh:mm:ss A',
 	    		icons: {
 	    				time	: 'fa fa-clock-o',

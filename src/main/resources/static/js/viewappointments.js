@@ -9,7 +9,7 @@
 	 $.ajax({
 				type     : "GET",
 			  	url      : "/"+app_name+"/getallappointmentsbyemail/"+vmail,
-			  	//url    : "/getallappointmentsbyemail/"+vmail,
+//			  	url    : "/getallappointmentsbyemail/"+vmail,
 				dataType : "json",
 				success  : function(result) {
 				var sr = 1;
@@ -72,7 +72,7 @@
 		$.ajax({
 				type     : "GET",
 			    url      : "/"+app_name+"/gettodaysappointmentsbyemail/"+vmail,
-			    //url      : "/gettodaysappointmentsbyemail/"+vmail,
+//			    url      : "/gettodaysappointmentsbyemail/"+vmail,
 				dataType : "json",
 				success  : function(result) {
 					

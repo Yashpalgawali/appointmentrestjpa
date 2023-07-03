@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
 import com.example.demo.model.Appointment;
 import com.example.demo.model.Employee;
-import com.example.demo.service.ActivityService;
+
 import com.example.demo.service.AppointmentService;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.EmployeeService;
 import com.example.demo.service.OtpService;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Controller
 public class AppointmentController {
@@ -51,7 +51,6 @@ public class AppointmentController {
 	public String bookAppointment(Model model)
 	{
 		List<Employee> elist = empserv.getAllEmployees();
-		 
 		model.addAttribute("elist", elist);
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		return "BookAppointment";
@@ -105,11 +104,8 @@ public class AppointmentController {
 	public String searchAppointmentByEmail(@ModelAttribute("Appointment") Appointment appoint,Model model , HttpServletRequest request ,HttpSession sess , RedirectAttributes attr)
 	{
 		String vemail = appoint.getVis_email();
-		
 		List<Appointment> appointment = appointserv.getAllAppointmentsByEmail(vemail);
-		
-		if(appointment!=null) 
-		{
+		if(appointment!=null){
 			otpserv.generateotp(vemail);
 			int otp = otpserv.getOtp(vemail);
 			sess.setAttribute("otp", otp);
@@ -119,28 +115,22 @@ public class AppointmentController {
 			attr.addFlashAttribute("response", "Otp sent to your email");
 			return "redirect:/confotp";
 		}
-		else
-		{
+		else{
 			attr.addFlashAttribute("reserr", "No appointment found for "+vemail);
 			return "redirect:/searchappointment";
 		}
-		
 	}
 	
 	@GetMapping("/confotp")
-	public String confOTP(Model model)
-	{
+	public String confOTP(Model model){
 		return "ConfirmOtp";
 	}
 	
 	
 	@PostMapping("/confotprl")
-	public String validateOtp(@ModelAttribute("Appointment")Appointment appoint,HttpSession sess ,RedirectAttributes attr)
-	{
+	public String validateOtp(@ModelAttribute("Appointment")Appointment appoint,HttpSession sess ,RedirectAttributes attr){
 		int old_otp = (Integer)sess.getAttribute("otp");
-		
 		Integer nw_otp = appoint.getNew_otp();
-		
 		if(old_otp==nw_otp){
 			otpserv.clearOtp(""+sess.getAttribute("vemail"));
 			return "redirect:/viewappointmentbyemail";
@@ -149,13 +139,10 @@ public class AppointmentController {
 			attr.addFlashAttribute("reserr", "OTP didnt matched");
 			return "redirect:/confotp";
 		}
-		
 	} 
 	
-	
 	@GetMapping("/viewappointmentbyemail")
-	public String viewAppointmentsByEmail(HttpServletRequest request,Model model,HttpSession sess)
-	{
+	public String viewAppointmentsByEmail(HttpServletRequest request,Model model,HttpSession sess){
 		String base_url =	ServletUriComponentsBuilder
 								.fromRequestUri(request)
 								.replacePath(null)
@@ -173,9 +160,6 @@ public class AppointmentController {
 	public List<Appointment> getallappointmentsbyemail(@PathVariable("email") String email)
 	{
 		List<Appointment> aplist = appointserv.getAllAppointmentsByEmail(email);
-		
-		//aplist.stream().forEach(e->System.err.println(e.getEmployee().getDepartment().getCompany().getComp_name()));
-		
 		return aplist;
 	}
 	
@@ -230,6 +214,5 @@ public class AppointmentController {
 			return "redirect:/";
 		}
 	}
-	
 	
 }
