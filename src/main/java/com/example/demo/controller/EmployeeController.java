@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -116,5 +119,28 @@ public class EmployeeController {
 		List<Employee> elist = empserv.getDeptByEmpId(id);
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		return elist;
+	}
+	
+	
+	@GetMapping("/forgotpass")
+	public String forgotPassword()
+	{
+		return "ForgotPassword";
+	}
+	
+	
+	@PostMapping("/confotpurl")
+	public String forgotPass(@ModelAttribute("Employee") Employee emp,HttpSession sess,RedirectAttributes attr)
+	{
+		Employee empl = empserv.getempbyemail(emp.getEmp_email());
+		if(empl!=null) {
+			sess.setAttribute("empemail", emp.getEmp_email());
+			return "redirect:/confotp";
+		}
+		else {
+			attr.addFlashAttribute("reserr", "Employee not found for given Email ");
+			return "redirect:/";
+		}	
+		
 	}
 }

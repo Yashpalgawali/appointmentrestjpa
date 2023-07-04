@@ -15,8 +15,8 @@
 	  $.ajax({
 			async    : true,
 			type     : "GET",
-			//url      : "getallappointments",
-			url      : "/"+app_name+"/getallappointments",
+			url      : "getallappointments",
+			//url      : "/"+app_name+"/getallappointments",
 			dataType : "json",
 			success  : function(result) {
 				var sr = 1;
@@ -67,8 +67,8 @@
 		$.ajax({
 				async    : true,
 				type     : "GET",
-				//url      : "gettodaysappointments",
-				url      : "/"+app_name+"/gettodaysappointments",
+				url      : "gettodaysappointments",
+				//url      : "/"+app_name+"/gettodaysappointments",
 			    dataType : "json",
 				success  : function(result) {
 					var sr = 1;

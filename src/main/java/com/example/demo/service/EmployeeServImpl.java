@@ -95,4 +95,11 @@ public class EmployeeServImpl implements EmployeeService {
 		return elist;
 	}
 
+	@Override
+	public Employee getempbyemail(String emp_email) {
+		// TODO Auto-generated method stub
+		
+		return emprepo.getEmployeByEmpEmail(emp_email);
+	}
+
 }

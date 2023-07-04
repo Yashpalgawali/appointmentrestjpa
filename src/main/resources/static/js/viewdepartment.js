@@ -16,8 +16,8 @@
 	$('#depttable').dataTable().fnDestroy();
 	
 	$.ajax({
-		url      : "/"+app_name+"/getdeptbycompid/"+cid,
-//		url		: '/getdeptbycompid/'+cid,
+//		url      : "/"+app_name+"/getdeptbycompid/"+cid,
+		url		: '/getdeptbycompid/'+cid,
 		type	:	'GET',
 		dataType: 	'JSON',
 		success : function(result){
@@ -27,8 +27,8 @@
 							+"<tr><td>" +(cnt++)
 							+"</td><td>"+result[i].dept_name
 							+"</td><td>"+result[i].company.comp_name	
-							+"</td><td><a href= "+app_name+"'/editdeptbyid/"+result[i].dept_id+"'><i class='fa fa-edit'></i>Edit</a></td></tr>"
-//							+"</td><td><a href= '/editdeptbyid/"+result[i].dept_id+"'><i class='fa fa-edit'></i>Edit</a></td></tr>"
+//							+"</td><td><a href= "+app_name+"'/editdeptbyid/"+result[i].dept_id+"'><i class='fa fa-edit'></i>Edit</a></td></tr>"
+							+"</td><td><a href= '/editdeptbyid/"+result[i].dept_id+"'><i class='fa fa-edit'></i>Edit</a></td></tr>"
 			}
 			$(dept_arr).appendTo('#deptbody');
 			$('#depttable').DataTable();

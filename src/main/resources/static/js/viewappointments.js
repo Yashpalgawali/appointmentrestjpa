@@ -8,11 +8,10 @@
 	  var aparr = "",tapp="";
 	 $.ajax({
 				type     : "GET",
-			  	url      : "/"+app_name+"/getallappointmentsbyemail/"+vmail,
-//			  	url    : "/getallappointmentsbyemail/"+vmail,
+			  	//url      : "/"+app_name+"/getallappointmentsbyemail/"+vmail,
+			  	url    : "/getallappointmentsbyemail/"+vmail,
 				dataType : "json",
 				success  : function(result) {
-				var sr = 1;
 				
 				for (var i = 0; i < result.length; i++) 
 				{
@@ -26,8 +25,7 @@
 								+ "</td><td>"+ result[i].vis_email
 								+ "</td><td>"+ result[i].vis_contact
 								+ "</td><td>"+ result[i].employee.emp_name
-								//+ "</td><td>"+ result[i].employee.department.company.comp_name
-								+ "</td><td>"+ result[i].employee.department
+								+ "</td><td>"+ result[i].employee.department.company.comp_name
 								+ "</td></tr>";
 				}
 					$(aparr).appendTo('#apbody');
@@ -71,8 +69,8 @@
 		
 		$.ajax({
 				type     : "GET",
-			    url      : "/"+app_name+"/gettodaysappointmentsbyemail/"+vmail,
-//			    url      : "/gettodaysappointmentsbyemail/"+vmail,
+//			    url      : "/"+app_name+"/gettodaysappointmentsbyemail/"+vmail,
+			    url      : "/gettodaysappointmentsbyemail/"+vmail,
 				dataType : "json",
 				success  : function(result) {
 					
@@ -89,7 +87,7 @@
 								+ "</td><td>"+ result[i].vis_email
 								+ "</td><td>"+ result[i].vis_contact
 								+ "</td><td>"+ result[i].employee.emp_name
-								+ "</td><td>"+ result[i].employee.department
+								+ "</td><td>"+ result[i].employee.department.company.comp_name
 								+ "</td></tr>";
 					}
 					$(tapp).appendTo('#aptodaybody');
