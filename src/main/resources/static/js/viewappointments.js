@@ -8,8 +8,8 @@
 	  var aparr = "",tapp="";
 	 $.ajax({
 				type     : "GET",
-			  	//url      : "/"+app_name+"/getallappointmentsbyemail/"+vmail,
-			  	url    : "/getallappointmentsbyemail/"+vmail,
+			  	url      : "/"+app_name+"/getallappointmentsbyemail/"+vmail,
+//			  	url    : "/getallappointmentsbyemail/"+vmail,
 				dataType : "json",
 				success  : function(result) {
 				
@@ -69,8 +69,8 @@
 		
 		$.ajax({
 				type     : "GET",
-//			    url      : "/"+app_name+"/gettodaysappointmentsbyemail/"+vmail,
-			    url      : "/gettodaysappointmentsbyemail/"+vmail,
+			    url      : "/"+app_name+"/gettodaysappointmentsbyemail/"+vmail,
+//			    url      : "/gettodaysappointmentsbyemail/"+vmail,
 				dataType : "json",
 				success  : function(result) {
 					

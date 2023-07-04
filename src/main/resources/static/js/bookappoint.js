@@ -89,8 +89,8 @@
 		$.ajax({
 				async    : true,
 				type     : "GET",
-			    //url      : "/"+app_name+"/getdeptbyempid/"+empid,
-			    url      : "/getdeptbyempid/"+empid, 
+			    url      : "/"+app_name+"/getdeptbyempid/"+empid,
+			    //url      : "/getdeptbyempid/"+empid, 
 				success  : function(result) {
 					for(let i=0;i<result.length;i++)
 					{
