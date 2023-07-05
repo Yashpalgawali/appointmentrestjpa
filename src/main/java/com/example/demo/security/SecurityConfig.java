@@ -27,12 +27,13 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 			
 //		auth.jdbcAuthentication()
 //		.dataSource(datasource)
-//		.usersByUsernameQuery("SELECT user_name,user_email,user_pass,role from tbl_users where user_name=?")
+//		.usersByUsernameQuery("SELECT user_name,user_email,user_pass,role,enabled from tbl_users where user_name=?")
 //		.authoritiesByUsernameQuery("SELECT user_name FROM tbl_users where user_name=?")
 //		.passwordEncoder(passEncode)
 //		;
 //		
 			auth.inMemoryAuthentication().withUser("admin").password(passEncode.encode("admin")).roles("admin");
+//			auth.inMemoryAuthentication().withUser("admin").password("{noop}admin").roles("admin");
 //			auth.inMemoryAuthentication().withUser("samyak").password("{noop}samyak").roles("admin");
 	}
 	

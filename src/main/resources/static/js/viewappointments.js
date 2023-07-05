@@ -2,6 +2,7 @@
  * 
  */
    $(document).ready(function(){
+	
 	  var vmail	=	$('#vis_email').val();
 	  var burl	=	$('#burl').val();
 	  let app_name = $('#app_name').val();
@@ -74,7 +75,6 @@
 				dataType : "json",
 				success  : function(result) {
 					
-					var sr = 1;
 					for (var i = 0; i < result.length; i++) 
 					{
 						tapp = tapp

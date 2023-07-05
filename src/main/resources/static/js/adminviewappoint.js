@@ -15,7 +15,7 @@
 	  $.ajax({
 			async    : true,
 			type     : "GET",
-			//url      : "getallappointments",
+//			url      : "getallappointments",
 			url      : "/"+app_name+"/getallappointments",
 			dataType : "json",
 			success  : function(result) {
@@ -67,7 +67,7 @@
 		$.ajax({
 				async    : true,
 				type     : "GET",
-				//url      : "gettodaysappointments",
+//				url      : "gettodaysappointments",
 				url      : "/"+app_name+"/gettodaysappointments",
 			    dataType : "json",
 				success  : function(result) {

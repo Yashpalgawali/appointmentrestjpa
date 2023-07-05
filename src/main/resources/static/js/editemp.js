@@ -28,7 +28,7 @@
 			async    : true,
 			type     : "GET",
 		    url      : "/"+app_name+"/getdeptbycompid/"+compid,
-		    //url      : "/getdeptbycompid/"+compid,
+//		    url      : "/getdeptbycompid/"+compid,
 			dataType : "json",
 			success  : function(result) {
 				

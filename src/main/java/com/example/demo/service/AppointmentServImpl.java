@@ -93,12 +93,13 @@ public class AppointmentServImpl implements AppointmentService {
 		// TODO Auto-generated method stub
 		
 		List<Appointment> elist = appointrepo.getAllEmployeesAppointments(email);
-		List<Appointment> vlist = appointrepo.getAllVisitorAppointments(email);
-		
-		if(elist.size()>0){
+		if(elist.size()>0)
+		{
 			return elist;
 		}
-		else if(vlist.size()>0){
+		
+		List<Appointment> vlist = appointrepo.getAllVisitorAppointments(email);
+		if(vlist.size()>0){
 			return vlist;
 		}
 		else{	return null;  }

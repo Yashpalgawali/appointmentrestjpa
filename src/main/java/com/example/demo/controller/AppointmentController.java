@@ -142,16 +142,24 @@ public class AppointmentController {
 	} 
 	
 	@GetMapping("/viewappointmentbyemail")
-	public String viewAppointmentsByEmail(HttpServletRequest request,Model model,HttpSession sess){
-		String base_url =	ServletUriComponentsBuilder
-								.fromRequestUri(request)
-								.replacePath(null)
-								.build()
-								.toUriString();
-		model.addAttribute("baseurl", base_url);
-		model.addAttribute("vemail", sess.getAttribute("vemail"));
-		model.addAttribute("appname", env.getProperty("spring.application.name"));
-		return "ViewAppointmentsByEmail";
+	public String viewAppointmentsByEmail(HttpServletRequest request,Model model,HttpSession sess,RedirectAttributes attr){
+		if(sess.getAttribute("vemail")!=null)
+		{
+			String base_url =	ServletUriComponentsBuilder
+									.fromRequestUri(request)
+									.replacePath(null)
+									.build()
+									.toUriString();
+			model.addAttribute("baseurl", base_url);
+			model.addAttribute("vemail", sess.getAttribute("vemail"));
+			model.addAttribute("appname", env.getProperty("spring.application.name"));
+			return "ViewAppointmentsByEmail";
+		}
+		else
+		{
+			attr.addFlashAttribute("reserr", "Please provide email ");
+			return "redirect:/searchappointment";
+		}
 	}
 	
 	// Fetch All Todays appointments for particular user

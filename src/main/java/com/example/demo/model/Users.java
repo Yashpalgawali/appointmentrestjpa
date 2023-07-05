@@ -6,8 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.springframework.data.annotation.Transient;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -28,6 +27,8 @@ public class Users {
 	private String user_email;
 	
 	private String role;
+	
+	private int enabled;
 	
 	@Transient
 	private String cnf_pass;

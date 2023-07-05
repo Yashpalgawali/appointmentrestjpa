@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.model.Users;
+import com.example.demo.service.UsersService;
 
 @Controller
 public class MainController {
@@ -24,6 +25,8 @@ public class MainController {
 		
 		return "Home";
 	}
+	@Autowired
+	UsersService userserv;
 	
 	@GetMapping("changepass")
 	public String changePassword()
@@ -34,7 +37,20 @@ public class MainController {
 	@PostMapping("changepassword")@ResponseBody
 	public String updatePassword(@ModelAttribute("Users")Users users,RedirectAttributes attr)
 	{
-		return ""+users.getUser_pass();
+		String enpass = passcode.encode(users.getUser_pass());
+		
+		int res = userserv.updateUsersPassword(enpass, users.getUser_id());
+		
+		if(res>0)
+		{
+			attr.addFlashAttribute("response", "Password updated successfully");
+			return "redirect:/";
+		}
+		else
+		{
+			attr.addFlashAttribute("reserr", "Password is not updated ");
+			return "redirect:/";
+		}
 	}
 	
 }
