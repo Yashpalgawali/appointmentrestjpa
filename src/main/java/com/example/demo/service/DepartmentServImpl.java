@@ -56,9 +56,7 @@ public class DepartmentServImpl implements DepartmentService {
 	@Override
 	public Department getDeptByDeptId(String dept_id) {
 		// TODO Auto-generated method stub
-		
 		Long did = Long.valueOf(dept_id);
-		
 		return deptrepo.getDepartmentByDeptId(did);
 	}
 
@@ -82,7 +80,6 @@ public class DepartmentServImpl implements DepartmentService {
 			actserv.saveActivity(act);
 			return res;
 		}
-		
 	}
 
 }

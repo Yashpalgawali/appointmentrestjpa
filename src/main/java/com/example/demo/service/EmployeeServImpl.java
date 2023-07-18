@@ -51,17 +51,13 @@ public class EmployeeServImpl implements EmployeeService {
 	@Override
 	public List<Employee> getAllEmployees() {
 		// TODO Auto-generated method stub
-		
 		List<Employee> elist = emprepo.getAllEmployees();
-		
-		elist.stream().forEach(e->System.err.println(e.getDepartment().toString()));
 		return elist;
 	}
 
 	@Override
 	public Employee getEmployeeById(String id) {
 		// TODO Auto-generated method stub
-		
 		Long eid = Long.parseLong(id);
 		return emprepo.findById(eid).get() ;
 	}
@@ -98,7 +94,6 @@ public class EmployeeServImpl implements EmployeeService {
 	@Override
 	public Employee getempbyemail(String emp_email) {
 		// TODO Auto-generated method stub
-		
 		return emprepo.getEmployeByEmpEmail(emp_email);
 	}
 

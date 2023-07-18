@@ -33,4 +33,7 @@ public class Users {
 	@Transient
 	private String cnf_pass;
 	
+	@Transient
+	private String cnf_otp;
+	
 }

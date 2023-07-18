@@ -122,7 +122,7 @@ public class AppointmentController {
 	}
 	
 	@GetMapping("/confotp")
-	public String confOTP(Model model){
+	public String confOTP(){
 		return "ConfirmOtp";
 	}
 	

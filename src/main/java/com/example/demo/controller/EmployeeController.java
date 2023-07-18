@@ -122,25 +122,5 @@ public class EmployeeController {
 	}
 	
 	
-	@GetMapping("/forgotpass")
-	public String forgotPassword()
-	{
-		return "ForgotPassword";
-	}
 	
-	
-	@PostMapping("/confotpurl")
-	public String forgotPass(@ModelAttribute("Employee") Employee emp,HttpSession sess,RedirectAttributes attr)
-	{
-		Employee empl = empserv.getempbyemail(emp.getEmp_email());
-		if(empl!=null) {
-			sess.setAttribute("empemail", emp.getEmp_email());
-			return "redirect:/confotp";
-		}
-		else {
-			attr.addFlashAttribute("reserr", "Employee not found for given Email ");
-			return "redirect:/";
-		}	
-		
-	}
 }
