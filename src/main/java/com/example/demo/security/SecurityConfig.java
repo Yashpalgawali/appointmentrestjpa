@@ -25,14 +25,14 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// TODO Auto-generated method stub
 			
-		auth.jdbcAuthentication()
-		.dataSource(datasource)
-		.usersByUsernameQuery("SELECT user_name,user_email,user_pass,role,enabled from tbl_users where user_name=?")
-		.authoritiesByUsernameQuery("SELECT user_name FROM tbl_users where user_name=?")
-		.passwordEncoder(passEncode)
-		;
+//		auth.jdbcAuthentication()
+//		.dataSource(datasource)
+//		.usersByUsernameQuery("SELECT user_name,user_email,user_pass,role,enabled from tbl_users where user_name=?")
+//		.authoritiesByUsernameQuery("SELECT user_name FROM tbl_users where user_name=?")
+//		.passwordEncoder(passEncode)
+//		;
 		
-//			auth.inMemoryAuthentication().withUser("admin").password(passEncode.encode("admin")).roles("admin");
+			auth.inMemoryAuthentication().withUser("admin").password(passEncode.encode("admin")).roles("admin");
 
 	}
 	
@@ -42,11 +42,11 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 
 		http
 		.authorizeHttpRequests()
-		.antMatchers("/","/bookappointment","/saveappointment","/viewappointments",
-					 "/getallappointments","/searchappointment","/searchappointbyemail",
-					 "/confotp","/confotprl","/viewappointmentbyemail","/getallappointmentsbyemail/**",
+		.antMatchers("/","/bookappointment","/saveappointment","/viewappointments","/confotppassword",
+					 "/getallappointments","/searchappointment","/searchappointbyemail","/changepassword",
+					 "/confotp","/confotprl","/viewappointmentbyemail","/getallappointmentsbyemail/**","/changepass",
 					 "/gettodaysappointmentsbyemail/**","/confappointment/**","/declineappointment/**",
-					 "/getdeptbycompid/**","/getdeptbyempid/**","/getDeptByEmpId/**","/forgotpass","/forgotpassword")
+					 "/getdeptbycompid/**","/getdeptbyempid/**","/getDeptByEmpId/**","/forgotpass","/forgotpassword","/confotppass")
 		.permitAll()
 		.anyRequest().hasRole("admin")
 		

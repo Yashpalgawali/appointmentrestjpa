@@ -1,8 +1,12 @@
 package com.example.demo.controller;
 
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +32,10 @@ public class AdminAppointmentController {
 	Environment env;
 
 	@GetMapping("/adminbookappoint")
-	public String adminBookAppointment(Model model)
+	public String adminBookAppointment(Model model,HttpSession sess)
 	{
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		sess.setAttribute("username", auth.getName()) ;
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		model.addAttribute("elist", empserv.getAllEmployees() );
 		return "AdminBookAppointment";
