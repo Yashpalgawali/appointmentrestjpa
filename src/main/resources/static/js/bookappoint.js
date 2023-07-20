@@ -41,10 +41,8 @@
 		width	:	'resolve'
 	});
 	
-	$('#apdate').focusout( function(){ 
-		
-		if($('#apdate').val()==today)
-		{
+	$('#apdate').focusout( function(){
+		if($('#apdate').val()==today){
 		   $('#aptime').datetimepicker({ 
 	    		format: 'hh:mm:ss A',
 	    		minDate: moment(),

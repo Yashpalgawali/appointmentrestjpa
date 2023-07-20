@@ -11,28 +11,29 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 
 	@Autowired
-	BCryptPasswordEncoder passEncode;
-	
-	@Autowired
 	private DataSource datasource;
 	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	@Autowired
+	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 		// TODO Auto-generated method stub
-			
-//		auth.jdbcAuthentication()
-//		.dataSource(datasource)
-//		.usersByUsernameQuery("SELECT user_name,user_email,user_pass,role,enabled from tbl_users where user_name=?")
-//		.authoritiesByUsernameQuery("SELECT user_name FROM tbl_users where user_name=?")
-//		.passwordEncoder(passEncode)
-//		;
+	
+		auth.jdbcAuthentication()
+		.dataSource(datasource)
 		
-			auth.inMemoryAuthentication().withUser("admin").password(passEncode.encode("admin")).roles("admin");
+		//Following will select the username from database depending on the username from Login form
+		.usersByUsernameQuery("select username,password,enabled from users where username=? ")
+		
+		//Following will select the authority(s) depending on the username
+		.authoritiesByUsernameQuery("select username,role from users  where username=?")
+		
+		.passwordEncoder(new BCryptPasswordEncoder())
+		;
 
 	}
 	
@@ -48,7 +49,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 					 "/gettodaysappointmentsbyemail/**","/confappointment/**","/declineappointment/**",
 					 "/getdeptbycompid/**","/getdeptbyempid/**","/getDeptByEmpId/**","/forgotpass","/forgotpassword","/confotppass")
 		.permitAll()
-		.anyRequest().hasRole("admin")
+		.anyRequest().hasAnyAuthority("ROLE_ADMIN")
 		
 		.and()
 		.formLogin()

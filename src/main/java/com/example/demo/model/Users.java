@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name= "tbl_users")
+@Table(name= "users")
 public class Users {
 	
 	@Id
@@ -20,9 +20,9 @@ public class Users {
 	@GeneratedValue(strategy = GenerationType.AUTO , generator = "user_seq")
 	private int user_id;
 	
-	private String user_name;
+	private String username;
 	
-	private String user_pass;
+	private String password;
 	
 	private String user_email;
 	

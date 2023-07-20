@@ -35,7 +35,7 @@ public class MainController {
 	
 	@PostMapping("changepassword")
 	public String updatePassword(@ModelAttribute("Users")Users users,HttpSession sess,RedirectAttributes attr){
-		String enpass = passcode.encode(users.getUser_pass());
+		String enpass = passcode.encode(users.getPassword());
 		int uid = (Integer) sess.getAttribute("userid");
 		int res = userserv.updateUsersPassword(enpass, uid);
 		
