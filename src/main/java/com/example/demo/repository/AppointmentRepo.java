@@ -49,6 +49,16 @@ public interface AppointmentRepo extends JpaRepository<Appointment, Long> {
 	@Query("UPDATE Appointment a SET a.apdate=?1,a.aptime=?2,a.vcomp_name=?3,a.vis_contact=?4,a.vis_email=?5,a.vis_name=?6,a.vis_purpose=?7,a.employee.emp_id=?8,a.status=?9 WHERE a.appoint_id=?10")
 	public int updateAppointmentById(String apdate, String aptime, String vcomp,String vcontact,String vemail,String vname,String purpose,Long empid,String status,Long apid);
 	
+	@Query("SELECT COUNT(a.appoint_id) FROM Appointment a")
+	public int getTotalAppointmentCount();
 	
+	@Query("SELECT COUNT(a.appoint_id) FROM Appointment a WHERE a.status='confirmed'")
+	public int getConfirmedAppointmentCount();
+	
+	@Query("SELECT COUNT(a.appoint_id) FROM Appointment a WHERE a.status='declined'")
+	public int getDeclinedAppointmentCount();
+	
+	@Query("SELECT COUNT(a.appoint_id) FROM Appointment a WHERE a.status='pending'")
+	public int getPendingAppointmentCount();
 	
 }

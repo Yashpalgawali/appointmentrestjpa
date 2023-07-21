@@ -26,4 +26,13 @@ public interface AppointmentService {
 	public Appointment getAppointmentById(Long apid);
 	
 	public int updateAppointment(Appointment appoint); 
+
+	public int getTotalAppointmentCount();
+	
+	public int getPendingAppointmentCount();
+	
+	public int getConfirmedAppointmentCount();
+	
+	public int getDeclinedAppointmentCount();
+	
 }

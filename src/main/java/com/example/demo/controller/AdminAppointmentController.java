@@ -31,6 +31,17 @@ public class AdminAppointmentController {
 	@Autowired
 	Environment env;
 
+	@GetMapping("adminhome")
+	public String adminHome(Model model)
+	{
+		model.addAttribute("tot_count", appointserv.getTotalAppointmentCount());
+		model.addAttribute("pending_count", appointserv.getPendingAppointmentCount());
+		model.addAttribute("confirm_count", appointserv.getConfirmedAppointmentCount());
+		model.addAttribute("decline_count", appointserv.getDeclinedAppointmentCount() );
+		
+		return "AdminHome";
+	}
+	
 	@GetMapping("/adminbookappoint")
 	public String adminBookAppointment(Model model,HttpSession sess)
 	{

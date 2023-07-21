@@ -212,4 +212,28 @@ public class AppointmentServImpl implements AppointmentService {
 		return appointrepo.updateAppointmentById(appoint.getApdate(), appoint.getAptime(), appoint.getVcomp_name(), appoint.getVis_contact(), appoint.getVis_email(), appoint.getVis_name(), appoint.getVis_purpose(), appoint.getEmployee().getEmp_id(), appoint.getStatus(), appoint.getAppoint_id());
 	}
 
+	@Override
+	public int getTotalAppointmentCount() {
+		// TODO Auto-generated method stub
+		return appointrepo.getTotalAppointmentCount();
+	}
+
+	@Override
+	public int getPendingAppointmentCount() {
+		// TODO Auto-generated method stub
+		return appointrepo.getPendingAppointmentCount();
+	}
+
+	@Override
+	public int getConfirmedAppointmentCount() {
+		// TODO Auto-generated method stub
+		return appointrepo.getConfirmedAppointmentCount();
+	}
+
+	@Override
+	public int getDeclinedAppointmentCount() {
+		// TODO Auto-generated method stub
+		return appointrepo.getDeclinedAppointmentCount();
+	}
+
 }
