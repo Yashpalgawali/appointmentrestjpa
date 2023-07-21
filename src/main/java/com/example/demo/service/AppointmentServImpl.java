@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -34,14 +35,16 @@ public class AppointmentServImpl implements AppointmentService {
 	@Autowired
 	ActivityService actserv;
 	
-
+	@Autowired
+	Environment env;
+	
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 	LocalDateTime today = LocalDateTime.now();  
 	
 	@Override
 	public Appointment saveAppointment(Appointment appoint) {
 		// TODO Auto-generated method stub
-		
+		String appname = env.getProperty("${spring.application.name}");
 		Appointment apoint = appointrepo.save(appoint); 
 		
 		if(apoint!=null)
@@ -61,8 +64,8 @@ public class AppointmentServImpl implements AppointmentService {
 			
 			String subject = appoint.getVis_purpose().substring(0, 10);
 			
-			String cnfappoint = base_url+"/confappointment/"+apoint.getAppoint_id();
-			String declineappoint = base_url+"/declineappointment/"+apoint.getAppoint_id();
+			String cnfappoint = base_url+"/"+appname+"/confappointment/"+apoint.getAppoint_id();
+			String declineappoint = base_url+"/"+appname+"/declineappointment/"+apoint.getAppoint_id();
 			
 			emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          "+appoint.getVis_name()
 					+" needs an appointment regarding "+appoint.getVis_purpose().substring(0, 10)+" dated on "+appoint.getApdate()
