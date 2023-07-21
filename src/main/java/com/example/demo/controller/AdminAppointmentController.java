@@ -58,7 +58,7 @@ public class AdminAppointmentController {
 		Appointment apt = appointserv.saveAppointment(appoint);
 		
 		if(apt!=null){
-			attr.addFlashAttribute("reswait", "Appointment is saved successfully and waiting for confirmation");
+			attr.addFlashAttribute("response", "Appointment is saved successfully and waiting for confirmation");
 			return "redirect:/adminviewappoints";
 		}
 		else{
