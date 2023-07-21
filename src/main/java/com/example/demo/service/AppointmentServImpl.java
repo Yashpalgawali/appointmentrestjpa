@@ -44,7 +44,7 @@ public class AppointmentServImpl implements AppointmentService {
 	@Override
 	public Appointment saveAppointment(Appointment appoint) {
 		// TODO Auto-generated method stub
-		String appname = env.getProperty("${spring.application.name}");
+		String appname = env.getProperty("spring.application.name");
 		Appointment apoint = appointrepo.save(appoint); 
 		
 		if(apoint!=null)
