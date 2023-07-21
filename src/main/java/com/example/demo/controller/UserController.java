@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.model.Employee;
 import com.example.demo.model.Users;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.OtpService;
 import com.example.demo.service.UsersService;
 
@@ -34,6 +35,9 @@ public class UserController {
 	@Autowired
 	OtpService otpserv;
 	
+	@Autowired
+	EmailService emailserv;
+	
 	@RequestMapping("/forgotpassword")
 	public String forGotPassword(@ModelAttribute("Users") Users users,HttpSession sess ,RedirectAttributes attr)
 	{
@@ -45,6 +49,8 @@ public class UserController {
 			
 			sess.setAttribute("vemail", users.getUser_email());
 			sess.setAttribute("otp", otp);
+			sess.setAttribute("userid", user.getUser_id());
+			emailserv.sendSimpleEmail(users.getUser_email(), "Respected Sir/Ma'am, \n\t Your OTP for change password is "+otp, "OTP for confirmation");
 			attr.addFlashAttribute("response","OTP sent to your email "+users.getUser_email());
 			return "redirect:/confotppass";
 		}
@@ -57,12 +63,9 @@ public class UserController {
 	@GetMapping("/confotppass")
 	public String confOTPForgotPassword(@ModelAttribute("Users") Users users,Model model,HttpSession sess)
 	{
-		System.err.println("in side confotppass method page");
 		model.addAttribute("vemail", sess.getAttribute("vemail"));
 		return "ConfirmOtpForgotPass";
 	}
-	
-
 	
 	@PostMapping("/confotppassword")
 	public String confirmOtpPassword(@ModelAttribute("Users") Users users, HttpSession sess,RedirectAttributes attr)
@@ -72,7 +75,6 @@ public class UserController {
 		Integer o_otp = (Integer) sess.getAttribute("otp");;
 		int  old_otp = o_otp;
 		
-		System.err.println("Provided OTP = "+n_otp+" \n and OTP is session is = "+o_otp);
 		if(new_otp==old_otp){
 			Users user = userserv.getUserByEmailId(users.getUser_email());
 			otpserv.clearOtp((String)sess.getAttribute("vemail"));

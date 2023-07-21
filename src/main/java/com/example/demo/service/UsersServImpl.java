@@ -31,4 +31,10 @@ public class UsersServImpl implements UsersService {
 		}
 	}
 
+	@Override
+	public Users getUserByUserName(String uname) {
+		// TODO Auto-generated method stub
+		return userrepo.findByUsername(uname);
+	}
+
 }

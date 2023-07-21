@@ -1,7 +1,5 @@
 package com.example.demo.model;
 
-import java.sql.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="tbl_appointment")
@@ -50,6 +46,12 @@ public class Appointment {
 	@Transient
 	private String app_name;
 	
+	//@JsonIgnoreProperties
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name="emp_id",referencedColumnName = "emp_id") 
+	private Employee employee;
+
+		
 	public Integer getNew_otp() {
 		return new_otp;
 	}
@@ -66,11 +68,7 @@ public class Appointment {
 		this.status = status;
 	}
 	
-	//@JsonIgnoreProperties
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name="emp_id",referencedColumnName = "emp_id") 
-	private Employee employee;
-
+	
 	public Long getAppoint_id() {
 		return appoint_id;
 	}

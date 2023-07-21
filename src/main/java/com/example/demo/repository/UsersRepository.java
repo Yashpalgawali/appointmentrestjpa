@@ -21,4 +21,5 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
 	public Users getUserByEmailId(String email);
 	
 	
+	public Users findByUsername(String uname);
 }

@@ -8,8 +8,6 @@ public class FinalSaveraAppointmentApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FinalSaveraAppointmentApplication.class, args);
+		
 	}
-	
-	
-
 }

@@ -8,4 +8,6 @@ public interface UsersService {
 	
 	public Users getUserByEmailId(String email);
 
+	public Users getUserByUserName(String uname);
+
 }
