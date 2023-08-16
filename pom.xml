@@ -93,7 +93,7 @@
 	</dependencies>
 
 	<build>
-	<finalName>finalappointmentjpa</finalName>
+	<finalName>appointment</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

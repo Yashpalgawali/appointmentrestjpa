@@ -1,8 +1,7 @@
 /**
  * 
  */
-   $(document).ready(function(){
-	
+   $(document).ready(function() {
 	  var aparr = "",tapp="";
 	  let app_name = $('#app_name').val();
 	 

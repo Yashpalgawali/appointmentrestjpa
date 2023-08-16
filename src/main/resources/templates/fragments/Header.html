@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-
-<head th:include="fragments/head.html:: linkfiles">
-  	
+<!-- <head th:include="fragments/head.html:: linkfiles"> -->
 <meta charset="ISO-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
 
 <header th:fragment="header" id="header" >
-
-<!-- <nav class="navbar navbar-expand-md navbar-light bg-light  fixed-top shadow p-3 mb-5 bg-white rounded "> -->
-<nav class="navbar navbar-expand-md navbar-light bg-light  fixed-top ">
+	<nav class="navbar navbar-expand-md navbar-light bg-light  fixed-top ">
   <a class="navbar-brand" th:href="@{/}"><img th:src="@{/img/savera_logo.jpg}" id="c_logo" ></a>
 	  
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -43,6 +39,8 @@
 	
 	</ul>
   </div>  
-	
- </nav>
+</nav>
 </header>
+</body>
+</html>
+

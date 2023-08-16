@@ -54,7 +54,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 		.and()
 		.formLogin()
 		.permitAll()
-		.defaultSuccessUrl("/adminbookappoint", true)
+		.defaultSuccessUrl("/adminhome", true)
 		
 		.and()
 		.logout()
