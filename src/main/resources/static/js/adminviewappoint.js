@@ -4,6 +4,7 @@
    $(document).ready(function() {
 	  var aparr = "",tapp="";
 	  let app_name = $('#app_name').val();
+	  let admemail = $('#admemail').val();
 	 
 	  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	        $($.fn.dataTable.tables(true)).DataTable()
@@ -67,7 +68,7 @@
 				async    : true,
 				type     : "GET",
 //				url      : "gettodaysappointments",
-				url      : "/"+app_name+"/gettodaysappointments",
+				url      : "/"+app_name+"/gettodaysappointments/",
 			    dataType : "json",
 				success  : function(result) {
 					var sr = 1;

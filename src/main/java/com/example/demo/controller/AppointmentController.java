@@ -84,7 +84,6 @@ public class AppointmentController {
 	}
 	
 	
-	
 	@RequestMapping("/getallappointments")
 	@ResponseBody
 	public List<Appointment> getAllAppointments()

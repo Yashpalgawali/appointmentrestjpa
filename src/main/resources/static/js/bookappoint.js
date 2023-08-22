@@ -90,8 +90,7 @@
 			    url      : "/"+app_name+"/getdeptbyempid/"+empid,
 //			    url      : "/getdeptbyempid/"+empid, 
 				success  : function(result) {
-					for(let i=0;i<result.length;i++)
-					{
+					for(let i=0;i<result.length;i++)  {
 						$('select[name="department"]').append('<option selected value="'+result[i].department.dept_id+'">'+result[i].department.dept_name+'</option>');
 						$('select[name="company"]').append('<option selected value="'+result[i].department.company.company_id+'">'+result[i].department.company.comp_name+'</option>');	
 					}

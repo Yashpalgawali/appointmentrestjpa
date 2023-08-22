@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import javax.servlet.ServletContext;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,14 @@ public class MainController {
 	UsersService userserv;
 	
 	@GetMapping("/")
-	public String index(){
-		return "Home";
+	public String index(HttpSession sess) {
+		
+		String uname = (String) sess.getAttribute("username");
+		return (uname==null?  "Home" :  "redirect:/adminhome");
 	}
 	
 	@GetMapping("changepass")
-	public String changePassword(HttpSession sess){
+	public String changePassword(HttpSession sess) {
 		
 		Users user = userserv.getUserByUserName("admin");
 		sess.setAttribute("userid", user.getUser_id());
@@ -40,7 +42,7 @@ public class MainController {
 	}
 	
 	@PostMapping("changepassword")
-	public String updatePassword(@ModelAttribute("Users")Users users,HttpSession sess,RedirectAttributes attr){
+	public String updatePassword(@ModelAttribute("Users")Users users,HttpSession sess,RedirectAttributes attr) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String logged_user = auth.getName();
 		
@@ -53,7 +55,7 @@ public class MainController {
 			if(logged_user.equals("admin"))
 			{	
 				attr.addFlashAttribute("response", "Password updated successfully");
-				return "redirect:/addcompany";
+				return "redirect:/adminhome";
 			}
 			else {
 				attr.addFlashAttribute("response", "Password updated successfully");
@@ -64,7 +66,7 @@ public class MainController {
 			if(logged_user.equals("admin"))
 			{
 				attr.addFlashAttribute("reserr", "Password is not updated ");
-				return "redirect:/addcompany";
+				return "redirect:/adminhome";
 			}
 			else {
 				attr.addFlashAttribute("reserr", "Password is not updated ");

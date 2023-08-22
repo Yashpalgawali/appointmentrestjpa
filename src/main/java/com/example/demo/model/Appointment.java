@@ -46,6 +46,18 @@ public class Appointment {
 	@Transient
 	private String app_name;
 	
+	@Transient
+	private String admemail;
+	
+	
+	public String getAdmemail() {
+		return admemail;
+	}
+
+	public void setAdmemail(String admemail) {
+		this.admemail = admemail;
+	}
+
 	//@JsonIgnoreProperties
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="emp_id",referencedColumnName = "emp_id") 

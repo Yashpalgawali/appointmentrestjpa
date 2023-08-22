@@ -32,8 +32,11 @@ public class AdminAppointmentController {
 	Environment env;
 
 	@GetMapping("adminhome")
-	public String adminHome(Model model)
+	public String adminHome(Model model,HttpSession sess)
 	{
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		sess.setAttribute("username", auth.getName());
 		model.addAttribute("tot_count", appointserv.getTotalAppointmentCount());
 		model.addAttribute("pending_count", appointserv.getPendingAppointmentCount());
 		model.addAttribute("confirm_count", appointserv.getConfirmedAppointmentCount());
@@ -45,8 +48,8 @@ public class AdminAppointmentController {
 	@GetMapping("/adminbookappoint")
 	public String adminBookAppointment(Model model,HttpSession sess)
 	{
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		sess.setAttribute("username", auth.getName()) ;
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		sess.setAttribute("username", auth.getName()) ;
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		model.addAttribute("elist", empserv.getAllEmployees() );
 		return "AdminBookAppointment";
@@ -68,8 +71,10 @@ public class AdminAppointmentController {
 	}
 	
 	@GetMapping("adminviewappoints")
-	public String adminViewAppointments(Model model){
+	public String adminViewAppointments(Model model,HttpSession sess){
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
+		String admemail = (String) sess.getAttribute("username");
+		model.addAttribute("admemail", admemail);
 		return "AdminViewAppointments";
 	}
 	

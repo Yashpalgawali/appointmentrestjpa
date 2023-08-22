@@ -44,7 +44,8 @@
 		  <div class="card-header">
 				<h4>View Appointments<a th:href="@{adminbookappoint}" class="btn btn-primary" style="float:right;">Book Appointment</a></h4>
 		  </div>
-	  	  <input type="hidden" id="app_name" name="app_name"  th:value="${appname}" />
+			<input type="hidden" id="app_name" name="app_name"  th:value="${appname}" />
+			<input type="hidden" id="admemail" name="admemail"  th:value="${admemail}" />
 		  <ul class="nav nav-tabs">
 				<li class="nav-item "><a class="nav-link active" href="#todayappoints" data-toggle="tab">Today's Appointments</a></li>
 				<li class="nav-item"><a class="nav-link " href="#allappoints" data-toggle="tab">All Appointments</a></li>
