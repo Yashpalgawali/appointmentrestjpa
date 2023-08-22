@@ -11,12 +11,12 @@
 <body>
 <div th:replace="fragments/Header.html :: header" ></div>
 <div class="container" >
- <!-- start: PAGE HEADER -->
-<div class="row">
-	<div class="col-sm-12"><p>Home Page</p></div>
 	<div th:if="${response}"><h6 th:text="${response}" class="alert alert-success"></h6></div>
 	<div th:if="${reserr}"><h6 th:text="${reserr}" class="alert alert-danger"></h6></div>
-</div>
+	<!-- start: PAGE HEADER -->
+	<div class="row">
+		<div class="col-sm-12"><p>Home Page</p></div>
+	</div>
 </div>
 
 <div th:replace="fragments/Footer.html :: footer"></div>
