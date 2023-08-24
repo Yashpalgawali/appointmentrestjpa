@@ -24,18 +24,22 @@ $(document).ready(function() {
 function getDeptByCompId(compid) {
 	var app_name = $('#app_name').val();
 	$.ajax({
-		async: true,
-		type: "GET",
-		// url: "/" + app_name + "/getdeptbycompid/" + compid,
-		url      : "getdeptbycompid/"+compid,
+		async	: true,
+		type	: "GET",
+  		url     : "getdeptbycompid/"+compid,
 		dataType: "json",
 		success: function(result) {
+		
 			$('select[name="department"]').empty();
 			$('select[name="department"]').append('<option selected disabled value="">' + "Please Select Department" + '</option');
 
 			$.each(result, function(i) {
 				$('select[name="department"]').append('<option value="' + result[i].dept_id + '">' + result[i].dept_name + '</option>');
 			});
+		},
+		error : function (err)
+		{
+			alert("inside error function "+err);
 		}
 	});
 }

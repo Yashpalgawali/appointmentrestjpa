@@ -27,21 +27,21 @@ public class DepartmentController {
 	@Autowired
 	Environment env;
 	
+	@Autowired
+	CompanyService compserv;
+	
+	
 	@GetMapping("/adddepartment")
-	public String addDepartment(Model model)
-	{
+	public String addDepartment(Model model) {
 		List<Company> clist= compserv.getAllCOmpanies();
-		
 		model.addAttribute("clist", clist);
 		return "AddDepartment";
 	}
 	
 	@RequestMapping("/savedepartment")
-	public String saveDepartment(@ModelAttribute("Department")Department depart,RedirectAttributes attr)
-	{
+	public String saveDepartment(@ModelAttribute("Department")Department depart,RedirectAttributes attr) {
 		Department dept = deptserv.saveDepartment(depart);
-		if(dept!=null)
-		{
+		if(dept!=null) {
 			attr.addFlashAttribute("response", "Department is saved Successfully");
 			return "redirect:/viewdepartments";
 		}
@@ -50,34 +50,26 @@ public class DepartmentController {
 			return "redirect:/viewdepartments";
 		}
 	}
-	
-	@Autowired
-	CompanyService compserv;
-	
-	@GetMapping("viewdepartments")
-	public String viewDepartments(Model model)
-	{
-		List<Company> clist= compserv.getAllCOmpanies();
 		
+	@GetMapping("viewdepartments")
+	public String viewDepartments(Model model) {
+		List<Company> clist= compserv.getAllCOmpanies();
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		model.addAttribute("clist", clist);
 		return "ViewDepartments";
 	}
 	
-	@RequestMapping("/getdeptbycompid/{id}")
+	@RequestMapping("getdeptbycompid/{id}")
 	@ResponseBody
-	public List<Department> getDepartmentsByCompId(@PathVariable("id") Long id)
-	{
+	public List<Department> getDepartmentsByCompId(@PathVariable("id") Long id) {
 		List<Department> deplist = deptserv.getAllDepartmentsByCompId(""+id);
 		return deplist;
 	}
 	
 	@RequestMapping("/editdeptbyid/{id}")
-	public String getDeptByid(@PathVariable("id") String id, Model model ,RedirectAttributes attr)
-	{
+	public String getDeptByid(@PathVariable("id") String id, Model model ,RedirectAttributes attr) {
 		Department dept = deptserv.getDeptByDeptId(id);
-		if(dept!=null)
-		{
+		if(dept!=null) {
 			List<Company> clist = compserv.getAllCOmpanies();
 			model.addAttribute("clist", clist);
 			model.addAttribute("dept", dept);
@@ -90,11 +82,9 @@ public class DepartmentController {
 	}
 	
 	@RequestMapping("/updatedepartment")
-	public String updateDepartment(@ModelAttribute("Department")Department depart, RedirectAttributes attr)
-	{
+	public String updateDepartment(@ModelAttribute("Department")Department depart, RedirectAttributes attr) {
 		int result = deptserv.updateDepartment(depart);
-		if(result > 0)
-		{
+		if(result > 0) {
 			attr.addFlashAttribute("response", "Department updated successfully");
 			return "redirect:/viewdepartments";
 		}

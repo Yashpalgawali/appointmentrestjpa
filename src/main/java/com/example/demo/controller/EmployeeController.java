@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -11,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -29,22 +27,17 @@ public class EmployeeController {
 
 	@Autowired
 	DepartmentService deptserv;
-	
 	@Autowired
 	CompanyService compserv;
-	
 	@Autowired
 	DesignationService desigserv;
-	
 	@Autowired
 	EmployeeService empserv;
-	
 	@Autowired
 	Environment env;
 	
 	@GetMapping("/addemployee")
-	public String addEmployee(Model model)
-	{
+	public String addEmployee(Model model) {
 		List<Company> clist = compserv.getAllCOmpanies();
 		List<Designation> dlist = desigserv.getAllDesignations();
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
@@ -54,10 +47,9 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("/saveemployee")
-	public String saveEmployee(@ModelAttribute("Employee")Employee emp,RedirectAttributes attr)
-	{
+	public String saveEmployee(@ModelAttribute("Employee")Employee emp,RedirectAttributes attr) {
 		Employee empl = empserv.saveEmployee(emp);
-		if(empl!=null){
+		if(empl!=null) {
 			attr.addFlashAttribute("response", "Employee Saved Successfully");
 			return "redirect:/viewemployee";
 		}
@@ -68,14 +60,12 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/viewemployee")
-	public String viewEmployees(Model model)
-	{
+	public String viewEmployees(Model model) {
 		List<Employee> elist = empserv.getAllEmployees();
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		model.addAttribute("elist", elist);
 		return "ViewEmployees";
 	}
-	
 	
 	@GetMapping("/editempbyid/{id}")
 	public String getEmployeeById(@PathVariable("id") String id, Model model, RedirectAttributes attr)
@@ -101,8 +91,7 @@ public class EmployeeController {
 	public String updateEmployee(@ModelAttribute("Employee")Employee empl,RedirectAttributes attr)
 	{
 		int res = empserv.updateEmployee(empl);
-		if(res > 0)
-		{
+		if(res > 0) {
 			attr.addFlashAttribute("response", "Employee is updated successfully");
 			return "redirect:/viewemployee";
 		}
@@ -114,11 +103,9 @@ public class EmployeeController {
 	
 	@GetMapping("/getdeptbyempid/{id}")
 	@ResponseBody
-	public  List<Employee>  getEmployeeByEmpId(@PathVariable("id")String id,Model model) 
-	{
+	public  List<Employee>  getEmployeeByEmpId(@PathVariable("id")String id,Model model)  {
 		List<Employee> elist = empserv.getDeptByEmpId(id);
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		return elist;
 	}
-	
 }

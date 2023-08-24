@@ -26,15 +26,12 @@ public class EmployeeServImpl implements EmployeeService {
 	@Override
 	public Employee saveEmployee(Employee emp) {
 		// TODO Auto-generated method stub
-		
 		Employee empl = emprepo.save(emp); 
-		if(empl!=null)
-		{
+		if(empl!=null) {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Employee "+empl.getEmp_name()+" saved");
 			act.setActivity_date(dtf.format(today));
 			actserv.saveActivity(act);
-			
 			return empl;
 		}
 		else {
@@ -42,10 +39,8 @@ public class EmployeeServImpl implements EmployeeService {
 			act.setActivity("Employee "+emp.getEmp_name()+" is not saved");
 			act.setActivity_date(dtf.format(today));
 			actserv.saveActivity(act);
-			
 			return empl;
 		}
-		
 	}
 
 	@Override
@@ -59,15 +54,19 @@ public class EmployeeServImpl implements EmployeeService {
 	public Employee getEmployeeById(String id) {
 		// TODO Auto-generated method stub
 		Long eid = Long.parseLong(id);
-		return emprepo.findById(eid).get() ;
+		try {
+			return emprepo.findById(eid).get() ;
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public int updateEmployee(Employee empl) {
 		// TODO Auto-generated method stub
 		int res = emprepo.updateEmployee(empl.getEmp_name(), empl.getEmp_email(), empl.getEmp_status(), empl.getDepartment().getDept_id(), empl.getDesignation().getDesig_id(), empl.getEmp_id());
-		if(res>0)
-		{
+		if(res>0) {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Employee "+empl.getEmp_name()+" is not updated");
 			act.setActivity_date(dtf.format(today));

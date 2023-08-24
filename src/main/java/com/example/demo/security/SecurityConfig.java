@@ -47,7 +47,8 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 					 "/getallappointments","/searchappointment","/searchappointbyemail","/changepassword",
 					 "/confotp","/confotprl","/viewappointmentbyemail","/getallappointmentsbyemail/**","/changepass",
 					 "/gettodaysappointmentsbyemail/**","/confappointment/**","/declineappointment/**",
-					 "/getdeptbycompid/**","/getdeptbyempid/**","/getDeptByEmpId/**","/forgotpass","/forgotpassword","/confotppass")
+					 "/getdeptbycompid/**","/getdeptbyempid/**","/getDeptByEmpId/**","/forgotpass","/forgotpassword",
+					 "/confotppass","/resources/static/**","/css/**","/js/**")
 		.permitAll()
 		.anyRequest().hasAnyAuthority("ROLE_ADMIN")
 		
@@ -66,6 +67,6 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// TODO Auto-generated method stub
-		web.ignoring().antMatchers("/resources/static/**","/css/**","/js/**");
+		//web.ignoring().antMatchers("/resources/static/**","/css/**","/js/**");
 	}
 }
