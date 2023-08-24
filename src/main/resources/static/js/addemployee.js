@@ -26,7 +26,8 @@ function getDeptByCompId(compid) {
 	$.ajax({
 		async	: true,
 		type	: "GET",
-  		url     : "getdeptbycompid/"+compid,
+		url     :  "/"+app_name+"/getdeptbycompid/"+compid,
+  		// url     : "getdeptbycompid/"+compid,
 		dataType: "json",
 		success: function(result) {
 		

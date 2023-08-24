@@ -16,8 +16,8 @@
 	$('#depttable').dataTable().fnDestroy();
 	
 	$.ajax({
-//		url      : "/"+app_name+"/getdeptbycompid/"+cid,
-		url		: 'getdeptbycompid/'+cid,
+		url      : "/"+app_name+"/getdeptbycompid/"+cid,
+		// url		: 'getdeptbycompid/'+cid,
 		type	:	'GET',
 		dataType: 	'JSON',
 		success : function(result){
