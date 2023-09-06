@@ -4,9 +4,9 @@
    $(document).ready(function() {
 	  var aparr = "",tapp="";
 	  let app_name = $('#app_name').val();
-	  let admemail = $('#admemail').val();
+	 // let admemail = $('#admemail').val();
 	 
-	  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	  $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
 	        $($.fn.dataTable.tables(true)).DataTable()
 	           .columns.adjust()
 	           .responsive.recalc();
@@ -19,7 +19,7 @@
 			url      : "/"+app_name+"/getallappointments",
 			dataType : "json",
 			success  : function(result) {
-				var sr = 1;
+				
 				for (var i = 0; i < result.length; i++){
 					aparr = aparr
 								+ "<tr><td>" + result[i].status
@@ -43,7 +43,7 @@
 										"zeroRecords": "No Appointments to Show",
 								  },
 								  
-				"fnRowCallback": function(nRow, result, iDisplayIndex, iDisplayIndexFull) {
+				"fnRowCallback": function(nRow, result) {
 					
 			        if (result[0]=="pending"){
 			        	$('td:eq(0)', nRow).css("color" , "#F69828");
@@ -71,7 +71,6 @@
 				url      : "/"+app_name+"/gettodaysappointments/",
 			    dataType : "json",
 				success  : function(result) {
-					var sr = 1;
 					
 					for (var i = 0; i < result.length; i++) 
 					{
@@ -93,12 +92,12 @@
 					$(tapp).appendTo('#aptodaybody');
 					$("#aptodaytable").DataTable({
 						
-						responsive	:	true,
+						responsive	: true,
 						language	: {
 											"zeroRecords": "No Appointments to Show",
 									  },
 									  
-						"fnRowCallback": function(nRow, result, iDisplayIndex, iDisplayIndexFull) {
+						"fnRowCallback": function(nRow, result) {
 					        if (result[0]=="pending"){
 					        	$('td:eq(0)', nRow).css("color" , "#F69828");
 					        }
