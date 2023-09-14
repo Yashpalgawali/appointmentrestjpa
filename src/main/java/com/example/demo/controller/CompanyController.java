@@ -3,97 +3,127 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.model.Company;
 import com.example.demo.service.CompanyService;
 
-@Controller
+@RestController
+@CrossOrigin("*")
+@RequestMapping("company")
 public class CompanyController {
 
 	@Autowired
 	CompanyService compserv;
 	
-	@GetMapping("/addcompany")
-	public String addCompany(){
-		return "AddCompany";
+	
+	@GetMapping("/")
+	public ResponseEntity<List<Company>> viewCompanies() {
+		List<Company> clist= compserv.getAllCOmpanies();
+		return new ResponseEntity<List<Company>>(clist,HttpStatus.OK);
 	}
 	
-	@RequestMapping("/savecompany")
-	public String saveCompany(@ModelAttribute("Company")Company comp, RedirectAttributes attr)
+	@PostMapping("/")
+	public ResponseEntity<List<Company>> saveCompany(@RequestBody Company comp, RedirectAttributes attr)
 	{
 		Company company = compserv.saveCompany(comp);
-		if(company!=null)
-		{
-			attr.addFlashAttribute("response", "Company is saved successfully");
-			return "redirect:/viewcompanies";
+		if(company!=null) {
+			return new ResponseEntity<List<Company>>(compserv.getAllCOmpanies() ,HttpStatus.OK);
 		}
 		else {
-			attr.addFlashAttribute("reserr", "Company is not saved");
-			return "redirect:/viewcompanies";
+			return new ResponseEntity<List<Company>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@GetMapping("/viewcompanies")
-	public String viewCompanies(Model model)
+	@GetMapping("/{id}")
+	public  ResponseEntity<Company> editCompById(@PathVariable("id") String id, Model model , RedirectAttributes attr) 
 	{
-		List<Company> clist= compserv.getAllCOmpanies();
-		
-		for(int i=0;i<clist.size();i++)
-		{
-			System.err.println(clist.get(i).toString());
-		}
-		//clist.stream().forEach(e->System.err.println(e.getComp_name()));
-		
-		model.addAttribute("clist", clist);
-		return "ViewCompany";
-	}
-	
-	@GetMapping("/editcompbyid/{id}")
-	public String editCompById(@PathVariable("id") String id, Model model , RedirectAttributes attr) 
-	{
-		
 		if(id!="") {
 			Company comp = compserv.getCompanyById(id);
-			if(comp!=null)
-			{
-				model.addAttribute("comp", comp);
-				return "EditCompany";
+			if(comp!=null) {
+				return  new ResponseEntity<Company>(HttpStatus.OK);
 			}
 			else {
-				attr.addFlashAttribute("reserr", "No Company found for given ID");
-				return "redirect:/viewcompanies";
+				return  new ResponseEntity<Company>(HttpStatus.NOT_FOUND);
 			}
-			
 		}
-		else{
-			attr.addFlashAttribute("reserr", "No Company found for given ID");
-			return "redirect:/viewcompanies";
+		else {
+			return  new ResponseEntity<Company>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
-	@RequestMapping("/updatecompany")
-	public String updateCompany(@ModelAttribute("Company")Company company,RedirectAttributes attr)
+	@PutMapping("/updatecompany")
+	public ResponseEntity<List<Company>> updateCompany(@RequestBody Company company)
 	{
-		
 		int result = compserv.updateCompany(company);
-		if(result > 0)
-		{
-			attr.addFlashAttribute("response", "Company updated successfully");
-			return "redirect:/viewcompanies";
+		if(result > 0) {
+			return  new ResponseEntity<List<Company>>(HttpStatus.NOT_FOUND);
 		}
 		else {
-			attr.addFlashAttribute("reserr", "Company is not updated ");
-			return "redirect:/viewcompanies";
+			return  new ResponseEntity<List<Company>>(HttpStatus.NOT_FOUND);
 		}
-		
 	}
+	
+//	@GetMapping("/viewcompanies")
+//	public String viewCompanies(Model model)
+//	{
+//		List<Company> clist= compserv.getAllCOmpanies();
+//		
+//		model.addAttribute("clist", clist);
+//		return "ViewCompany";
+//	}
+	
+//	@GetMapping("/editcompbyid/{id}")
+//	public String editCompById(@PathVariable("id") String id, Model model , RedirectAttributes attr) 
+//	{
+//		
+//		if(id!="") {
+//			Company comp = compserv.getCompanyById(id);
+//			if(comp!=null)
+//			{
+//				model.addAttribute("comp", comp);
+//				return "EditCompany";
+//			}
+//			else {
+//				attr.addFlashAttribute("reserr", "No Company found for given ID");
+//				return "redirect:/viewcompanies";
+//			}
+//			
+//		}
+//		else{
+//			attr.addFlashAttribute("reserr", "No Company found for given ID");
+//			return "redirect:/viewcompanies";
+//		}
+//	}
+	
+//	@RequestMapping("/updatecompany")
+//	public String updateCompany(@ModelAttribute("Company")Company company,RedirectAttributes attr)
+//	{
+//		
+//		int result = compserv.updateCompany(company);
+//		if(result > 0)
+//		{
+//			attr.addFlashAttribute("response", "Company updated successfully");
+//			return "redirect:/viewcompanies";
+//		}
+//		else {
+//			attr.addFlashAttribute("reserr", "Company is not updated ");
+//			return "redirect:/viewcompanies";
+//		}
+//		
+//	}
 }

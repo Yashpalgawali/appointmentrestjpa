@@ -50,7 +50,8 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 					 "/getdeptbycompid/**","/getdeptbyempid/**","/getDeptByEmpId/**","/forgotpass","/forgotpassword",
 					 "/confotppass","/resources/static/**","/css/**","/js/**")
 		.permitAll()
-		.anyRequest().hasAnyAuthority("ROLE_ADMIN")
+		.anyRequest().permitAll()
+		//.anyRequest().hasAnyAuthority("ROLE_ADMIN")
 		
 		.and()
 		.formLogin()
