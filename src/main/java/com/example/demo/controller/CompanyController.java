@@ -5,73 +5,71 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.model.Company;
 import com.example.demo.service.CompanyService;
 
 @RestController
-@CrossOrigin("*")
-@RequestMapping("company")
+@CrossOrigin(origins="*")
+@RequestMapping("company") 
 public class CompanyController {
 
 	@Autowired
 	CompanyService compserv;
 	
-	
 	@GetMapping("/")
 	public ResponseEntity<List<Company>> viewCompanies() {
 		List<Company> clist= compserv.getAllCOmpanies();
-		return new ResponseEntity<List<Company>>(clist,HttpStatus.OK);
+		if(clist.size()>0) {
+			return new ResponseEntity<List<Company>>(clist,HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<List<Company>>(HttpStatus.NO_CONTENT);
+		}
 	}
 	
 	@PostMapping("/")
-	public ResponseEntity<List<Company>> saveCompany(@RequestBody Company comp, RedirectAttributes attr)
-	{
+	public ResponseEntity<Company> saveCompany(@RequestBody Company comp) {
+		
 		Company company = compserv.saveCompany(comp);
 		if(company!=null) {
-			return new ResponseEntity<List<Company>>(compserv.getAllCOmpanies() ,HttpStatus.OK);
+			return new ResponseEntity<Company>(company ,HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<List<Company>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Company>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@GetMapping("/{id}")
-	public  ResponseEntity<Company> editCompById(@PathVariable("id") String id, Model model , RedirectAttributes attr) 
-	{
+	public  ResponseEntity<Company> editCompById(@PathVariable("id") String id) {
 		if(id!="") {
 			Company comp = compserv.getCompanyById(id);
 			if(comp!=null) {
-				return  new ResponseEntity<Company>(HttpStatus.OK);
+				return new ResponseEntity<Company>(comp,HttpStatus.OK);
 			}
 			else {
-				return  new ResponseEntity<Company>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Company>(HttpStatus.NOT_FOUND);
 			}
 		}
 		else {
-			return  new ResponseEntity<Company>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Company>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
-	@PutMapping("/updatecompany")
-	public ResponseEntity<List<Company>> updateCompany(@RequestBody Company company)
-	{
+	@PutMapping("/")
+	public ResponseEntity<List<Company>> updateCompany(@RequestBody Company company) {
 		int result = compserv.updateCompany(company);
 		if(result > 0) {
-			return  new ResponseEntity<List<Company>>(HttpStatus.NOT_FOUND);
+			return  new ResponseEntity<List<Company>>(compserv.getAllCOmpanies(), HttpStatus.OK);
 		}
 		else {
 			return  new ResponseEntity<List<Company>>(HttpStatus.NOT_FOUND);

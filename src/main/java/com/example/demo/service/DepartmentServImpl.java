@@ -20,7 +20,6 @@ public class DepartmentServImpl implements DepartmentService {
 	@Autowired
 	ActivityService actserv;
 	
-
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 	LocalDateTime today = LocalDateTime.now();  
 	
@@ -28,16 +27,14 @@ public class DepartmentServImpl implements DepartmentService {
 	public Department saveDepartment(Department dept) {
 		// TODO Auto-generated method stub
 		Department depart = deptrepo.save(dept);
-		if(depart!=null)
-		{
+		if(depart!=null) {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Department "+depart.getDept_name()+" is saved");
 			act.setActivity_date(dtf.format(today));
 			actserv.saveActivity(act);
 			return depart;
 		}
-		else
-		{
+		else {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Department "+dept.getDept_name()+" is not saved");
 			act.setActivity_date(dtf.format(today));
@@ -80,6 +77,12 @@ public class DepartmentServImpl implements DepartmentService {
 			actserv.saveActivity(act);
 			return res;
 		}
+	}
+
+	@Override
+	public List<Department> getAllDepartments() {
+		// TODO Auto-generated method stub
+		return deptrepo.getAllDepartments();
 	}
 
 }

@@ -41,27 +41,43 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
 
-		http
-		.authorizeHttpRequests()
-		.antMatchers("/","/bookappointment","/saveappointment","/viewappointments","/confotppassword",
-					 "/getallappointments","/searchappointment","/searchappointbyemail","/changepassword",
-					 "/confotp","/confotprl","/viewappointmentbyemail","/getallappointmentsbyemail/**","/changepass",
-					 "/gettodaysappointmentsbyemail/**","/confappointment/**","/declineappointment/**",
-					 "/getdeptbycompid/**","/getdeptbyempid/**","/getDeptByEmpId/**","/forgotpass","/forgotpassword",
-					 "/confotppass","/resources/static/**","/css/**","/js/**")
-		.permitAll()
-		.anyRequest().permitAll()
-		//.anyRequest().hasAnyAuthority("ROLE_ADMIN")
+		http.csrf().disable()
+			.authorizeRequests()
+			.anyRequest()
+			.permitAll()
+//			.and()
+//			.formLogin()
+//			.permitAll()
+//			.defaultSuccessUrl("/adminhome", true)
+//			
+//			.and()
+//			.logout()
+//			.logoutSuccessUrl("/")
+			;
+//		http
+//		.authorizeHttpRequests()
+//		.antMatchers("/","/addcompany","/bookappointment","/saveappointment","/viewappointments","/confotppassword",
+//					 "/getallappointments","/searchappointment","/searchappointbyemail","/changepassword",
+//					 "/confotp","/confotprl","/viewappointmentbyemail","/getallappointmentsbyemail/**","/changepass",
+//					 "/gettodaysappointmentsbyemail/**","/confappointment/**","/declineappointment/**",
+//					 "/getdeptbycompid/**","/getdeptbyempid/**","/getDeptByEmpId/**","/forgotpass","/forgotpassword",
+//					 "/confotppass","/resources/static/**","/css/**","/js/**")
+//		.permitAll()
+//		.anyRequest().permitAll()
 		
-		.and()
-		.formLogin()
-		.permitAll()
-		.defaultSuccessUrl("/adminhome", true)
 		
-		.and()
-		.logout()
-		.logoutSuccessUrl("/")
-		;
+	
+//		//.anyRequest().hasAnyAuthority("ROLE_ADMIN")
+//		
+//		.and()
+//		.formLogin()
+//		.permitAll()
+//		.defaultSuccessUrl("/adminhome", true)
+//		
+//		.and()
+//		.logout()
+//		.logoutSuccessUrl("/")
+//		;
 		
 	}
 	

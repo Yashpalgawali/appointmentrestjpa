@@ -22,48 +22,46 @@ public class CompanyServImpl implements CompanyService {
 	ActivityService actserv;
 	
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-	LocalDateTime today = LocalDateTime.now();  
-	   
+	LocalDateTime today = LocalDateTime.now();
 	
 	@Override
 	public Company saveCompany(Company comp) {
-		// TODO Auto-generated method stub
+	
 		Company cmpny = comprepo.save(comp);
-		if(cmpny!=null)
-		{
+		if(cmpny!=null) {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Company "+comp.getComp_name()+" saved");
 			act.setActivity_date(dtf.format(today));
 			actserv.saveActivity(act);
 			return cmpny;
 		}
-		else
-		{
+		else {
 			return cmpny;
 		}
 	}
 
 	@Override
 	public List<Company> getAllCOmpanies() {
-		// TODO Auto-generated method stub
 		return comprepo.findAll();
 	}
 
 	@Override
 	public Company getCompanyById(String id) {
-		// TODO Auto-generated method stub
 		Long cid =Long.parseLong(id);
-		
-		return comprepo.findById(cid).get();
+		try {
+			return comprepo.findById(cid).get();
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public int updateCompany(Company comp) {
-		// TODO Auto-generated method stub
 		
 		int res = comprepo.updateCompanyById(comp.getComp_name(), comp.getCompany_id());
 		
-		if(res>0){
+		if(res>0) {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Company "+comp.getComp_name()+" updated");
 			act.setActivity_date(dtf.format(today));
