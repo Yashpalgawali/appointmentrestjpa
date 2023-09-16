@@ -9,8 +9,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +33,8 @@ import com.example.demo.service.EmployeeService;
 import com.example.demo.service.OtpService;
 
 @Controller
+@CrossOrigin("*")
+@RequestMapping("appointment")
 public class AppointmentController {
 
 	@Autowired
@@ -46,6 +51,14 @@ public class AppointmentController {
 	
 	@Autowired
 	Environment env;
+	
+	
+
+	@GetMapping("/")
+	public ResponseEntity<List<Appointment>> getAllAppointments() {
+		return new ResponseEntity<List<Appointment>>(appointserv.getAllAppointments(),HttpStatus.OK);
+	}
+	
 	
 	@GetMapping("/bookappointment")
 	public String bookAppointment(Model model)
@@ -83,14 +96,14 @@ public class AppointmentController {
 		return "ViewAppointments";
 	}
 	
-	
-	@RequestMapping("/getallappointments")
-	@ResponseBody
-	public List<Appointment> getAllAppointments()
-	{
-		return appointserv.getAllAppointments();
-	}
-	
+//	
+//	@RequestMapping("/getallappointments")
+//	@ResponseBody
+//	public List<Appointment> getAllAppointments()
+//	{
+//		return appointserv.getAllAppointments();
+//	}
+//	
 	
 	@GetMapping("/searchappointment")
 	public String searchAppointment()

@@ -64,7 +64,11 @@ public class DepartmentController {
 	@GetMapping("getdeptbycompid/{id}")
 	public ResponseEntity<List<Department>> getDepartmentsByCompId(@PathVariable("id") Long id) {
 		List<Department> deplist = deptserv.getAllDepartmentsByCompId(""+id);
-		return new ResponseEntity<List<Department>>(deplist,HttpStatus.OK);
+		if(deplist.size()>0) {
+			return new ResponseEntity<List<Department>>(deplist,HttpStatus.OK);
+		}
+		else
+			return new ResponseEntity<List<Department>>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/{id}")

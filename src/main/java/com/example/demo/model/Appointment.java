@@ -13,7 +13,6 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name="tbl_appointment")
-
 public class Appointment {
 
 	@Id
@@ -49,6 +48,9 @@ public class Appointment {
 	@Transient
 	private String admemail;
 	
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name="emp_id",referencedColumnName = "emp_id") 
+	private Employee employee;
 	
 	public String getAdmemail() {
 		return admemail;
@@ -58,12 +60,6 @@ public class Appointment {
 		this.admemail = admemail;
 	}
 
-	//@JsonIgnoreProperties
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name="emp_id",referencedColumnName = "emp_id") 
-	private Employee employee;
-
-		
 	public Integer getNew_otp() {
 		return new_otp;
 	}

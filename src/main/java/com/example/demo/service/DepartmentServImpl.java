@@ -47,7 +47,14 @@ public class DepartmentServImpl implements DepartmentService {
 	public List<Department> getAllDepartmentsByCompId(String cid) {
 		// TODO Auto-generated method stub
 		Long cmpid = Long.valueOf(cid);
-		return deptrepo.getAllDepartmentsByCompId(cmpid);
+		try {
+			List<Department> deplist = deptrepo.getAllDepartmentsByCompId(cmpid);
+			return deplist;
+		}
+		catch(Exception e) {
+			return  null;
+		}
+		
 	}
 
 	@Override
