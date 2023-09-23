@@ -76,6 +76,11 @@ public class CompanyController {
 		}
 	}
 	
+	@GetMapping("/comp")
+	public String getComp()
+	{
+		return "Called from ";
+	}
 //	@GetMapping("/viewcompanies")
 //	public String viewCompanies(Model model)
 //	{

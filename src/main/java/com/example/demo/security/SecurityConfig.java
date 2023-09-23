@@ -3,6 +3,7 @@ package com.example.demo.security;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SuppressWarnings("deprecation")
 @Configuration
@@ -39,23 +42,34 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// TODO Auto-generated method stub
-
-		http.csrf().disable()
-			.authorizeRequests()
-			.anyRequest()
-			.permitAll()
+		
+/* START OF WORKING LOGIN Credentials*/		
+//		http.cors();
+//		http.
+//		csrf().disable()
+//		.authorizeRequests()
+//		.anyRequest()
+//		.fullyAuthenticated()
+//		.and()
+//		.httpBasic();
+//		;
+/* END OF WORKING LOGIN Credentials*/
+		
+//		http.csrf().disable()
+//			.authorizeRequests()
 //			.and()
 //			.formLogin()
+//			.loginProcessingUrl("/login")
+//			.defaultSuccessUrl("/company/comp")
 //			.permitAll()
-//			.defaultSuccessUrl("/adminhome", true)
-//			
 //			.and()
 //			.logout()
 //			.logoutSuccessUrl("/")
-			;
-//		http
-//		.authorizeHttpRequests()
+//			;
+		http.csrf().disable();
+		http.cors();
+		http
+		.authorizeHttpRequests()
 //		.antMatchers("/","/addcompany","/bookappointment","/saveappointment","/viewappointments","/confotppassword",
 //					 "/getallappointments","/searchappointment","/searchappointbyemail","/changepassword",
 //					 "/confotp","/confotprl","/viewappointmentbyemail","/getallappointmentsbyemail/**","/changepass",
@@ -69,15 +83,15 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	
 //		//.anyRequest().hasAnyAuthority("ROLE_ADMIN")
 //		
-//		.and()
-//		.formLogin()
-//		.permitAll()
-//		.defaultSuccessUrl("/adminhome", true)
-//		
-//		.and()
-//		.logout()
-//		.logoutSuccessUrl("/")
-//		;
+		.and()
+		.formLogin()
+		.permitAll()
+		.defaultSuccessUrl("/adminhome", true)
+		
+		.and()
+		.logout()
+		.logoutSuccessUrl("/")
+		;
 		
 	}
 	
@@ -85,5 +99,17 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	public void configure(WebSecurity web) throws Exception {
 		// TODO Auto-generated method stub
 		//web.ignoring().antMatchers("/resources/static/**","/css/**","/js/**");
+	}
+	
+	
+	public WebMvcConfigurer corsConfigurer()
+	{
+		return new WebMvcConfigurer() {
+			public void addCorsMapping(CorsRegistry reg)
+			{
+				reg.addMapping("/*").allowedOrigins("*");
+			}
+			
+		};
 	}
 }

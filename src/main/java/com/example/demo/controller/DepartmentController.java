@@ -71,6 +71,16 @@ public class DepartmentController {
 			return new ResponseEntity<List<Department>>(HttpStatus.NO_CONTENT);
 	}
 	
+	@GetMapping("getdeptbycompname/{id}")
+	public ResponseEntity<List<Department>> getDepartmentsByCompName(@PathVariable("id") String name) {
+		List<Department> deplist = deptserv.getAllDepartmentsByCompName(name);
+		if(deplist.size()>0) {
+			return new ResponseEntity<List<Department>>(deplist,HttpStatus.OK);
+		}
+		else
+			return new ResponseEntity<List<Department>>(HttpStatus.NO_CONTENT);
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Department> getDeptByid(@PathVariable("id") String id) {
 		Department dept = deptserv.getDeptByDeptId(id);

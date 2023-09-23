@@ -15,4 +15,6 @@ public interface DepartmentService {
 	public int updateDepartment(Department dept);
 	
 	public List<Department> getAllDepartments();
+
+	public List<Department> getAllDepartmentsByCompName(String name);
 }

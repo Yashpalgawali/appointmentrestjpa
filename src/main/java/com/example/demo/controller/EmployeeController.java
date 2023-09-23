@@ -40,13 +40,14 @@ public class EmployeeController {
 	
 	
 	@PostMapping("/")
-	public ResponseEntity<Employee> saveEmployee(@RequestBody Employee emp) {
+	public ResponseEntity<List<Employee>> saveEmployee(@RequestBody Employee emp) {
+		System.err.println("Inside save employee controller \n"+emp.toString()+"\nDesignation = "+emp.getDesignation().getDesig_name());
 		Employee empl = empserv.saveEmployee(emp);
 		if(empl!=null) {
-			return new ResponseEntity<Employee>(empl,HttpStatus.OK);
+			return new ResponseEntity<List<Employee>>(empserv.getAllEmployees(),HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<Employee>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<List<Employee>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -72,7 +73,7 @@ public class EmployeeController {
 		}
 	}
 	
-	@PutMapping("/")
+	@PostMapping("/updateemployee")
 	public ResponseEntity<List<Employee>> updateEmployee(@RequestBody Employee empl)
 	{
 		int res = empserv.updateEmployee(empl);
@@ -85,7 +86,7 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/getdeptbyempid/{id}")
-	public  ResponseEntity<List<Employee>>   getEmployeeByEmpId(@PathVariable("id")String id,Model model)  {
+	public  ResponseEntity<List<Employee>> getEmployeeByEmpId(@PathVariable("id")String id,Model model)  {
 		List<Employee> elist = empserv.getDeptByEmpId(id);
 		return new ResponseEntity<List<Employee>>(elist,HttpStatus.OK) ;
 	}

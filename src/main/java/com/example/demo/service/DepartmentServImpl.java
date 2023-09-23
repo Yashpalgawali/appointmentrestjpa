@@ -92,4 +92,10 @@ public class DepartmentServImpl implements DepartmentService {
 		return deptrepo.getAllDepartments();
 	}
 
+	@Override
+	public List<Department> getAllDepartmentsByCompName(String name) {
+		// TODO Auto-generated method stub
+		return deptrepo.getAllDepartmentsByCompName(name);
+	}
+
 }

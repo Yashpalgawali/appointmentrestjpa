@@ -6,37 +6,45 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.model.Employee;
 import com.example.demo.model.Users;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.OtpService;
 import com.example.demo.service.UsersService;
 
-@Controller
+@RestController
+@CrossOrigin("*")
+@RequestMapping("users")
 public class UserController {
 
 	@Autowired
 	UsersService userserv;
-	
-	@GetMapping("/forgotpass")
-	public String forgotPassword()
-	{
-		return "ForgotPassword";
-	}
 	
 	@Autowired
 	OtpService otpserv;
 	
 	@Autowired
 	EmailService emailserv;
+	
+	@GetMapping("/forgotpass")
+	public String forgotPassword()
+	{
+		return "ForgotPassword";
+	}
+//	
+//	@GetMapping("/login")
+//	public String loginPage()
+//	{
+//		return "Login";
+//	}
 	
 	@RequestMapping("/forgotpassword")
 	public String forGotPassword(@ModelAttribute("Users") Users users,HttpSession sess ,RedirectAttributes attr)
@@ -61,27 +69,26 @@ public class UserController {
 	}
 	
 	@GetMapping("/confotppass")
-	public String confOTPForgotPassword(@ModelAttribute("Users") Users users,Model model,HttpSession sess)
-	{
+	public String confOTPForgotPassword(@ModelAttribute("Users") Users users,Model model,HttpSession sess) {
 		model.addAttribute("vemail", sess.getAttribute("vemail"));
 		return "ConfirmOtpForgotPass";
 	}
 	
 	@PostMapping("/confotppassword")
-	public String confirmOtpPassword(@ModelAttribute("Users") Users users, HttpSession sess,RedirectAttributes attr)
-	{
+	public String confirmOtpPassword(@ModelAttribute("Users") Users users, 
+									HttpSession sess,RedirectAttributes attr) {
 		Integer n_otp = Integer.parseInt(users.getCnf_otp());
 		int  new_otp = n_otp;
 		Integer o_otp = (Integer) sess.getAttribute("otp");;
 		int  old_otp = o_otp;
 		
-		if(new_otp==old_otp){
+		if(new_otp==old_otp) {
 			Users user = userserv.getUserByEmailId(users.getUser_email());
 			otpserv.clearOtp((String)sess.getAttribute("vemail"));
 			sess.setAttribute("userid", user.getUser_id());
 			return "redirect:/changepass";
 		}
-		else{
+		else {
 			attr.addFlashAttribute("reserr", "OTP did not matched");
 			return "redirect:/confotppass";
 		}

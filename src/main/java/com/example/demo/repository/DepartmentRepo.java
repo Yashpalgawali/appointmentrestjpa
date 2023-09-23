@@ -18,6 +18,11 @@ public interface DepartmentRepo extends JpaRepository<Department, Long> {
 	@Query("SELECT d FROM Department d JOIN  d.company c WHERE d.company.company_id=?1" )
 	public List<Department> getAllDepartmentsByCompId(Long cid);
 	
+	
+	@Query("SELECT d FROM Department d JOIN  d.company c WHERE d.company.comp_name=?1" )
+	public List<Department> getAllDepartmentsByCompName(String name);
+	
+	
 	@Query("SELECT d FROM Department d JOIN d.company  WHERE d.dept_id=?1")
 	public Department getDepartmentByDeptId(Long did);
 	
