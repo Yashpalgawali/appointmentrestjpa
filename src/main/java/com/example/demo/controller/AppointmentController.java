@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -59,6 +60,21 @@ public class AppointmentController {
 		return new ResponseEntity<List<Appointment>>(appointserv.getAllAppointments(),HttpStatus.OK);
 	}
 	
+	@PostMapping("/")
+	public ResponseEntity<List<Appointment>> saveAppointment(@RequestBody Appointment appoint, HttpSession sess )
+	{	
+		appoint.setStatus("pending");
+		Appointment appointment = appointserv.saveAppointment(appoint);
+		
+		if(appointment!=null)
+		{
+			sess.setAttribute("vemail", appoint.getVis_email());
+			return new  ResponseEntity<List<Appointment>>(appointserv.getAllAppointmentsByEmail(appoint.getVis_email()) ,HttpStatus.OK);
+		}
+		else {
+			return new  ResponseEntity<List<Appointment>>(HttpStatus.NO_CONTENT);
+		}
+	}
 	
 	@GetMapping("/bookappointment")
 	public String bookAppointment(Model model)
@@ -69,23 +85,23 @@ public class AppointmentController {
 		return "BookAppointment";
 	}
 	
-	@RequestMapping("/saveappointment")
-	public String saveAppointment(@ModelAttribute("Appointment")Appointment appoint, HttpSession sess ,RedirectAttributes attr)
-	{	
-		appoint.setStatus("pending");
-		Appointment appointment = appointserv.saveAppointment(appoint);
-		
-		if(appointment!=null)
-		{
-			sess.setAttribute("vemail", appoint.getVis_email());
-			attr.addFlashAttribute("reswait", "Appointment is booked and waiting for the confirmation");
-			return "redirect:/viewappointmentbyemail";
-		}
-		else {
-			attr.addFlashAttribute("reserr", "Appointment is not booked ");
-			return "redirect:/viewappointmentbyemail";
-		}
-	}
+//	@RequestMapping("/saveappointment")
+//	public String saveAppointment(@ModelAttribute("Appointment")Appointment appoint, HttpSession sess ,RedirectAttributes attr)
+//	{	
+//		appoint.setStatus("pending");
+//		Appointment appointment = appointserv.saveAppointment(appoint);
+//		
+//		if(appointment!=null)
+//		{
+//			sess.setAttribute("vemail", appoint.getVis_email());
+//			attr.addFlashAttribute("reswait", "Appointment is booked and waiting for the confirmation");
+//			return "redirect:/viewappointmentbyemail";
+//		}
+//		else {
+//			attr.addFlashAttribute("reserr", "Appointment is not booked ");
+//			return "redirect:/viewappointmentbyemail";
+//		}
+//	}
 	
 	@GetMapping("/viewappointments")
 	public String viewAppointments(Model model)

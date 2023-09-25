@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpSession;
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import com.example.demo.model.Appointment;
 import com.example.demo.service.AppointmentService;
@@ -98,12 +100,28 @@ public class AdminAppointmentController {
 		model.addAttribute("pending_count", pending);
 		model.addAttribute("confirm_count", confirm);
 		model.addAttribute("decline_count", decline );
-//		model.addAttribute("tot_count", appointserv.getTotalAppointmentCount());
-//		model.addAttribute("pending_count", appointserv.getPendingAppointmentCount());
-//		model.addAttribute("confirm_count", appointserv.getConfirmedAppointmentCount());
-//		model.addAttribute("decline_count", appointserv.getDeclinedAppointmentCount() );
+
+		Map<String, Long> cntmap =null;
+		
+		cntmap.put("tot_count", tot_count);
+		cntmap.put("pending", pending);
+		cntmap.put("confirm", confirm);
+		cntmap.put("decline", decline);
+		
 		
 		return "AdminHome";
+	}
+	
+	@GetMapping("getcounts")
+	public ResponseEntity<List<Integer>> getAppointmentCounts()
+	{
+		List<Integer> apcounts = new ArrayList<>();
+		apcounts.add( appointserv.getConfirmedAppointmentCount());
+		apcounts.add( appointserv.getDeclinedAppointmentCount() );
+		apcounts.add( appointserv.getPendingAppointmentCount());
+		apcounts.add( appointserv.getTotalAppointmentCount());
+		apcounts.stream().forEach(e->System.err.println(e));
+		return new ResponseEntity<List<Integer>>(apcounts,HttpStatus.OK);
 	}
 	
 	@GetMapping("/adminbookappoint")

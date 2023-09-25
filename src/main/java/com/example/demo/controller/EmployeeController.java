@@ -76,6 +76,7 @@ public class EmployeeController {
 	@PostMapping("/updateemployee")
 	public ResponseEntity<List<Employee>> updateEmployee(@RequestBody Employee empl)
 	{
+		System.err.println(empl.toString());
 		int res = empserv.updateEmployee(empl);
 		if(res > 0) {
 			return new ResponseEntity<List<Employee>>(empserv.getAllEmployees(),HttpStatus.OK);
