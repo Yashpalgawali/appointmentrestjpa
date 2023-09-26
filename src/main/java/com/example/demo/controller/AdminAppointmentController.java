@@ -4,7 +4,6 @@ package com.example.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,11 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,22 +43,21 @@ public class AdminAppointmentController {
 	@Autowired
 	Environment env;
 	
-	
 	@GetMapping("/{id}")
-	public ResponseEntity<Appointment> getAppointmentById(@PathVariable("id")Long id){
-
+	public ResponseEntity<Appointment> getAppointmentById(@PathVariable("id")Long id) {
 		return new ResponseEntity<Appointment>(appointserv.getAppointmentById(id),HttpStatus.OK);
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<List<Appointment>> getAllAppointment(){
-
+	public ResponseEntity<List<Appointment>> getAllAppointment() {
 		return new ResponseEntity<List<Appointment>>(appointserv.getAllAppointments(),HttpStatus.OK);
 	}
 	
 	@PostMapping("/")
-	public ResponseEntity<Appointment> saveAdminBookAppointment(@RequestBody Appointment appoint)
-	{
+	public ResponseEntity<Appointment> saveAdminBookAppointment(@RequestBody Appointment appoint) {
+		
+		System.err.println("Inside saveAdminBookAppointment() \n"+appoint.getEmployee().toString());
+		
 		Appointment apt = appointserv.saveAppointment(appoint);
 		if(apt!=null) {
 			return new ResponseEntity<Appointment>(apt,HttpStatus.OK);
@@ -71,13 +68,13 @@ public class AdminAppointmentController {
 	}
 	
 	@PutMapping("/")
-	public ResponseEntity<Appointment> updateAppointment(@RequestBody Appointment appoint) {
+	public ResponseEntity<List<Appointment>> updateAppointment(@RequestBody Appointment appoint) {
 		int res = appointserv.updateAppointment(appoint);
 		if(res>0) {
-			return new ResponseEntity<Appointment>(appointserv.getAppointmentById(appoint.getAppoint_id()) ,HttpStatus.OK);
+			return new ResponseEntity<List<Appointment>>(appointserv.getAllAppointments() ,HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<Appointment>(HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<List<Appointment>>(HttpStatus.NOT_MODIFIED);
 		}
 	}
 	

@@ -51,11 +51,11 @@ public class EmployeeServImpl implements EmployeeService {
 	}
 
 	@Override
-	public Employee getEmployeeById(String id) {
+	public Employee getEmployeeById(Long id) {
 		// TODO Auto-generated method stub
-		Long eid = Long.parseLong(id);
+		
 		try {
-			return emprepo.findById(eid).get() ;
+			return emprepo.findById(id).get() ;
 		}
 		catch(Exception e) {
 			return null;
@@ -94,6 +94,12 @@ public class EmployeeServImpl implements EmployeeService {
 	public Employee getempbyemail(String emp_email) {
 		// TODO Auto-generated method stub
 		return emprepo.getEmployeByEmpEmail(emp_email);
+	}
+
+	@Override
+	public Employee getEmployeeByName(String name) {
+		// TODO Auto-generated method stub
+		return emprepo.getDeptByEmpName(name).get(0);
 	}
 
 }

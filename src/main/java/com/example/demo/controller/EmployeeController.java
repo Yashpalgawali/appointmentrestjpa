@@ -63,7 +63,7 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") String id) {
+	public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") Long id) {
 		Employee emp = empserv.getEmployeeById(id);
 		if(emp!=null) {
 			return new ResponseEntity<Employee>(emp,HttpStatus.OK);
@@ -72,11 +72,20 @@ public class EmployeeController {
 			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
 		}
 	}
+//	@GetMapping("/{name}")
+//	public ResponseEntity<Employee> getEmployeeByName(@PathVariable("name") String name) {
+//		Employee emp = empserv.getEmployeeByName(name);
+//		if(emp!=null) {
+//			return new ResponseEntity<Employee>(emp,HttpStatus.OK);
+//		}
+//		else {
+//			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
+//		}
+//	}
 	
 	@PostMapping("/updateemployee")
-	public ResponseEntity<List<Employee>> updateEmployee(@RequestBody Employee empl)
-	{
-		System.err.println(empl.toString());
+	public ResponseEntity<List<Employee>> updateEmployee(@RequestBody Employee empl) {
+		
 		int res = empserv.updateEmployee(empl);
 		if(res > 0) {
 			return new ResponseEntity<List<Employee>>(empserv.getAllEmployees(),HttpStatus.OK);

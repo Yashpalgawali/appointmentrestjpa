@@ -45,6 +45,7 @@ public class AppointmentServImpl implements AppointmentService {
 	public Appointment saveAppointment(Appointment appoint) {
 		// TODO Auto-generated method stub
 		String appname = env.getProperty("spring.application.name");
+		appoint.setStatus("pending");
 		Appointment apoint = appointrepo.save(appoint); 
 		
 		if(apoint!=null)
@@ -67,10 +68,14 @@ public class AppointmentServImpl implements AppointmentService {
 			String cnfappoint = base_url+"/"+appname+"/confappointment/"+apoint.getAppoint_id();
 			String declineappoint = base_url+"/"+appname+"/declineappointment/"+apoint.getAppoint_id();
 			
-			emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          "+appoint.getVis_name()
+			if(appoint.getVis_purpose().length()>10)
+				emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          "+appoint.getVis_name()
 					+" needs an appointment regarding "+appoint.getVis_purpose().substring(0, 10)+" dated on "+appoint.getApdate()
 					+"  "+appoint.getAptime()+"\n\n Confirm Appointment \n"+cnfappoint+"\n\n Decline Appointment \n"+declineappoint, subject);
-			
+			else
+				emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          "+appoint.getVis_name()
+				+" needs an appointment regarding "+appoint.getVis_purpose().substring(0, appoint.getVis_purpose().length())+" dated on "+appoint.getApdate()
+				+"  "+appoint.getAptime()+"\n\n Confirm Appointment \n"+cnfappoint+"\n\n Decline Appointment \n"+declineappoint, subject);
 		   return apoint;
 		}
 		else

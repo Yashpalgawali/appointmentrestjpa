@@ -156,26 +156,6 @@ public class Appointment {
 	public void setOtp_num(Integer otp_num) {
 		this.otp_num = otp_num;
 	}
-	
-
-	public Appointment(Long appoint_id, String vis_name, String vis_email, String vis_contact, String vis_purpose,
-			String vcomp_name, String apdate, String aptime, String status, Integer otp_num, Integer new_otp,
-			String app_name, Employee employee) {
-		super();
-		this.appoint_id = appoint_id;
-		this.vis_name = vis_name;
-		this.vis_email = vis_email;
-		this.vis_contact = vis_contact;
-		this.vis_purpose = vis_purpose;
-		this.vcomp_name = vcomp_name;
-		this.apdate = apdate;
-		this.aptime = aptime;
-		this.status = status;
-		this.otp_num = otp_num;
-		this.new_otp = new_otp;
-		this.app_name = app_name;
-		this.employee = employee;
-	}
 
 	public String getApp_name() {
 		return app_name;

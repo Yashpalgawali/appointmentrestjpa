@@ -78,14 +78,13 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 //					 "/confotppass","/resources/static/**","/css/**","/js/**")
 //		.permitAll()
 //		.anyRequest().permitAll()
-		
-		
 	
 //		//.anyRequest().hasAnyAuthority("ROLE_ADMIN")
-//		
+
 		.and()
 		.formLogin()
 		.permitAll()
+		
 		.defaultSuccessUrl("/adminhome", true)
 		
 		.and()

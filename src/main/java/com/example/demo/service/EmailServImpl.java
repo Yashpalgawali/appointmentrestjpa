@@ -29,7 +29,7 @@ public class EmailServImpl implements EmailService {
 		message.setText(body);
 		try {
 			mailsend.send(message);
-			System.err.println("mail sent success");
+			
 		}
 		catch(Exception e)
 		{
