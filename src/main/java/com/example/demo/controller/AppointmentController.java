@@ -66,8 +66,7 @@ public class AppointmentController {
 		appoint.setStatus("pending");
 		Appointment appointment = appointserv.saveAppointment(appoint);
 		
-		if(appointment!=null)
-		{
+		if(appointment!=null) {
 			sess.setAttribute("vemail", appoint.getVis_email());
 			return new  ResponseEntity<List<Appointment>>(appointserv.getAllAppointmentsByEmail(appoint.getVis_email()) ,HttpStatus.OK);
 		}
@@ -76,14 +75,13 @@ public class AppointmentController {
 		}
 	}
 	
-	@GetMapping("/bookappointment")
-	public String bookAppointment(Model model)
-	{
-		List<Employee> elist = empserv.getAllEmployees();
-		model.addAttribute("elist", elist);
-		model.addAttribute("appname", env.getProperty("spring.application.name"));
-		return "BookAppointment";
-	}
+//	@GetMapping("/bookappointment")
+//	public String bookAppointment(Model model) {
+//		List<Employee> elist = empserv.getAllEmployees();
+//		model.addAttribute("elist", elist);
+//		model.addAttribute("appname", env.getProperty("spring.application.name"));
+//		return "BookAppointment";
+//	}
 	
 //	@RequestMapping("/saveappointment")
 //	public String saveAppointment(@ModelAttribute("Appointment")Appointment appoint, HttpSession sess ,RedirectAttributes attr)
@@ -121,33 +119,52 @@ public class AppointmentController {
 //	}
 //	
 	
-	@GetMapping("/searchappointment")
-	public String searchAppointment()
-	{
-		return "SearchAppointment";
-	}
+//	@GetMapping("/searchappointment")
+//	public String searchAppointment()
+//	{
+//		return "SearchAppointment";
+//	}
 	
-		
-	@PostMapping("/searchappointbyemail")
-	public String searchAppointmentByEmail(@ModelAttribute("Appointment") Appointment appoint,Model model , HttpServletRequest request ,HttpSession sess , RedirectAttributes attr)
+	
+	@GetMapping("/{vemail}")
+	public ResponseEntity<String> searchAppointmentByEmail(@PathVariable String vemail ,HttpServletRequest request ,HttpSession sess )
 	{
-		String vemail = appoint.getVis_email();
+		System.err.println("\n Inside search appointment byemail method\n Email= "+vemail);
 		List<Appointment> appointment = appointserv.getAllAppointmentsByEmail(vemail);
-		if(appointment!=null){
+		if(appointment!=null) {
 			otpserv.generateotp(vemail);
 			int otp = otpserv.getOtp(vemail);
 			sess.setAttribute("otp", otp);
 			sess.setAttribute("vemail", vemail);
 			emailserv.sendSimpleEmail(vemail, "Hi, your otp is "+otp, "Verification OTP");
 			
-			attr.addFlashAttribute("response", "Otp sent to your email");
-			return "redirect:/confotp";
+			return new ResponseEntity<String>(HttpStatus.OK);
 		}
-		else{
-			attr.addFlashAttribute("reserr", "No appointment found for "+vemail);
-			return "redirect:/searchappointment";
+		else {
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
 	}
+		
+//	@PostMapping("/searchappointbyemail")
+//	public String searchAppointmentByEmail(@ModelAttribute("Appointment") Appointment appoint,Model model , HttpServletRequest request ,HttpSession sess , RedirectAttributes attr)
+//	{
+//		String vemail = appoint.getVis_email();
+//		List<Appointment> appointment = appointserv.getAllAppointmentsByEmail(vemail);
+//		if(appointment!=null){
+//			otpserv.generateotp(vemail);
+//			int otp = otpserv.getOtp(vemail);
+//			sess.setAttribute("otp", otp);
+//			sess.setAttribute("vemail", vemail);
+//			emailserv.sendSimpleEmail(vemail, "Hi, your otp is "+otp, "Verification OTP");
+//			
+//			attr.addFlashAttribute("response", "Otp sent to your email");
+//			return "redirect:/confotp";
+//		}
+//		else{
+//			attr.addFlashAttribute("reserr", "No appointment found for "+vemail);
+//			return "redirect:/searchappointment";
+//		}
+//	}
 	
 	@GetMapping("/confotp")
 	public String confOTP(){

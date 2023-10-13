@@ -12,6 +12,7 @@
 	<artifactId>FinalSaveraAppointment</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+<!-- 	<packaging>jar</packaging> -->
 	<name>FinalSaveraAppointment</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -19,8 +20,7 @@
 		<start-class>com.example.demo.FinalSaveraAppointmentApplication</start-class>
 	</properties>
 	<dependencies>
-	
-	<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
