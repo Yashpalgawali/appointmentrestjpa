@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.model.AuthenticationBean;
 import com.example.demo.model.Users;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.OtpService;
@@ -33,13 +34,13 @@ public class UserController {
 	@Autowired
 	EmailService emailserv;
 	
-	@GetMapping("/login")
-	public String forgotPassword()
+	@GetMapping("/basicauth")
+	public AuthenticationBean authenticationBean()
 	{
-		System.err.println("inside login method");
-		return "ForgotPassword";
-	}
-//	
+		System.err.println("Inside Basic Authentication user Controller\n");
+		return new AuthenticationBean("You are authenticated");
+	} 
+	
 //	@GetMapping("/login")
 //	public String loginPage()
 //	{

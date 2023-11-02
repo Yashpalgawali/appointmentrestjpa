@@ -81,7 +81,7 @@ public class AdminAppointmentController {
 	@GetMapping("adminhome")
 	public String adminHome(Model model,HttpSession sess)
 	{
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
 		List<Appointment> aplist = appointserv.getAllAppointments();
 		//Stream<Appointment> aptstr = aplist.stream();
@@ -91,7 +91,7 @@ public class AdminAppointmentController {
 		
 		long decline = aplist.stream().filter(apt->apt.getStatus().equals("declined")).count();
 		
-		sess.setAttribute("username", auth.getName());
+		//sess.setAttribute("username", auth.getName());
 		
 		model.addAttribute("tot_count", tot_count);
 		model.addAttribute("pending_count", pending);
@@ -117,7 +117,7 @@ public class AdminAppointmentController {
 		apcounts.add( appointserv.getDeclinedAppointmentCount() );
 		apcounts.add( appointserv.getPendingAppointmentCount());
 		apcounts.add( appointserv.getTotalAppointmentCount());
-		apcounts.stream().forEach(e->System.err.println(e));
+		
 		return new ResponseEntity<List<Integer>>(apcounts,HttpStatus.OK);
 	}
 	

@@ -23,7 +23,6 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-		// TODO Auto-generated method stub
 	
 		auth.jdbcAuthentication()
 		.dataSource(datasource)
@@ -45,12 +44,16 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 		http
 			.csrf().disable()
 			.authorizeHttpRequests()
+			//.antMatchers("getdeptbycompid/**","getdeptbycompname/**","/getdeptbyempid/**","employee").permitAll()
 			.antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 			.anyRequest()
 			.authenticated() 
 			.and()
+			.logout()
+			.invalidateHttpSession(true)
+			.and()
 			.httpBasic();
-		
+		 
 	/* START OF WORKING LOGIN Credentials*/		
 //		http.cors();
 //		http.
