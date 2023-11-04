@@ -43,12 +43,15 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 		
 		http
 			.csrf().disable()
-			.authorizeHttpRequests()
-			//.antMatchers("getdeptbycompid/**","getdeptbycompname/**","/getdeptbyempid/**","employee").permitAll()
+			.authorizeRequests()
+			.antMatchers("/employee/","/appointment/","/appointment/*","/appointment/appointmentbymail/*","/appointment/getcounts").permitAll()
+			//.antMatchers(HttpMethod.OPTIONS , "/employee/").permitAll()
+			//.antMatchers("getdeptbycompid/**","getdeptbycompname/**","/getdeptbyempid/**","/employee/").permitAll()
 			.antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 			.anyRequest()
 			.authenticated() 
 			.and()
+			
 			.logout()
 			.invalidateHttpSession(true)
 			.and()
