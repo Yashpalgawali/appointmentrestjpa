@@ -44,9 +44,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 		http
 			.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/employee/","/appointment/","/appointment/*","/appointment/appointmentbymail/*","/appointment/getcounts").permitAll()
-			//.antMatchers(HttpMethod.OPTIONS , "/employee/").permitAll()
-			//.antMatchers("getdeptbycompid/**","getdeptbycompname/**","/getdeptbyempid/**","/employee/").permitAll()
+			.antMatchers("/employee/","/appointment/","/appointment/*","/appointment/appointmentbymail/*").permitAll()
 			.antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 			.anyRequest()
 			.authenticated() 
@@ -64,10 +62,10 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 //			.authorizeRequests()
 //			.anyRequest()
 //			.fullyAuthenticated()
-////			.and()
-////			.formLogin()
-////			.loginProcessingUrl("/login")
-////			.permitAll()
+//			.and()
+//			.formLogin()
+//			.loginProcessingUrl("/login")
+//			.permitAll()
 //			.and()
 //			
 //			.httpBasic()
@@ -100,18 +98,15 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 //		.anyRequest().permitAll()
 	
 //		//.anyRequest().hasAnyAuthority("ROLE_ADMIN")
-
 //		.and()
 //		.formLogin()
 //		.permitAll()
-//		
 //		.defaultSuccessUrl("/adminhome", true)
 //		
 //		.and()
 //		.logout()
 //		.logoutSuccessUrl("/")
 //		;
-		
 	}
 	
 //	@Override

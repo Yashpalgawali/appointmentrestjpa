@@ -105,13 +105,11 @@ public class AdminAppointmentController {
 		cntmap.put("confirm", confirm);
 		cntmap.put("decline", decline);
 		
-		
 		return "AdminHome";
 	}
 	
 	@GetMapping("getcounts")
-	public ResponseEntity<List<Integer>> getAppointmentCounts()
-	{
+	public ResponseEntity<List<Integer>> getAppointmentCounts() {
 		List<Integer> apcounts = new ArrayList<>();
 		apcounts.add( appointserv.getConfirmedAppointmentCount());
 		apcounts.add( appointserv.getDeclinedAppointmentCount() );
@@ -147,7 +145,7 @@ public class AdminAppointmentController {
 //	}
 	
 	@GetMapping("adminviewappoints")
-	public String adminViewAppointments(Model model,HttpSession sess){
+	public String adminViewAppointments(Model model,HttpSession sess) {
 		model.addAttribute("appname", env.getProperty("spring.application.name"));
 		String admemail = (String) sess.getAttribute("username");
 		model.addAttribute("admemail", admemail);
