@@ -53,25 +53,44 @@ public class UserController {
 		else {
 			return new ResponseEntity<Users>( HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@GetMapping("/email/{email}")
+	public ResponseEntity<Users> getUserByUserEmail(@PathVariable("email") String email)
+	{
+		Users user = userserv.getUserByEmailId(email);
+		if(user!=null) {
+			return new ResponseEntity<Users>(user, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<Users>( HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
+	
+	@GetMapping("/otp/{vemail}")
+	public ResponseEntity<String> otpForForgotPassword(@PathVariable("vemail") String vemail)
+	{
+		if(userserv.getUserByEmailId(vemail)!=null)
+		{
+			otpserv.generateotp(vemail);
+			return new ResponseEntity<String>(""+otpserv.getOtp(vemail),HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+		}
 		
 	}
 	
-	@GetMapping("/otp/{vemail}")
-	public String otpForForgotPassword(@PathVariable("vemail") String vemail)
-	{
-		otpserv.generateotp(vemail);
-		return ""+otpserv.getOtp(vemail);
-	}
-	
 	@RequestMapping("/forgotpassword")
-	public String forGotPassword(@ModelAttribute("Users") Users users,HttpSession sess ,RedirectAttributes attr)
-	{
+	public String forGotPassword(@ModelAttribute("Users") Users users,HttpSession sess ,RedirectAttributes attr) {
+		
 		Users user = userserv.getUserByEmailId(users.getUser_email());
-		if(user!=null)
-		{
+		
+		if(user!=null) 	{
 			otpserv.generateotp(users.getUser_email());
 			int otp = otpserv.getOtp(users.getUser_email());
-			
 			sess.setAttribute("vemail", users.getUser_email());
 			sess.setAttribute("otp", otp);
 			sess.setAttribute("userid", user.getUser_id());
@@ -95,9 +114,9 @@ public class UserController {
 	public String confirmOtpPassword(@ModelAttribute("Users") Users users, 
 									HttpSession sess,RedirectAttributes attr) {
 		Integer n_otp = Integer.parseInt(users.getCnf_otp());
-		int  new_otp = n_otp;
+		int  new_otp  = n_otp;
 		Integer o_otp = (Integer) sess.getAttribute("otp");;
-		int  old_otp = o_otp;
+		int  old_otp  = o_otp;
 		
 		if(new_otp==old_otp) {
 			Users user = userserv.getUserByEmailId(users.getUser_email());
