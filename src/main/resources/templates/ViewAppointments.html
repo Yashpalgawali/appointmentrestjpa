@@ -124,42 +124,38 @@
 <div th:replace="fragments/Header.html :: header"></div>
 	
 <div class="container" >
-	
  <!-- start: PAGE HEADER -->
 		<div class="row">
 			<div class="col-sm-12">
-				
 				<!-- start: PAGE TITLE & BREADCRUMB -->
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
-						
 						<a th:href="@{/}">
-							<i class="fa fa-home "></i>&nbsp;	Home
+							<i class="fa fa-home"></i>&nbsp;Home
 						</a>
 					</li>
 					<li class="breadcrumb-item active" aria-current="page">
 						View Appointments
 					</li>
-					
 				</ol>
 			</div>
 		</div>
 		<div th:if="${response}"><h6 th:text="${response}" class="alert alert-success"></h6></div>
 		<div th:if="${reserr}">	<h6 th:text="${reserr}" class="alert alert-danger"></h6></div>						
-		<div class="card">
-			<div class="card-header">
-				<h4>View Appointments 
-					<a th:href="@{bookappointment}" class="btn btn-primary" style="float:right;">Book Appointment</a>
-				</h4>
-			</div>
-	  		<ul class="nav nav-tabs">
-					<li class="nav-item ">
-					  <a class="nav-link active" href="#todayappoints" data-toggle="tab">Today's Appointments</a>
-					</li>
-					<li class="nav-item">
-					  <a class="nav-link " href="#allappoints" data-toggle="tab">All Appointments</a>
-					</li>
-			</ul>
+	<div class="card">
+		<div class="card-header">
+			<h4>View Appointments 
+				<a th:href="@{bookappointment}" class="btn btn-primary" style="float:right;">Book Appointment</a>
+			</h4>
+		</div>
+  		<ul class="nav nav-tabs">
+				<li class="nav-item ">
+				  <a class="nav-link active" href="#todayappoints" data-toggle="tab">Today's Appointments</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link " href="#allappoints" data-toggle="tab">All Appointments</a>
+				</li>
+		</ul>
 	<div class="tab-content">
 	  <input type="hidden" id="vemail" name="vemail" th:value="${vemail}">
  	  <div id="todayappoints" class="tab-pane active">

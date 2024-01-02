@@ -24,9 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
 import com.example.demo.model.Appointment;
-import com.example.demo.model.Employee;
 
 import com.example.demo.service.AppointmentService;
 import com.example.demo.service.EmailService;
@@ -53,8 +51,6 @@ public class AppointmentController {
 	@Autowired
 	Environment env;
 	
-	
-
 	@GetMapping("/")
 	public ResponseEntity<List<Appointment>> getAllAppointments() {
 		return new ResponseEntity<List<Appointment>>(appointserv.getAllAppointments(),HttpStatus.OK);
@@ -62,7 +58,7 @@ public class AppointmentController {
 	
 	@PostMapping("/")
 	public ResponseEntity<List<Appointment>> saveAppointment(@RequestBody Appointment appoint, HttpSession sess )
-	{	
+	{	System.err.println("Inside save appointment method \nAppointment date is "+appoint.getApdate()+"\n Time is = "+appoint.getAptime()+"\n");
 		appoint.setStatus("pending");
 		Appointment appointment = appointserv.saveAppointment(appoint);
 		
@@ -232,11 +228,9 @@ public class AppointmentController {
 	}
 	
 	@GetMapping("/confappointment/{id}")
-	public String confAppointmentById(@PathVariable("id")Long id,RedirectAttributes attr)
-	{ 
+	public String confAppointmentById(@PathVariable("id")Long id,RedirectAttributes attr) { 
 		int res = appointserv.confAppointmentById(id);
-		if(res>0)
-		{
+		if(res>0) {
 			attr.addFlashAttribute("response", "Appointment is confirmed");
 			return "redirect:/";
 		}

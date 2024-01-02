@@ -23,6 +23,5 @@ public class ActivityLogs {
 	
 	private String activity_date;
 	
-	
 	private String activity;
 }

@@ -20,7 +20,8 @@ public class DesignationServImpl implements DesignationService {
 	@Autowired
 	ActivityService actserv;
 
-	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+//	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 	LocalDateTime today = LocalDateTime.now();  
 	
 	

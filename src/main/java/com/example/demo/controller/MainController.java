@@ -77,6 +77,7 @@ public class MainController {
 	@PutMapping("/changepassword")
 	public ResponseEntity<Users> updatePassword(@RequestBody Users users) {
 		
+		System.err.println(""+users.toString());
 		String enpass = passcode.encode(users.getCnf_pass());
 		int uid = (Integer) users.getUser_id();
 		int res = userserv.updateUsersPassword(enpass, uid);
