@@ -1,15 +1,12 @@
 package com.example.demo.repository;
 
-import java.sql.Date;
+
 import java.util.List;
-
 import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 import com.example.demo.model.Appointment;
 
 @Repository("appointrepo")
@@ -34,8 +31,14 @@ public interface AppointmentRepo extends JpaRepository<Appointment, Long> {
 	@Query("SELECT a FROM Appointment a JOIN a.employee WHERE a.employee.emp_email=?1")
 	public List<Appointment> getAllEmployeesAppointments(String eemail);
 	
+	
+	//Visitors Todays Appointments
 	@Query("SELECT a FROM Appointment a WHERE a.apdate=?1 AND a.vis_email=?2")
 	public List<Appointment> getAllTodaysAppointmentsByEmail(String tdate, String email);
+	
+	//Employees Todays Appointments
+	@Query("SELECT a FROM Appointment a JOIN a.employee WHERE a.apdate=?1 AND a.employee.emp_email=?2")
+	public List<Appointment> getAllTodaysAppointmentsByEmployeeEmail(String tdate, String email);
 	
 	
 	@Transactional

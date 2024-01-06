@@ -17,7 +17,6 @@ public class OtpServImpl implements OtpService {
 	
 	private LoadingCache<String, Integer> otpcache;
 	
-	
 	public OtpServImpl() {
 		super();
 		
@@ -56,7 +55,6 @@ public class OtpServImpl implements OtpService {
 
 	@Override
 	public void clearOtp(String uname) {
-		// TODO Auto-generated method stub
 		otpcache.invalidate(uname);
 	}
 

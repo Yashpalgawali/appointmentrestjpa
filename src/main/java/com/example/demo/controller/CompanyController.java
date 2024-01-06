@@ -50,8 +50,8 @@ public class CompanyController {
 	}
 	
 	@GetMapping("/{id}")
-	public  ResponseEntity<Company> editCompById(@PathVariable("id") String id) {
-		if(id!="") {
+	public  ResponseEntity<Company> editCompById(@PathVariable("id") Long id) {
+		if(id!=null) {
 			Company comp = compserv.getCompanyById(id);
 			if(comp!=null) {
 				return new ResponseEntity<Company>(comp,HttpStatus.OK);

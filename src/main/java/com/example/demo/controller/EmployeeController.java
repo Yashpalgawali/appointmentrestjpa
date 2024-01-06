@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
 import java.util.List;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -41,7 +39,6 @@ public class EmployeeController {
 	
 	@PostMapping("/")
 	public ResponseEntity<List<Employee>> saveEmployee(@RequestBody Employee emp) {
-		System.err.println("Inside save employee controller \n"+emp.toString()+"\nDesignation = "+emp.getDesignation().getDesig_name());
 		Employee empl = empserv.saveEmployee(emp);
 		if(empl!=null) {
 			return new ResponseEntity<List<Employee>>(empserv.getAllEmployees(),HttpStatus.OK);
@@ -72,18 +69,8 @@ public class EmployeeController {
 			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
 		}
 	}
-//	@GetMapping("/{name}")
-//	public ResponseEntity<Employee> getEmployeeByName(@PathVariable("name") String name) {
-//		Employee emp = empserv.getEmployeeByName(name);
-//		if(emp!=null) {
-//			return new ResponseEntity<Employee>(emp,HttpStatus.OK);
-//		}
-//		else {
-//			return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
-//		}
-//	}
-	
-	@PostMapping("/updateemployee")
+
+	@PutMapping("/")
 	public ResponseEntity<List<Employee>> updateEmployee(@RequestBody Employee empl) {
 		
 		int res = empserv.updateEmployee(empl);
@@ -91,7 +78,7 @@ public class EmployeeController {
 			return new ResponseEntity<List<Employee>>(empserv.getAllEmployees(),HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<List<Employee>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<Employee>>(HttpStatus.NOT_MODIFIED);
 		}
 	}
 	
@@ -100,77 +87,4 @@ public class EmployeeController {
 		List<Employee> elist = empserv.getDeptByEmpId(id);
 		return new ResponseEntity<List<Employee>>(elist,HttpStatus.OK) ;
 	}
-	
-//	@GetMapping("/addemployee")
-//	public String addEmployee(Model model) {
-//		List<Company> clist = compserv.getAllCOmpanies();
-//		List<Designation> dlist = desigserv.getAllDesignations();
-//		model.addAttribute("appname", env.getProperty("spring.application.name"));
-//		model.addAttribute("clist", clist);
-//		model.addAttribute("dlist", dlist);
-//		return "AddEmployee";
-//	}
-	
-//	@RequestMapping("/saveemployee")
-//	public String saveEmployee(@ModelAttribute("Employee")Employee emp,RedirectAttributes attr) {
-//		Employee empl = empserv.saveEmployee(emp);
-//		if(empl!=null) {
-//			attr.addFlashAttribute("response", "Employee Saved Successfully");
-//			return "redirect:/viewemployee";
-//		}
-//		else {
-//			attr.addFlashAttribute("reserr", "Employee is not saved ");
-//			return "redirect:/viewemployee";
-//		}
-//	}
-	
-//	@GetMapping("/viewemployee")
-//	public String viewEmployees(Model model) {
-//		List<Employee> elist = empserv.getAllEmployees();
-//		model.addAttribute("appname", env.getProperty("spring.application.name"));
-//		model.addAttribute("elist", elist);
-//		return "ViewEmployees";
-//	}
-	
-//	@GetMapping("/editempbyid/{id}")
-//	public String getEmployeeById(@PathVariable("id") String id, Model model, RedirectAttributes attr)
-//	{
-//		Employee emp = empserv.getEmployeeById(id);
-//		if(emp!=null)
-//		{
-//			List<Company> clist = compserv.getAllCOmpanies();
-//			List<Designation> dlist = desigserv.getAllDesignations();
-//			model.addAttribute("emp", emp);
-//			model.addAttribute("appname", env.getProperty("spring.application.name"));
-//			model.addAttribute("clist", clist);
-//			model.addAttribute("dlist", dlist);
-//			return "EditEmployee";
-//		}
-//		else {
-//			attr.addFlashAttribute("reserr", "Employee not found for given ID");
-//			return "redirect:/viewemployee";
-//		}
-//	}
-	
-//	@RequestMapping("/updateemployee")
-//	public String updateEmployee(@ModelAttribute("Employee")Employee empl,RedirectAttributes attr)
-//	{
-//		int res = empserv.updateEmployee(empl);
-//		if(res > 0) {
-//			attr.addFlashAttribute("response", "Employee is updated successfully");
-//			return "redirect:/viewemployee";
-//		}
-//		else {
-//			attr.addFlashAttribute("reserr", "Employee not found for given ID");
-//			return "redirect:/viewemployee";
-//		}
-//	}
-//	
-//	@GetMapping("/getdeptbyempid/{id}")
-//	@ResponseBody
-//	public  List<Employee>  getEmployeeByEmpId(@PathVariable("id")String id,Model model)  {
-//		List<Employee> elist = empserv.getDeptByEmpId(id);
-//		model.addAttribute("appname", env.getProperty("spring.application.name"));
-//		return elist;
-//	}
 }

@@ -16,13 +16,11 @@ public class ActivityServImpl implements ActivityService {
 	
 	@Override
 	public void saveActivity(ActivityLogs act) {
-		// TODO Auto-generated method stub
 		actrepo.save(act);
 	}
 
 	@Override
 	public List<ActivityLogs> getAllActivities() {
-		// TODO Auto-generated method stub
 		return actrepo.findAll();
 	}
 

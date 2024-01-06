@@ -34,8 +34,7 @@ public class AppointmentServImpl implements AppointmentService {
 	@Autowired
 	Environment env;
 	
-	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-	LocalDateTime today = LocalDateTime.now();  
+	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
 	
 	@Override
 	public Appointment saveAppointment(Appointment appoint) {
@@ -44,12 +43,12 @@ public class AppointmentServImpl implements AppointmentService {
 		appoint.setStatus("pending");
 		Appointment apoint = appointrepo.save(appoint); 
 		
-		if(apoint!=null) {  
-			lastupdatetimeserv.updateLastUpdateTime(""+dtf.format(today));
+		if(apoint!=null) { 
+			lastupdatetimeserv.updateLastUpdateTime(""+dtf.format(LocalDateTime.now()));
 			
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Appointment is saved for "+apoint.getVis_email());
-			act.setActivity_date(dtf.format(today));
+			act.setActivity_date(dtf.format(LocalDateTime.now()));
 			actserv.saveActivity(act);
 			
 			String base_url =	ServletUriComponentsBuilder
@@ -62,6 +61,7 @@ public class AppointmentServImpl implements AppointmentService {
 			
 			String cnfappoint = base_url+"/"+appname+"/confappointment/"+apoint.getAppoint_id();
 			String declineappoint = base_url+"/"+appname+"/declineappointment/"+apoint.getAppoint_id();
+			
 			
 			if(appoint.getVis_purpose().length()>10)
 				emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          "+appoint.getVis_name()
@@ -106,8 +106,16 @@ public class AppointmentServImpl implements AppointmentService {
 
 	@Override
 	public List<Appointment> getAllTodaysAppointmentsByEmail(String tdate, String email) {
-		List<Appointment> alist = appointrepo.getAllTodaysAppointmentsByEmail(tdate,email); 
-		return alist;
+		List<Appointment> elist = appointrepo.getAllTodaysAppointmentsByEmployeeEmail(tdate,email);
+		if(elist.size()>0) {
+			return elist;
+		}
+		
+		List<Appointment> vlist = appointrepo.getAllTodaysAppointmentsByEmail(tdate,email); 
+		if(vlist.size()>0) {
+			return vlist;
+		}
+		else{	return null;  }
 	}
 
 	@Override
@@ -118,16 +126,13 @@ public class AppointmentServImpl implements AppointmentService {
 		if(res>0) {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Appointment is confirmed for "+appoint.getVis_email());
-			act.setActivity_date(dtf.format(today));
+			act.setActivity_date(dtf.format(LocalDateTime.now()));
 			actserv.saveActivity(act);
-			
 			emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          \n Your appointment is confirmed with "+appoint.getEmployee().getEmp_name()+" dated on "+appoint.getApdate()+" "+appoint.getAptime() , "Appointment Confirmation");
-	
 			return res;
 		}
 		else
-			return res ;
-		
+			{ return res ; }
 	}
 
 	@Override
@@ -139,7 +144,7 @@ public class AppointmentServImpl implements AppointmentService {
 		if(res>0) {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Appointment is declined for "+appoint.getVis_email());
-			act.setActivity_date(dtf.format(today));
+			act.setActivity_date(dtf.format(LocalDateTime.now()));
 			actserv.saveActivity(act);
 			
 			emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          \n Your appointment is declined with "+appoint.getEmployee().getEmp_name()+" dated on "+appoint.getApdate()+" "+appoint.getAptime() , "Appointment Confirmation");
@@ -156,14 +161,11 @@ public class AppointmentServImpl implements AppointmentService {
 		Appointment apoint = appointrepo.save(appoint); 
 		
 		if(apoint!=null) {
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-			LocalDateTime today = LocalDateTime.now();  
-			   
-			lastupdatetimeserv.updateLastUpdateTime(""+dtf.format(today));
+			lastupdatetimeserv.updateLastUpdateTime(""+dtf.format(LocalDateTime.now()));
 			   
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Appointment is saved for "+apoint.getVis_email()+" by admin");
-			act.setActivity_date(dtf.format(today));
+			act.setActivity_date(dtf.format(LocalDateTime.now()));
 			actserv.saveActivity(act);
 			
 			String base_url =	ServletUriComponentsBuilder
@@ -201,32 +203,26 @@ public class AppointmentServImpl implements AppointmentService {
 
 	@Override
 	public int updateAppointment(Appointment appoint) {
-
 		return appointrepo.updateAppointmentById(appoint.getApdate(), appoint.getAptime(), appoint.getVcomp_name(), appoint.getVis_contact(), appoint.getVis_email(), appoint.getVis_name(), appoint.getVis_purpose(), appoint.getEmployee().getEmp_id(), appoint.getStatus(), appoint.getAppoint_id());
 	}
 
 	@Override
 	public int getTotalAppointmentCount() {
-
 		return appointrepo.getTotalAppointmentCount();
 	}
 
 	@Override
 	public int getPendingAppointmentCount() {
-		
 		return appointrepo.getPendingAppointmentCount();
 	}
 
 	@Override
 	public int getConfirmedAppointmentCount() {
-
 		return appointrepo.getConfirmedAppointmentCount();
 	}
 
 	@Override
 	public int getDeclinedAppointmentCount() {
-
 		return appointrepo.getDeclinedAppointmentCount();
 	}
-
 }

@@ -20,20 +20,16 @@ public class DesignationServImpl implements DesignationService {
 	@Autowired
 	ActivityService actserv;
 
-	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-//	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-	LocalDateTime today = LocalDateTime.now();  
-	
+	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
+	LocalDateTime today ; 
 	
 	@Override
 	public Designation saveDesignation(Designation desig) {
-		// TODO Auto-generated method stub
-		
 		Designation des = desigrepo.save(desig);
-		if(des!=null)
-		{
+		if(des!=null) {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Designation "+des.getDesig_name()+" is saved");
+			today = LocalDateTime.now();
 			act.setActivity_date(dtf.format(today));
 			actserv.saveActivity(act);
 			return des;
@@ -41,6 +37,7 @@ public class DesignationServImpl implements DesignationService {
 		else {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Designation "+desig.getDesig_name()+" is not saved");
+			today = LocalDateTime.now();
 			act.setActivity_date(dtf.format(today));
 			actserv.saveActivity(act);
 			return des;
@@ -49,38 +46,32 @@ public class DesignationServImpl implements DesignationService {
 
 	@Override
 	public List<Designation> getAllDesignations() {
-		// TODO Auto-generated method stub
 		return desigrepo.findAll();
 	}
 
 	@Override
 	public Designation getDesignationByid(String did) {
-		// TODO Auto-generated method stub
-		Long des_id = Long.parseLong(did);
-		
-		return desigrepo.findById(des_id).get();
+		return desigrepo.findById(Long.parseLong(did)).get();
 	}
 
 	@Override
 	public int updateDesignation(Designation desig) {
-		// TODO Auto-generated method stub
 		int res = desigrepo.updateDesignationById(desig.getDesig_name(), desig.getDesig_id());
-		if(res>0)
-		{
+		if(res>0) {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Designation "+desig.getDesig_name()+" is updated");
+			today = LocalDateTime.now();
 			act.setActivity_date(dtf.format(today));
 			actserv.saveActivity(act);
 			return res ;
 		}
-		else
-		{
+		else {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Designation "+desig.getDesig_name()+" is not updated");
+			today = LocalDateTime.now();
 			act.setActivity_date(dtf.format(today));
 			actserv.saveActivity(act);
 			return res;
 		}
 	}
-
 }

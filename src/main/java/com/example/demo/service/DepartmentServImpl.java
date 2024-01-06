@@ -21,16 +21,15 @@ public class DepartmentServImpl implements DepartmentService {
 	ActivityService actserv;
 	
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-//	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-	LocalDateTime today = LocalDateTime.now();  
+	LocalDateTime today;  
 	
 	@Override
 	public Department saveDepartment(Department dept) {
-		// TODO Auto-generated method stub
 		Department depart = deptrepo.save(dept);
 		if(depart!=null) {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Department "+depart.getDept_name()+" is saved");
+			today = LocalDateTime.now();
 			act.setActivity_date(dtf.format(today));
 			actserv.saveActivity(act);
 			return depart;
@@ -38,15 +37,14 @@ public class DepartmentServImpl implements DepartmentService {
 		else {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Department "+dept.getDept_name()+" is not saved");
+			today = LocalDateTime.now();
 			act.setActivity_date(dtf.format(today));
 			actserv.saveActivity(act);
 			return depart;
 		}
 	}
-
 	@Override
 	public List<Department> getAllDepartmentsByCompId(String cid) {
-		// TODO Auto-generated method stub
 		Long cmpid = Long.valueOf(cid);
 		try {
 			List<Department> deplist = deptrepo.getAllDepartmentsByCompId(cmpid);
@@ -55,25 +53,20 @@ public class DepartmentServImpl implements DepartmentService {
 		catch(Exception e) {
 			return  null;
 		}
-		
 	}
-
 	@Override
 	public Department getDeptByDeptId(String dept_id) {
-		// TODO Auto-generated method stub
-		Long did = Long.valueOf(dept_id);
-		return deptrepo.getDepartmentByDeptId(did);
+		return deptrepo.getDepartmentByDeptId(Long.valueOf(dept_id));
 	}
 
 	@Override
 	public int updateDepartment(Department dept) {
 		// TODO Auto-generated method stub
 		int res = deptrepo.updateDepartmentByDeptId(dept.getDept_name(), dept.getCompany().getCompany_id(), dept.getDept_id());
-				
-		if(res>0)
-		{
+		if(res>0) {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Department "+dept.getDept_name()+" is updated");
+			today = LocalDateTime.now();
 			act.setActivity_date(dtf.format(today));
 			actserv.saveActivity(act);
 			return res;
@@ -81,22 +74,18 @@ public class DepartmentServImpl implements DepartmentService {
 		else {
 			ActivityLogs act = new ActivityLogs();
 			act.setActivity("Department "+dept.getDept_name()+" is not updated");
+			today = LocalDateTime.now();
 			act.setActivity_date(dtf.format(today));
 			actserv.saveActivity(act);
 			return res;
 		}
 	}
-
 	@Override
 	public List<Department> getAllDepartments() {
-		// TODO Auto-generated method stub
 		return deptrepo.getAllDepartments();
 	}
-
 	@Override
 	public List<Department> getAllDepartmentsByCompName(String name) {
-		// TODO Auto-generated method stub
 		return deptrepo.getAllDepartmentsByCompName(name);
 	}
-
 }
