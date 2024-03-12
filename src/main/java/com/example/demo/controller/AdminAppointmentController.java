@@ -19,7 +19,7 @@ import com.example.demo.service.AppointmentService;
 import com.example.demo.service.EmployeeService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping("adminappointment")
 public class AdminAppointmentController {
 

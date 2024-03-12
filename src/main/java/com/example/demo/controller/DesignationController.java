@@ -17,7 +17,7 @@ import com.example.demo.model.Designation;
 import com.example.demo.service.DesignationService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping("designation")
 public class DesignationController {
 

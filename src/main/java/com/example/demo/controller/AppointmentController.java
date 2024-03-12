@@ -17,13 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.demo.model.Appointment;
 import com.example.demo.service.AppointmentService;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.EmployeeService;
 import com.example.demo.service.OtpService;
 
-@Controller
+@RestController
 @CrossOrigin("*")
 @RequestMapping("appointment")
 public class AppointmentController {
@@ -119,5 +121,14 @@ public class AppointmentController {
 		List<Appointment> aplist = appointserv.getAllTodaysAppointments(dformat.format(LocalDate.now()));
 		return aplist;
 	}
+	@GetMapping("/confappointment/{id}")
+	public void confAppointmentById(@PathVariable("id")Long id) { 
+		appointserv.confAppointmentById(id);
+	}
 	
+	@GetMapping("/declineappointment/{id}")
+	public void declineAppointmentById(@PathVariable("id")Long id)
+	{ 
+	 appointserv.confAppointmentById(id);
+	}
 }
