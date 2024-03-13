@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -105,12 +104,18 @@ public class AppointmentController {
 	}
 	
 	// Fetch Only Todays appointments for particular user
-	@RequestMapping("/gettodaysappointmentsbyemail/{email}")
-	@ResponseBody
-	public List<Appointment> getTodaysAppointmentsByEmail(@PathVariable("email") String email)
+//	@RequestMapping("/gettodaysappointmentsbyemail/{email}")
+//	@ResponseBody
+//	public List<Appointment> getTodaysAppointmentsByEmail(@PathVariable("email") String email)
+//	{
+//		List<Appointment> aplist = appointserv.getAllTodaysAppointmentsByEmail(dformat.format(LocalDate.now()),email);
+//		return aplist;
+//	}
+	@GetMapping("/gettodaysappointmentsbyemail/{email}")
+	public ResponseEntity<List<Appointment>> getTodaysAppointmentsByEmail(@PathVariable("email") String email)
 	{
 		List<Appointment> aplist = appointserv.getAllTodaysAppointmentsByEmail(dformat.format(LocalDate.now()),email);
-		return aplist;
+		return new ResponseEntity<List<Appointment>>(aplist,HttpStatus.OK);
 	}
 	
 	// Fetch All Todays appointments for admin

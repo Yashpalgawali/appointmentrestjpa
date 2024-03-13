@@ -39,7 +39,7 @@ public class AppointmentServImpl implements AppointmentService {
 	@Override
 	public Appointment saveAppointment(Appointment appoint) {
 		
-		String appname = env.getProperty("spring.application.name");
+		String appname = "/appointment/";
 		appoint.setStatus("pending");
 		Appointment apoint = appointrepo.save(appoint); 
 		
@@ -59,10 +59,10 @@ public class AppointmentServImpl implements AppointmentService {
 			
 			String subject = appoint.getVis_purpose().substring(0, 10);
 			
-			String cnfappoint = base_url+"/"+appname+"/confappointment/"+apoint.getAppoint_id();
-			String declineappoint = base_url+"/"+appname+"/declineappointment/"+apoint.getAppoint_id();
+			String cnfappoint = base_url+appname+"confappointment/"+apoint.getAppoint_id();
+			String declineappoint = base_url+appname+"declineappointment/"+apoint.getAppoint_id();
 			
-			
+					
 			if(appoint.getVis_purpose().length()>10)
 				emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          "+appoint.getVis_name()
 					+" needs an appointment regarding "+appoint.getVis_purpose().substring(0, 10)+" dated on "+appoint.getApdate()
