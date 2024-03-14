@@ -3,11 +3,13 @@ package com.example.demo.service;
 import java.sql.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.example.demo.model.Appointment;
 
 public interface AppointmentService {
 
-	public Appointment saveAppointment(Appointment appoint);
+	public Appointment saveAppointment(Appointment appoint,HttpServletRequest request);
 	
 	public List<Appointment> getAllAppointments();
 	

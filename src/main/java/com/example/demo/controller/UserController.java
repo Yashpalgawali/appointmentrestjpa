@@ -1,6 +1,7 @@
 
 package com.example.demo.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,9 @@ public class UserController {
 	BCryptPasswordEncoder passcode;
 	
 	@GetMapping("/basicauth")
-	public AuthenticationBean authenticationBean() { return new AuthenticationBean("You are authenticated"); } 
+	public AuthenticationBean authenticationBean() { 
+		
+		return new AuthenticationBean("You are authenticated"); } 
 	
 	@GetMapping("/{uname}")
 	public ResponseEntity<Users> getUserByUserName(@PathVariable("uname") String uname) {

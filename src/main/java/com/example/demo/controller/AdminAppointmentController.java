@@ -2,6 +2,8 @@ package com.example.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -41,9 +43,9 @@ public class AdminAppointmentController {
 		return new ResponseEntity<List<Appointment>>(appointserv.getAllAppointments(),HttpStatus.OK);
 	}
 	@PostMapping("/")
-	public ResponseEntity<Appointment> saveAdminBookAppointment(@RequestBody Appointment appoint) {
+	public ResponseEntity<Appointment> saveAdminBookAppointment(@RequestBody Appointment appoint,HttpServletRequest request) {
 		
-		Appointment apt = appointserv.saveAppointment(appoint);
+		Appointment apt = appointserv.saveAppointment(appoint,request);
 		if(apt!=null) {
 			return new ResponseEntity<Appointment>(apt,HttpStatus.OK);
 		}

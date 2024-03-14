@@ -37,9 +37,10 @@ public class AppointmentServImpl implements AppointmentService {
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
 	
 	@Override
-	public Appointment saveAppointment(Appointment appoint) {
+	public Appointment saveAppointment(Appointment appoint,HttpServletRequest request) {
 		
-		String appname = "/appointment/";
+		String domain = request.getRequestURL().toString().split("/", 3)[0] + "//" + request.getRequestURL().toString().split("/")[2]+"/";;
+		String  appname =  env.getProperty("spring.application.name");
 		appoint.setStatus("pending");
 		Appointment apoint = appointrepo.save(appoint); 
 		
@@ -51,24 +52,19 @@ public class AppointmentServImpl implements AppointmentService {
 			act.setActivity_date(dtf.format(LocalDateTime.now()));
 			actserv.saveActivity(act);
 			
-			String base_url =	ServletUriComponentsBuilder
-					.fromRequestUri(request)
-					.replacePath(null)
-					.build()
-					.toUriString();
+//			String base_url =	ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
 			
 			String subject = appoint.getVis_purpose().substring(0, 10);
 			
-			String cnfappoint = base_url+appname+"confappointment/"+apoint.getAppoint_id();
-			String declineappoint = base_url+appname+"declineappointment/"+apoint.getAppoint_id();
+			String cnfappoint 	  = domain+appname+"/"+"confappointment/"+apoint.getAppoint_id();
+			String declineappoint = domain+appname+"/"+"declineappointment/"+apoint.getAppoint_id();
 			
-					
 			if(appoint.getVis_purpose().length()>10)
-				emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          "+appoint.getVis_name()
+				emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          \n"+appoint.getVis_name()
 					+" needs an appointment regarding "+appoint.getVis_purpose().substring(0, 10)+" dated on "+appoint.getApdate()
 					+"  "+appoint.getAptime()+"\n\n Confirm Appointment \n"+cnfappoint+"\n\n Decline Appointment \n"+declineappoint, subject);
 			else
-				emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          "+appoint.getVis_name()
+				emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          \n"+appoint.getVis_name()
 				+" needs an appointment regarding "+appoint.getVis_purpose().substring(0, appoint.getVis_purpose().length())+" dated on "+appoint.getApdate()
 				+"  "+appoint.getAptime()+"\n\n Confirm Appointment \n"+cnfappoint+"\n\n Decline Appointment \n"+declineappoint, subject);
 		   return apoint;

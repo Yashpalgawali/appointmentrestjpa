@@ -47,14 +47,15 @@ public class AppointmentController {
 	DateTimeFormatter dformat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	
 	@GetMapping("/")
-	public ResponseEntity<List<Appointment>> getAllAppointments() {
+	public ResponseEntity<List<Appointment>> getAllAppointments(HttpServletRequest request) {
+		
 		return new ResponseEntity<List<Appointment>>(appointserv.getAllAppointments(),HttpStatus.OK);
 	}
 	
 	@PostMapping("/")
-	public ResponseEntity<List<Appointment>> saveAppointment(@RequestBody Appointment appoint, HttpSession sess )
+	public ResponseEntity<List<Appointment>> saveAppointment(@RequestBody Appointment appoint, HttpSession sess ,HttpServletRequest request)
 	{	
-		Appointment appointment = appointserv.saveAppointment(appoint);
+		Appointment appointment = appointserv.saveAppointment(appoint,request);
 		if(appointment!=null) {
 			sess.setAttribute("vemail", appoint.getVis_email());
 			return new  ResponseEntity<List<Appointment>>(appointserv.getAllAppointmentsByEmail(appoint.getVis_email()) ,HttpStatus.OK);

@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,7 @@ public class CompanyController {
 	
 	@GetMapping("/")
 	public ResponseEntity<List<Company>> viewCompanies() {
+		
 		List<Company> clist= compserv.getAllCOmpanies();
 		if(clist.size()>0) {
 			return new ResponseEntity<List<Company>>(clist,HttpStatus.OK);
