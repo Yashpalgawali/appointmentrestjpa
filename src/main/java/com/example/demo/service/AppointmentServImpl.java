@@ -59,6 +59,9 @@ public class AppointmentServImpl implements AppointmentService {
 			String cnfappoint 	  = domain+appname+"/"+"confappointment/"+apoint.getAppoint_id();
 			String declineappoint = domain+appname+"/"+"declineappointment/"+apoint.getAppoint_id();
 			
+			System.err.println("To email is "+appoint.getEmployee());
+			
+			
 			if(appoint.getVis_purpose().length()>10)
 				emailserv.sendSimpleEmail(appoint.getEmployee().getEmp_email(), "Respected Sir/Ma'am,          \n"+appoint.getVis_name()
 					+" needs an appointment regarding "+appoint.getVis_purpose().substring(0, 10)+" dated on "+appoint.getApdate()

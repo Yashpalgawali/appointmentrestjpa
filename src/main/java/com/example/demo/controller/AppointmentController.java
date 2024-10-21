@@ -55,6 +55,7 @@ public class AppointmentController {
 	@PostMapping("/")
 	public ResponseEntity<List<Appointment>> saveAppointment(@RequestBody Appointment appoint, HttpSession sess ,HttpServletRequest request)
 	{	
+		System.err.println("inside saveAppointment() controller \n "+appoint.toString());
 		Appointment appointment = appointserv.saveAppointment(appoint,request);
 		if(appointment!=null) {
 			sess.setAttribute("vemail", appoint.getVis_email());

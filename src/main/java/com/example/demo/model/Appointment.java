@@ -166,6 +166,14 @@ public class Appointment {
 	}
 
 	public Appointment() {}
-	
+
+	@Override
+	public String toString() {
+		return "Appointment [appoint_id=" + appoint_id + ", vis_name=" + vis_name + ", vis_email=" + vis_email
+				+ ", vis_contact=" + vis_contact + ", vis_purpose=" + vis_purpose + ", vcomp_name=" + vcomp_name
+				+ ", apdate=" + apdate + ", aptime=" + aptime + ", status=" + status + ", otp_num=" + otp_num
+				+ ", new_otp=" + new_otp + ", app_name=" + app_name + ", admemail=" + admemail + ", employee="
+				+ employee + "]";
+	}
 	
 }
